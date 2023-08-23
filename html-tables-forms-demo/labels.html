@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Labels Demo</title>
+</head>
+<body>
+  <h1>Labels</h1>
+  <h2>Register</h2>
+  <form>
+    <!-- Label using for & id -->
+    <label for="email">Enter Email:</label>
+    <input type="email" placeholder="Email" name="email" id="email">
+    <br>
+    <!-- Label using nesting -->
+    <label>
+      Enter Password:
+      <input type="password" name="password" placeholder="Password">
+    </label>
+    <br>
+    <label>
+        <input type="checkbox" name="tos-agree"> 
+        I agree to the terms of service
+    </label>
+    
+    <p>Select Shirt Size</p>
+    <label>
+        <input type="radio" name="shirt-size" value="XS"> 
+        XS 
+    </label>
+    <br>
+    <label>
+        <input type="radio" name="shirt-size" value="S"> 
+        S
+    </label>
+    <br>
+    <label>
+        <input type="radio" name="shirt-size" value="M"> 
+        M
+    </label>
+    <br>
+    <label>
+        <input type="radio" name="shirt-size" value="M"> 
+        L
+    </label>
+    <br>
+    <button type="submit">Submit Form</button>
+  </form>
+</body>
+</html>

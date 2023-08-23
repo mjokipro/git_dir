@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Forms Demo</title>
+</head>
+<body>
+  <h1>Forms Demo!</h1>
+  <form >
+    <input
+      name="city"
+      type="text"
+      placeholder="Enter a City"
+      minlength="2"
+      maxlength="10"
+      required>
+  </form>
+  <button>Our <b>First</b> Button!</button>
+  <h2>Register</h2>
+  <form>
+    <button type="button">Click Me</button>
+    <input type="email" placeholder="Email" name="email">
+    <input type="password" name="password" placeholder="Password">
+    <input type="checkbox" name="tos-agree"> I agree to the terms of service
+    <p>Select Shirt Size</p>
+    <input type="radio" name="shirt-size" value="XS"> XS <br>
+    <input type="radio" name="shirt-size" value="S"> S <br>
+    <input type="radio" name="shirt-size" value="M"> M <br>
+    <input type="radio" name="shirt-size" value="L"> Large <br>
+
+    <button type="submit">Submit Form</button>
+    <!-- <input type="submit" value="GO!"> -->
+  </form>
+
+  <h2>Other Input Types</h2>
+  <form>
+    Pick a Color: <input type="color" name="color">
+    Enter Your Birthday: <input type="date" name="birthday">
+    How Happy Are You? <input type="range" name="happiness" min="1" max="10" step="2">
+
+    <br>
+    Select a State:
+    <select name="state">
+      <option value="">--Choose Your State--</option>
+      <option value="AL">Alabama</option>
+      <option value="AK">Alaska</option>
+      <option value="AZ">Arizona</option>
+      <option value="AR">Arkansas</option>
+    </select>
+    <br>
+    Please Draft an Exquisite Essay:
+    <textarea name="essay" cols="30" rows="10" minlength="5" maxlength="200">Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro aperiam cum</textarea>
+    <button type="submit">Submit Form</button>
+  </form>
+
+  <form method="post" enctype="multipart/form-data">
+    Choose file to upload:
+    <input type="file" accept="image/*" capture>
+    <!-- <input type="file" capture="user" name="my-file"> -->
+    <button type="submit">Upload File</button>
+  </form>
+
+  <h2>Search Reddit:</h2>
+  <form action="https://www.reddit.com/search" method="get">
+    <input type="text" name="q" placeholder="Search Term">
+    <br>
+    Sort By:
+    <select name="sort">
+      <option value="top">Top</option>
+      <option value="new">New</option>
+      <option value="comments">Comments</option>
+    </select>
+    <button type="submit">Search!</button>
+    <!-- https://www.reddit.com/search?q=pickles&sort=top -->
+  </form>
+
+  <form method="post" enctype="multipart/form-data">
+    <label>
+      This won't actually work, but go ahead and pick a file!
+      <input type="file">
+    </label>
+  </form>
+
+
+</body>
+</html>
