@@ -21,6 +21,24 @@ describe('Utilities test', () => {
     });
 
     it('generate delete tr', () => {
-        let 
-    })
+        let newTr = document.createElement('tr');
+
+        appendDeleteBtn(newTr);
+
+        expect(newTr.children.length).toEqual(1);
+        expect(newTr.firstChild.innerHTML).toEqual('X');
+    });
+
+    afterEach(() => {
+        billAmtInput.value = '';
+        tipAmtInput.value = '';
+        paymentTbody.value = '';
+        summaryTds[0].innerHTML = '';
+        summaryTds[1].innerHTML = '';
+        summaryTds[2].innerHTML = '';
+        serverTbody.innerHTML = '';
+        allPayments = {};
+        paymentId = 0;
+
+    });
 });
