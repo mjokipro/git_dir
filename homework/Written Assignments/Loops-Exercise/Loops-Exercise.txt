@@ -1,0 +1,38 @@
+Matthew Joki Jul 23
+
+7/19/2023
+
+Loops Exercise
+
+Numbers up to ten:
+for(let i = 0; i <= 10; i++) {
+	console.log(i);
+};
+
+let count = 0;
+
+	while(count <= 10) {
+	console.log(count);
+	count++;
+	};
+
+Even numbers to 20:
+
+for(let i = 0; i <= 20; i += 2) {
+	console.log(i);
+};
+
+Odd numbers to 20:
+
+let i = 1;
+
+while(i <= 20) {
+	console.log(i);
+	i +=2;
+};
+
+Back to zero:
+
+for(let i = 10; i >=0; i--) {
+	console.log(i);
+};

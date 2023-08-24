@@ -1,0 +1,92 @@
+Matthew Joki Jul 23
+
+7/20/2023
+
+Functions Exercise
+
+1.)  DIFFERENCE:
+
+function difference(x, y) {
+	return x-y;
+};
+
+2.)  PRODUCT:
+
+function product(x, y) {
+	return x * y;
+};
+
+3.)  printDay:
+
+function printDay(num) {
+
+const daysWeek = [undefined, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+	if(num < 1 && num > 7) {
+		return undefined;
+	}; 
+	return daysWeek[num];
+};
+
+4.)  lastElement:
+
+function lastElement(arr) {
+	return arr[arr.length-1];
+};
+
+5.)  numberCompare:
+
+function numberCompare(x, y) {
+	if (x > y) { return 'Numbers are equal' };
+	if (x < y) { return 'First is greater' };
+	if (x === y) { return 'Numbers are equal' };
+}
+
+6.)  singleLetterCount:
+
+function singleLetterCount(str, char) {
+    return str.toLowerCase().lastIndexOf(char.toLowerCase());
+}
+
+7.)  multipleLetterCount:
+
+function multLetterCount(str) {
+    const letterCount = {};
+    
+    for (let char of str) {
+        if (letterCount[char]) {
+            letterCount[char]++;
+        } else {
+            letterCount[char] = 1;
+        }
+    }
+    return letterCount;
+}
+
+8.)  arrayManip:
+
+function arrayManip(arr, command, location, value) {
+    for (let num of arr) {
+        if (command === "remove") {
+            if (location === 'end') {
+                return arr.pop();
+            }
+            return arr.shift();
+        } else if (command === "add") {
+            if (location === 'beginning') {
+                arr.unshift(value);
+                return arr;
+            }
+            arr.push(value);
+            return arr;
+        }
+    }
+}
+
+9.)  isPalindrome:
+
+function isPalindrome(str) {
+    return str.toLowerCase() === str.split('').reverse().join('');
+}
+
+10.)  

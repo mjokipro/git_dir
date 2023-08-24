@@ -1,0 +1,14 @@
+NAME             COMMON NAME   CAUSE
+Avian influenza  Bird Flue     Virus
+Moniliasis       Thrush        Fungi
+pododermatitis   Bumblefoot    Bacteria
+Dermanyssus      Red Mite      Parasite
+
+PLAYER        GOALS
+Aubameyang    7
+Lacazette     2
+Pepe          1
+Torreira      1
+Luiz          1
+Chambers      1   
+Total         13
