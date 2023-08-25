@@ -7,8 +7,12 @@ Examples:
 
 */
 function doubleValues(arr){
-    
+    const newArr = arr.map((val) => {
+        return val * 2;
+    });
+    return newArr;
 }
+
 
 /*
 Write a function called onlyEvenValues which accepts an array and returns a new array with only the even values in the array passed to the function
@@ -19,7 +23,12 @@ Examples:
 
 */
 function onlyEvenValues(arr){
-    
+    const newArr = arr.filter((val) => {
+        if (val % 2 === 0 && val !== 0) {
+            return val;
+        };
+    });
+    return newArr;
 }
 
 /*
@@ -30,8 +39,11 @@ Examples:
     showFirstAndLast(['hi', 'goodbye', 'smile']) // ['hi', 'ge', 'se']
 
 */
-function showFirstAndLast(arr){
-    
+function showFirstAndLast(arr) {
+    const newArr = arr.map((val, i) => {
+        return val[0] + val.charAt(val.length-1);
+    });
+    return newArr;
 }
 
 /*
@@ -44,7 +56,10 @@ Examples:
 
 */
 function addKeyAndValue(arr,key,value){
-    
+    const newArr = arr.map((key, value) => {
+        return key + value;
+    });
+    return newArr;
 }
 
 /*
