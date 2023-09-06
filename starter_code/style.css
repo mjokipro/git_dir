@@ -38,7 +38,7 @@ ul li {
   /* TODO */
 }
 ul li:hover {
-  /* TODO */
+  cursor: pointer;
 }
 
 input {
