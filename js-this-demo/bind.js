@@ -19,7 +19,7 @@ const rocket = {
 
 const bDance = blue.dance;
 const boundDance = bDance.bind(blue);
-
+// bind value
 const rocketDance = blue.dance.bind(rocket);
 
 const dog = {
@@ -27,7 +27,7 @@ const dog = {
 	breed : 'Mini Aussie',
 	dance : rocketDance
 };
-
+// bake args
 const blueDisco = blue.dance.bind(blue, 'disco');
 const playsWithSocks = blue.play.bind(blue, 'left sock', 'right sock');
 
