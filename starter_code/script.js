@@ -25,7 +25,7 @@ function showSuggestions(results, inputVal) {
 
 	const display = results.map(v => v);
 	
-	li.innerHTML = display.join(' ');
+	li.innerHTML = display[0];
 
 	suggestions.append(li);
 
