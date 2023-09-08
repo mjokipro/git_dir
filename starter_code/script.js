@@ -5,39 +5,44 @@ const fruits = ['Apple', 'Apricot', 'Avocado 🥑', 'Banana', 'Bilberry', 'Black
 
 function search(str) {
 	let results = [];
-	
-	if (str) results = fruits.filter(v => v.toLowerCase().includes(str));
+	if (str) {
+		results.filter(v => v.toLowerCase().includes(str));
+	}
 	return results;
+
 }
 
 function searchHandler(e) {
 	e.preventDefault();
-
-	showSuggestions(search(e.target.value.toLowerCase()), e.target.value.toLowerCase());
+	let inputVal = e.target.value.toLowerCase();
+	console.log(inputVal);
+	let results = search(inputVal);
+	showSuggestions(results,);
 }
 
-function showSuggestions(results, inputVal) {
-
-
-	if (!inputVal) suggestions.innerHTML = '';
-
-	let li = document.createElement('li');
-
-	const display = results.map(v => v);
+function showSuggestions(results,) {
 	
-	li.innerHTML = display[0];
-
-	suggestions.append(li);
-
+	let newArr = results.map(v => v = `<li>${v}</li>`);
+	suggestions.append(newArr);
 }
+
+
+	
+
+	// if (!inputVal) suggestions.innerHTML = '';
+
+	// suggestions.innerHTML = newArr;
+	// suggestions.append(li);
+
+
 
 function useSuggestion(e) {
 	e.preventDefault();
 	// input.value = e.target;
-	 suggestions.innerHTML = input.value;
-	
+	//  suggestions.innerHTML = e.target.value;
+	// input.value = e.target.value;
 }
 
 input.addEventListener('keyup', searchHandler);
 
-suggestions.addEventListener('click', useSuggestion);
+// suggestions.addEventListener('click', useSuggestion);
