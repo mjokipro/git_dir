@@ -79,10 +79,11 @@ async function searchForShowAndDisplay() {
 
 $searchForm.on("submit", async function (evt) {
   evt.preventDefault();
-  await searchForShowAndDisplay();
+  const res = await searchForShowAndDisplay();
 });
 
-
+// https://api.tvmaze.com/singlesearch/shows?q=girls
+ 
 /** Given a show ID, get from API and return (promise) array of episodes:
  *      { id, name, season, number }
  */
