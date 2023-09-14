@@ -1,51 +1,88 @@
 * {
   /* box-sizing: border-box; */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
 
 :focus {
-  
+  color: rgb(103, 103, 245);
+  /* background: #664AFF; */
  /* TODO */
 }
 
 body {
   /* TODO */
+  background: orange;
+  padding: 0 20px;
 }
 
 input {
  /* TODO */
   border: 1px solid transparent;
-  background-color: #f1f1f1;
+  background-color: #271010;
   padding: 10px;
   font-size: 16px;
 }
 
 .search-container {
  /* TODO */
+  max-width: 450px;
+  margin: 150px auto;
 }
 .search-container input,
 .search-container .suggestions {
   /* TODO */
+  background: #fff;
+  width: 100%;
+  border-radius: 5px;
+  position: relative;
+  box-shadow: 0px 1px 5px 3px rgba(0,0,0,0.12);
 }
 .search-container input {
  /* TODO */
+  height: 55px;
+  width: 100%;
+  outline: 10px solid;
+  border: none;
+  border-radius: 5px;
+  padding: 0 60px 0 20px;
+  font-size: 18px;
+  box-shadow: 0px 1px 5px rgba(0,0,0,0.1);
 }
 .search-container .suggestions {
    /* TODO */
+  border: 1px dotted #ccc;
+  padding: 3px;
 }
 
 ul {
   /* TODO */
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  
 }
 ul.has-suggestions {
   /* TODO */
+  padding: 2px 0;
 }
 ul li {
   /* TODO */
+  list-style: none;
+  padding: 8px 6px;
+  width: 100%;
+  cursor: default;
+  border-radius: 3px;
 }
 ul li:hover {
   cursor: pointer;
+  background: #eee;
 }
 
 input {
    /* TODO */
+  color: #fff;
+  background: #664AFF;
 }
