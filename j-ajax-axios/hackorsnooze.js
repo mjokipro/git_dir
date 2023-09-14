@@ -1,5 +1,5 @@
 async function getData(token) {
-    const res = await axios.get('https://hack-or-snooze.herokuapp.com/users',
+    const res = await axios.get('https://hack-or-snooze-v3.herokuapp.com/',
         { params: {token}});
     console.log(res);
 }
