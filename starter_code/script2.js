@@ -20,13 +20,13 @@ function showResults(value) {
 		newList += '<li>' + results[i] + '</li>';
 	}
 
-	const lis = document.querySelectorAll('li');
+	// const lis = document.querySelectorAll('li');
 
-	for (let i = 0; i < lis.length; i++) {
-		lis[i].addEventListener('click', (e) => { 
-			input.value = e.target.value;
-		})	
-	}
+	// for (let i = 0; i < lis.length; i++) {
+	// 	lis[i].addEventListener('click', (e) => { 
+	// 		input.value = e.target.value;
+	// 	})	
+	// }
 
 	suggestions.innerHTML = '<ul>' + newList + '</ul>';
 }
@@ -34,5 +34,4 @@ function showResults(value) {
 // input.addEventListener('keyup', searchHandler);
 
 // suggestions.addEventListener('click', (e) => {
-// 	input.textContent = e.target.value;
 // });
