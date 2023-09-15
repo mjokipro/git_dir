@@ -1,4 +1,12 @@
 // categories is the main data structure for the app; it looks like this:
+const BASE_URL = 'http://jservice.io';
+
+
+const $input = $('#start');
+const $div = $('#spin-container');
+const $i = $('.fa fa-spin fa-spinner');
+const $table = $('#jeopardy');
+
 
 //  [
 //    { title: "Math",
@@ -18,7 +26,12 @@
 //    ...
 //  ]
 
-let categories = [];
+const getCategories = async function() {
+
+    const res = await axios.get(BASE_URL + '/api/clues/');
+    // console.log(res.data[1]["answer"]);
+    return res.data;
+}
 
 
 /** Get NUM_CATEGORIES random category from API.
@@ -27,6 +40,7 @@ let categories = [];
  */
 
 function getCategoryIds() {
+     
 }
 
 /** Return object with data about a category:
