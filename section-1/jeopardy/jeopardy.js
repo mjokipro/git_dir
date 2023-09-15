@@ -29,7 +29,7 @@ const $table = $('#jeopardy');
 const getCategories = async function() {
 
     const res = await axios.get(BASE_URL + '/api/clues/');
-    // console.log(res.data[1]["answer"]);
+    // console.log(res.data[k]["v"]);
     return res.data;
 }
 
