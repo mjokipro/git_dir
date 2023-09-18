@@ -24,8 +24,11 @@ class Story {
   /** Parses hostname out of URL and returns it. */
 
   getHostName() {
+   
     // UNIMPLEMENTED: complete this function!
-    return "hostname.com";
+  
+        return new URL(this.url).host;
+
   }
 }
 
@@ -73,8 +76,8 @@ class StoryList {
    * Returns the new Story instance
    */
 
-  async addStory( /* user, newStory */) {
-    // UNIMPLEMENTED: complete this function!
+  async addStory(currentUser, {title: test, author: currentUser, }) {
+    putStoriesOnPage(newStory, true );
   }
 }
 
