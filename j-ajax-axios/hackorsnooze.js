@@ -18,13 +18,13 @@ async function login(username, password) {
 }
 
 async function getUsersAuth() {
-    const token = await login('mjoki111', 'bla123!33');
+    const token = await login('mjokipro', 'Buttfuck_1');
     console.log(token);
     getData(token);
 }
 
 async function createStory() {
-    const token = await login('mjoki111', 'bla123!33');
+    const token = await login('mjokipro', 'Buttfuck_1');
     const newStory = {
         token,
         story: {

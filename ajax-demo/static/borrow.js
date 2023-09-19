@@ -1,7 +1,7 @@
 /* show result of borrowing in box */
 
 function showBorrow(res) {
-  $("#borrowed").html(res);
+  $("#borrowed").html(res.data);
 }
 
 async function borrowMoney() {
@@ -15,3 +15,4 @@ async function borrowMoney() {
 }
 
 $("#borrow-btn").on("click", borrowMoney);
+

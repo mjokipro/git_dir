@@ -1,3 +1,6 @@
+const BASE_URL = "https://hack-or-snooze-v3.herokuapp.com";
+
+
 async function getReq() {
     const req = await axios.get('https://reqres.in/api/users');
     console.log(req);

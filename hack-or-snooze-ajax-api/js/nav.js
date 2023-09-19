@@ -34,3 +34,40 @@ function updateNavOnLogin() {
   $navLogOut.show();
   $navUserProfile.text(`${currentUser.username}`).show();
 }
+
+function navSubmitStoryClick(evt) {
+  console.debug("navSubmitStoryClick");
+  hidePageComponents();
+  putStoriesOnPage();
+  $allStoriesList.show();
+  $submitForm.show();
+}
+
+$navSubmitStory.on("click", navSubmitStoryClick);
+
+function navFavoritesClick(evt) {
+  console.debug("navFavoritesClick");
+  hidePageComponents();
+  putFavoritesListOnPage();
+}
+
+$body.on("click", "#nav-favorites", navFavoritesClick);
+
+function navMyStories(evt) {
+  console.debug("navMyStories");
+  hidePageComponents();
+  putUserStoriesOnPage();
+  $ownStories.show();
+}
+
+$body.on("click", "#nav-my-stories", navMyStories);
+
+function navProfileClick(evt) {
+  console.debug("navProfileClick");
+  hidePageComponents();
+  $loginForm.show();
+  $signupForm.show();
+}
+
+$navLogin.on("click", navLoginClick);
+

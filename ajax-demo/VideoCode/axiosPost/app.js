@@ -12,18 +12,21 @@
 
 
 async function getUsers(token) {
-  const res = await axios.get('https://hack-or-snooze-v3.herokuapp.com/users', { params: { token } });
-  console.log(res);
+  const res = await axios.get('https://hack-or-snooze-v3.herokuapp.com/users',
+    { params: { token } });
+  console.log("2-getUsers(token)=", res);
 }
 
 async function signUp(username, password, name) {
-  const res = await axios.post('https://hack-or-snooze-v3.herokuapp.com/signup', { user: { name, username, password } })
-  console.log(res);
+  const res = await axios.post('https://hack-or-snooze-v3.herokuapp.com/signup',
+    { user: { name, username, password } })
+  console.log("signUp(username, password, name)=", res);
 }
 
 async function login(username, password) {
-  const res = await axios.post('https://hack-or-snooze-v3.herokuapp.com/login', { user: { username, password } })
-  console.log(res);
+  const res = await axios.post('https://hack-or-snooze-v3.herokuapp.com/login',
+    { user: { username, password } })
+  console.log("1-get token, and return", res);
   return res.data.token;
 }
 // getUsers();
@@ -31,10 +34,12 @@ async function login(username, password) {
 
 async function getUsersWithAuth() {
   const token = await login('butterschicken', '238197sadhj');
+  // send token
   getUsers(token);
 }
 
 async function createStory() {
+  
   const token = await login('butterschicken', '238197sadhj');
   const newStory = {
     token,
@@ -44,11 +49,12 @@ async function createStory() {
       url: 'http://chickens4lyfe.com'
     }
   }
-  const res = await axios.post('https://hack-or-snooze-v3.herokuapp.com/stories', newStory);
-  console.log(res);
+  const res = await axios.post('https://hack-or-snooze-v3.herokuapp.com/stories',
+    newStory);
+  console.log("createStory()", res);
 }
 
-// getUsersWithAuth();
+getUsersWithAuth();
 createStory();
 
 

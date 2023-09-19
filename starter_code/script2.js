@@ -12,21 +12,7 @@ function searchIn(input) {
 }
 
 function showResults(value) {
-	suggestions.innerHTML = '';
-	let newList = '';
-	let results = searchIn(value);
 
-	for (let i = 0; i < results.length; i++) {
-		newList += '<li>' + results[i] + '</li>';
-	}
-
-	// const lis = document.querySelectorAll('li');
-
-	// for (let i = 0; i < lis.length; i++) {
-	// 	lis[i].addEventListener('click', (e) => { 
-	// 		input.value = e.target.value;
-	// 	})	
-	// }
 
 	suggestions.innerHTML = '<ul>' + newList + '</ul>';
 }
