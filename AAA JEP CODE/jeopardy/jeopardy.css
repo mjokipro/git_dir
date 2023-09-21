@@ -1,0 +1,70 @@
+/* some colors you may find useful:
+  #115ff4
+  #060ce9
+  #28a200
+  #8d2ab5
+  #74119c
+*/
+
+.fa fa-spin fa-spinner {
+}
+
+body {
+  background-color: rgb(23, 126, 204);
+  background-repeat: no-repeat;
+  /* background-image: none; */
+}
+
+h1 {
+}
+
+#spin-container {
+}
+
+.flipped-first {
+  background-color: #8d2ab5;
+  color: white;
+  border-color: black;
+}
+
+.flipped-second {
+  background-color: #28a200;
+  color: white;
+  border-color: black;
+}
+
+body .bg {
+
+}
+
+body .on-load {
+  /* background-image: url("jeopardy.gif"); */
+  
+}
+
+body.off-load {
+
+}
+
+table {
+  border-style: bold solid black;
+background-color: rgba(14, 14, 224, 0.847);
+}
+table th {
+  border-color: black;
+  background-color: #8d2ab5;
+  color: white;
+}
+table, th, td {
+  border: 1px solid;
+  text-align: center;
+  height: 50px;
+  width: auto;
+  color: white;
+  border-color: black;
+}
+
+/* button {
+  border-radius: 5px;
+  background-color: white;
+} */
