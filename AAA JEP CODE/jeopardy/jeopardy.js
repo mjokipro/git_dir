@@ -164,7 +164,7 @@ const randomFuncTr = () => {
     ];
 
      console.debug('randomFuncTr');
-    let newArr = [];
+    let newArr = '';
     let count = 0;
 
     while(newArr.length < 6) {
@@ -210,11 +210,13 @@ async function getCategory(catId) {
         return arr;
     }
 
-    newArr = [];    
+    newArr = []; 
+    let fiveQs = [];
 
     const res = await axios.get(`https://jservice.io/api/category?id=${catId}`);
 	let questions = res.data.clues;
-    let fiveQs = shuffle(questions).slice(0, 5);
+    fiveQs = shuffle(questions).slice(0, 10);
+    // .slice(0, 5)
 
     console.log(fiveQs);
 	let clue = fiveQs.map((v) => {
@@ -264,9 +266,6 @@ async function fillTable($board, $tHead, catDat, categories) {
     categories = randomFuncTr();
 
     for (let category of categories) {
-        if (chosen.indexOf(category) !== -1) {
-           
-        } 
         
         catDat.push(await getCategory(category));
     }
@@ -321,7 +320,8 @@ function restart() {
     console.debug('restart()');
     setupAndStart();
         $('body').css("background-image", "none");
-        // $("i").toggleClass("fa fa-spin fa-spinner");
+    // $("i").toggleClass("fa fa-spin fa-spinner");
+    makeBoard();
     makeHtmlBoard();
 }
 
@@ -371,7 +371,7 @@ function hideLoadingView() {
 function setupAndStart() {
     console.debug('setupAndStart');
     showLoadingView();
-     $("i").toggleClass("fa fa-spin fa-spinner");
+    //  $("i").toggleClass("fa fa-spin fa-spinner");
 }
 
 /** On click of start / restart button, set up game. */

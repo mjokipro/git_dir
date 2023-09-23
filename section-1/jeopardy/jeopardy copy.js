@@ -68,7 +68,13 @@ async function getCategoryIds() {
     console.log(newArr);
     console.debug('getCategoryIds');
     
-
+    //  while(newArr.length < 6) {
+        
+    //     let random = Math.floor(Math.random() * newArr.length + count);
+    //     let result = catId[random];
+    //     newArr.push(result);
+    //   count++;
+    //  }
     
   const res = await axios.get(`https://jservice.io/api/clues?id=${catId}`);
     
@@ -150,60 +156,24 @@ const WIDTH = 6;
 const HEIGHT = 5;
 let board = [];
 
-const allEqual = arr => arr.every(v => v === arr[0])
-function allTheSame(array) {
-
-}
-
 async function fillTable() {
     console.debug('fillTable()');
     let isTrue = true;
-    
-    let getCats = [];
-    getCats = await getCategoryIds();
-    // for (let cat of getCats) {
-    //     if ((catDat.indexOf(getCats[cat]) !== -1)) {
-    //         catDat.push(cat);
-    //     }
-    //     fillTable();
-    // }
-
-    //      while(newArr.length < 6) {
-        
-    //     let random = Math.floor(Math.random() * newArr.length + count);
-    //     let result = catId[random];
-    //     newArr.push(result);
-    //   count++;
-    //  }
-    getCats = shuffle(cats).slice(0, 6);
+    let getCats = shuffle(cats).slice(0, 6);
     let catDat = [];
     console.log(getCats);
     for (let y = 0; y < HEIGHT; y++) {
         board.push(Array.from({ length: WIDTH }));
     }  
-    
-    
+   
+   
     // [{ title, clues: { question, answer } }] = cats;
-    // if (allTheSame(catDat) !== true) {
-    //     shuffle(catDat);
-    // }
-    // fillTable();
-    
+
     for (let i = 0; i < 6; i++) {
-        
         catDat.push(getCats[i]);
-        
     }
 
-    console.log(catDat);
-
     catDat.slice(0, 5);
-
-    // for (let cat of catDat) {
-    //     if (!(catDat.indexOf(cat) !== -1)) {
-            
-    //     }
-    // }
 
     // for (let cat of catDat) {
     //     if (cat === catDat[cat]) {
@@ -214,12 +184,9 @@ async function fillTable() {
 
     // console.log(catDat);
     
-    // document.getElementById('#je').deleteRow(1)"
-        $("#jeopardy").remove();
-    $('#categories').remove();
-    $('tr').remove();
-    let $board;
-  $board = $('<table id="jeopardy"></table>');
+    $("#jeopardy").eq(0).remove();
+    $('#categories').eq(0).remove();
+    let $board = $('<table id="jeopardy"></table>');
     $('body').append($board);
     let $tHead = $('<tr id="categories"></tr>');
     $($board).append($tHead);
