@@ -9,5 +9,3 @@ def product(a, b):
     """
     
     return a * b
-
-product(3, 4)
