@@ -99,13 +99,16 @@ function useSuggestion(e) {
 
 	// display clicked suggestion in input field
 	input.value = e.target.innerText;
-	
-	// set focus on input
-	input.focus();
 
 	// remove suggestions list and class
 	$suggestions.innerHTML = '';
 	$suggestions.classList.remove('has-suggestions');
+
+	// hide ul dropdown when input present in box
+	if (input.value) {
+    	$(".suggestions").hide();
+    	input.focus();
+  	}
 }
 
 // set input text box to 'listen out' for key presses, and 
