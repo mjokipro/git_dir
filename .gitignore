@@ -1,6 +1,5 @@
-/rep/p_venv/venv/bin
-/rep/p_venv/venv/include
-/rep/p_venv/venv/lib
-/rep/p_venv/venv/lib64
-/rep/p_venv/venv/pyvenv.cfg
-/rep/p_venv/requirements.txt
+p_venv/venv
+p_venv2/venv
+p_venv4/venv
+p_venv/venv/pyvenv.cfg
+p_venv/requirements.txt
