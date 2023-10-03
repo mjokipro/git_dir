@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello</title>
+    <title>Spell</title>
 </head>
 <body>
-    <h1>This is the hello page{{2 + 2}}</h1>
-    <p>Thank you</p>
+    {% for char in word %}
+    <h1>{{char.upper()}}.</h1>
+    {% endfor %}
 </body>
 </html>
