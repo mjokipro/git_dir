@@ -81,8 +81,6 @@ def do_div():
 
     return str(result)
 
-### PART TWO
-
 operators = {
         "add": add,
         "sub": sub,
