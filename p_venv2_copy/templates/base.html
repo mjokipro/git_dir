@@ -1,25 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}{% endblock %}</title>
-    <!-- <link rel="stylesheet" href="/static/css/styles.css" /> -->
+    <link rel="stylesheet" href="/static/app1.css" />
     <!-- <script src="http://unpkg.com/jquery"></script> -->
-</head>
-<body>
-
-    <nav>
-        <a href="">NAVBAR</a>
-        <a href="">{% block page_name %}{% endblock %}</a>
+  </head>
+  <body>
+    <nav class="navbar">
+      <!-- <a href="">NAVBAR</a> -->
+      <a href="/form">Greet 1</a>
+      <a href="/form2">Greet 2</a>
+      <a href="/lucky">Lucky</a>
+      <a href="/hello">Hello</a>
+      <a href="/goodbye">Goodbye</a>
+      <a href="">{% block page_name %}{% endblock %}</a>
     </nav>
     {% block content %} {% endblock %}
-    <footer>
-        FOOTER
-    </footer>
-</body>
+    <footer>FOOTER</footer>
+    <!-- <script src="/static/app.js"></script> -->
+  </body>
 </html>
-
-
-
-
