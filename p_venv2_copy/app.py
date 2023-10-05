@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template
 from flask_debugtoolbar import DebugToolbarExtension
-from random import randint, choice
+from random import randint, choice, sample
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "oh-so-secret"
@@ -26,31 +26,36 @@ def hello(name):
     return render_template("hello.html")
 
 ###############
+# /form, /greet
 
 @app.route('/form')
 def show_form():
     return render_template("form.html")
-
-@app.route('/form2')
-def show_form2():
-    return render_template("form2.html")
-
-################
-
-COMPLIMENTS = ["cool", "bla", "bla bla"]
 
 @app.route('/greet')
 def greet():
     username = request.args["username"]
     return render_template("greet.html", username=username, compliment=choice(COMPLIMENTS))
 
+################
+# /form2, /greet2
+
+COMPLIMENTS = ["cool", "bla", "bla bla"]
+
+
+@app.route('/form2')
+def show_form2():
+    return render_template("form2.html")
+
 @app.route('/greet2')
 def greet2():
     username = request.args["username"]
-    wants_compliments = request.args["wants_compliments"]
-    return render_template("greet.html", username=username, wants_compliments=wants_compliments)
+    wants = request.args.get("wants_compliments")
+    samp = sample(COMPLIMENTS, 2)
+    return render_template("greet2.html", username=username, wants_compliments=wants, compliments=samp)
 
 #################
+# /lucky
 
 @app.route("/lucky")
 def show_lucky_num():
@@ -61,6 +66,7 @@ def show_lucky_num():
     return render_template("lucky.html", lucky_num=num, msg="sup dude")
 
 #################
+# /spell/<word>
 
 @app.route("/spell/<word>")
 def spell_word(word):
