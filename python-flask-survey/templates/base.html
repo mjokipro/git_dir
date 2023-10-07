@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>{% block title %}{% endblock %}</title>
-  <!-- <link rel="stylesheet" href="/static/css/pretty.css"> -->
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Flask Survey</title>
 </head>
-
 <body>
-
-    <h1>Flask Tools: Survey</h1>
-    
-  {% block content %}{% endblock %}
-  <footer></footer>
+  {% for msg in get_flashed_messages() %}
+    <p>{{ msg }}</p>
+  {% endfor %}
+  {% block content %}
+  {% endblock %}
 </body>
 </html>
