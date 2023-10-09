@@ -28,7 +28,7 @@ def show_pick_survey_form():
 @app.route("/", methods=["POST"])
 def pick_survey():
     """Clear the session of responses."""
-
+    # key
     survey_id = request.form['survey_code']
     
     if request.cookies.get(f"completed_{survey_id}"):
@@ -118,5 +118,14 @@ def handle_question():
 @app.route("/complete")
 def complete():
     """Survey complete. Show completion page."""
-
-    return render_template("completion.html")
+    survey_id = session[CURRENT_SURVEY_KEY]
+    survey = surveys[survey_id]
+    responses = session[RESPONSES_KEY]
+    
+    html = render_template("completion.html", survey=survey, responses=responses)
+    
+    # set cookie noting survey is done so cant redo
+    response = make_response(html)
+    response.set_cookie(f"completed_{survey_id}", "yes", max_age=60)
+    
+    return response
