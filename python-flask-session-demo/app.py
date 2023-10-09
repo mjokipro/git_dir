@@ -1,7 +1,14 @@
 from flask import Flask, request, render_template, redirect
 from flask import session, make_response
+from flask_debugtoolbar import DebugToolbarExtension
 
 app = Flask(__name__)
+
+app.config["SECRET_KEY"] = "4534gdghjk5d#$RGR^HDG"
+# app.config['SECRET_KEY'] = "never-tell!"
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+
+debug = DebugToolbarExtension(app)
 
 # Flask uses a secret key to encrypt cookies used to connect
 # the browser to the session--so if you want to use sessions,
@@ -9,7 +16,7 @@ app = Flask(__name__)
 # value, they can forge session information--so for sites with
 # security concerns, make sure this isn't checked into a
 # public place like GitHub
-app.config["SECRET_KEY"] = "4534gdghjk5d#$RGR^HDG"
+
 
 
 @app.before_request
@@ -23,9 +30,18 @@ def print_cookies():
 @app.route("/")
 def index():
     """Homepage."""
+    yoyo = session["username"]
+    blabla = session["leaderboard"]
+    session["username"] = "chickenguy333"
+    session["leaderboard"] = ["butters", "bla bla", "hello"]
+    print("******session******")
+    print(yoyo)
+    print(blabla)
+    print("******session******")
+    
     return render_template("index.html")
 
-
+# make response
 @app.route("/demo")
 def res_demo():
     content = "<h1>HELLO!!</h1>"
@@ -130,7 +146,7 @@ def show_login_form():
     """Show form that prompts users to enter the secret access code"""
     return render_template("login-form.html")
 
-
+# code from query string sent from /secret-invite
 @app.route("/login")
 def verify_secret_code():
     """
