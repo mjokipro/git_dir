@@ -13,15 +13,21 @@ app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
 
 class ColorViewsTestCase(TestCase):
     """Examples of integration tests: testing Flask app."""
+    
+    
+########## test color get ##########
 
     def test_color_form(self):
         with app.test_client() as client:
             # can now make requests to flask via `client`
             resp = client.get('/')
+            
             html = resp.get_data(as_text=True)
-
+            
             self.assertEqual(resp.status_code, 200)
             self.assertIn('<h1>Color Form</h1>', html)
+
+########## test color post ##########
 
     def test_color_submit(self):
         with app.test_client() as client:
@@ -31,6 +37,9 @@ class ColorViewsTestCase(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn('Woah! I like blue, too', html)
+            
+
+########## test redirection ##########
 
     def test_redirection(self):
         with app.test_client() as client:
@@ -46,6 +55,9 @@ class ColorViewsTestCase(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn('<h1>Color Form</h1>', html)
+            
+            
+########## test session ##########
 
     def test_session_info(self):
         with app.test_client() as client:
