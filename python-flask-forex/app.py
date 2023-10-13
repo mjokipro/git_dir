@@ -1,6 +1,6 @@
 from flask import Flask, session, request, render_template, redirect, make_response, flash
 import json
-import requests
+# import requests
 
 from flask_debugtoolbar import DebugToolbarExtension
 
@@ -22,26 +22,21 @@ def redirect_to_index():
     
     return render_template('index.html')
 
-@app.route('/call_api', methods=["POST"])
+@app.route('/call_api')
 def call_forex_api():
     """call forex api, and update index.html"""
     
-    API_KEY = "f25e3073d016e546572716b3c7ccb7e2"
-    url = "http://api.exchangerate.host/live?access_key=f25e3073d016e546572716b3c7ccb7e2"
-    cfrom = request.form.get("cfrom")
-    cto = request.form.get("cto")
-    amount = request.form.get("amount")
+    # API_KEY = "f25e3073d016e546572716b3c7ccb7e2"
+    conv_from = request.args.get("cfrom")
+    conv_to = request.args.get("cto")
+    amount = request.args.get("amount")
+    url = f"https://api.exchangerate.host/convert?from={conv_from}&to={conv_to}&amount={amount}&places=2"
+        
+    req = requests.get(url)
     
-    client = app.test_client()
+    print(req)
     
-    
-    response = requests.get(url)
-    
-    
-    
-    # request = request.get('http://api.exchangerate.host/live?access_key=f25e3073d016e546572716b3c7ccb7e2')
-    
-    return f"<p>cfrom: { cfrom }, cto: { cto }, amount: { amount }, {response}</p>"
+    return f"<p>cfrom: { conv_from }, cto: { conv_to }, amount: { amount }, ,</p>"
 
 if __name__ == '__main__':
     app.run()
