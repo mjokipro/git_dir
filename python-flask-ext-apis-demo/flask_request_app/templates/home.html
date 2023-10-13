@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+  <head>
+    <title>get geo-coords</title>
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/style.css">
+  </head>
+  <body>
+    <h1>get geo-coords</h1>
+
+    <form action="/coords" method="POST">
+      <label for="city">city</label>
+        <input id="city" name="city" value="" autofocus />
+    </form>
+
+    {% if coords %}
+    <div>
+      <h4>lat : {{ coords['lat'] }}</h4>
+      <h4>lng : {{ coords['lng'] }}</h4>
+    </div>
+    {% endif %}
+
+  <body>
+</html>
