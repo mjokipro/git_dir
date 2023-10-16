@@ -2,4 +2,7 @@ p_venv/venv
 p_venv2/venv
 p_venv4/venv
 p_venv/venv/pyvenv.cfg
-p_venv/requirements.txt
+p_venv/requirements.
+snap/
+PYTHON_DISTRIBUTIONS/
+Python36/
