@@ -3,17 +3,17 @@
 {% block content %}
 <h1>Foreign Currency Exchange</h1>
 
-<form action="/call_api" id="form">
-    <h3>Currency from:</h3>
-        <select name="curr_from">
-         {% for code, country in countries.items() %}
-           <option value="{{ code }}">{{ country.currency_code }}</option>
+<form action="/call_api" id="form" methods="POST">
+    <h3>Select currency to get lastest rates:</h3>
+        <select name="curr_from" >
+         {% for code in countries.symbols.keys() %}
+           <option value="{{ code }}">{{ code }}</option>
           {% endfor %}
          </select>
-    <h3>Currency to:</h3>
+    <h3>Currency date:</h3>
        <select name="curr_to">
-         {% for code, country in countries.items() %}
-           <option value="{{ code }}">{{ country.currency_code }}</option>
+         {% for code in countries.symbols.keys() %}
+           <option value="{{ code }}">{{ code }}</option>
           {% endfor %}
          </select>
     <h3>Amount:</h3>
@@ -24,12 +24,23 @@
      <button>Submit</button>
 </form>
 
-{% endblock %}
-<p>{{ curr_from }}</p>
-<p>{{ curr_to }}</p>
-<p>{{ amount }}</p>
-<p>{{ amount }}</p>
+<p>
+  {{result}}, {{ curr }}
+</p>
+<!-- {% endblock %} -->
 
-{% block list %}
+<!-- {% block list %} -->
+
+<!-- {% for code, rate in result.rates.items() %} -->
+<!-- {% if curr == code %} -->
+
+<!-- <p>This currency: {{ code }}, and this is current rate: {{ rate }}</p> -->
+<!-- {% endif %} -->
+<!-- {% endfor %} -->
+
+
+<!-- <p>{{ curr_to }}</p> -->
+<!-- <p>{{ amount }}</p> -->
+
 
 {% endblock %}

@@ -6,14 +6,6 @@ class Currency:
         
         self.currency_code = countrys_currency_code
         
-# class Country:
-#     """Class for country to match to currency code"""
-    
-#     def __init__(self, country_name):
-#         """Create country"""
-        
-#         self.country_name = country_name
-       
 USA = Currency("USD") 
 United_Arab_Emirates = Currency("AED")
 Albania = Currency("ALL")
