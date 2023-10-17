@@ -15,7 +15,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 
 app = Flask(__name__)
 # Make Flask errors be real errors, not HTML pages with error info
-# app.config['TESTING'] = False
+app.config['TESTING'] = True
 
 # This is a bit of hack, but don't use Flask DebugToolbar
 # app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
@@ -35,16 +35,20 @@ def redirect_to_index():
     
     response = requests.get(url4)
     r = response.json()
+    
+    
     print("********")
-    print(r)
+    print("**")
     print("********")
     
     return render_template('index.html', countries=r)
 
-@app.route('/call_api', methods=['POST'])
+
+
+@app.route("/call_api", methods=["POST"])
 def call_forex_api():
     """call forex api, and update index.html"""
-    
+    print("call_forex")
     # curr_date = request.form.get("curr_date")
     # url2 = f"https://api.exchangeratesapi.io/v1/symbols?access_key={API_KEY}"
     # url = f"https://api.exchangerate.host/result?access_key={API_KEY}&from={conv_from}&to={conv_to}&amount={amount}"
@@ -52,11 +56,11 @@ def call_forex_api():
 
     API_KEY = '92d940481351facd61fea59b25b2c978'
    
-    curr_from = request.form.get("curr_from")
-    curr_to = request.form.get("to")
-    amount = request.form.get("amount")
+    curr_from = request.form["curr_from"]
+    curr_to = request.form["curr_to"]
+    amount = request.form["amount"]
     
-    url3 = f"https://api.exchangerate.host//result?access_key={ API_KEY }&conv_from={curr_from}&conv_to={curr_to}&amount={amount}"
+    url3 = f"https://api.exchangerate.host//result?access_key={API_KEY}&conv_from={curr_from}&conv_to={curr_to}&amount={amount}"
     
     response = requests.get(url3)
     res = response.json()
@@ -67,7 +71,7 @@ def call_forex_api():
     print(amount)
     print("********")
     
-    return redirect("result.html", result=res)
+    return {"result": res}
 
 if __name__ == '__main__':
     app.run()

@@ -3,7 +3,7 @@
 {% block content %}
 <h1>Foreign Currency Exchange</h1>
 
-<form action="/call_api" id="form" methods="POST">
+<form action="/call_api" id="form" method="post">
     <h3>Select currency to get lastest rates:</h3>
         <select name="curr_from" >
          {% for code in countries.symbols.keys() %}
@@ -25,7 +25,7 @@
 </form>
 
 <p>
-  {{result}}, {{ curr }}
+  {{result}}
 </p>
 <!-- {% endblock %} -->
 
