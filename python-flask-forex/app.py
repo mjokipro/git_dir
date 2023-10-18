@@ -5,6 +5,7 @@ from collections import abc
 from collections.abc import Mapping, MutableMapping
 collections.MutableMapping = abc.MutableMapping
 import requests
+from urllib.request import urlopen
 
 
 from flask_debugtoolbar import DebugToolbarExtension
@@ -15,7 +16,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 
 app = Flask(__name__)
 # Make Flask errors be real errors, not HTML pages with error info
-app.config['TESTING'] = True
+app.config['TESTING'] = False
 
 # This is a bit of hack, but don't use Flask DebugToolbar
 # app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
@@ -45,7 +46,7 @@ def redirect_to_index():
 
 
 
-@app.route("/call_api", methods=["POST"])
+@app.route("/", methods=["POST"])
 def call_forex_api():
     """call forex api, and update index.html"""
     print("call_forex")
@@ -56,22 +57,31 @@ def call_forex_api():
 
     API_KEY = '92d940481351facd61fea59b25b2c978'
    
-    curr_from = request.form["curr_from"]
-    curr_to = request.form["curr_to"]
-    amount = request.form["amount"]
+    curr_from = request.form["curr_from"].upper()
+    curr_to = request.form["curr_to"].upper()
+    amount = float(request.form["amount"])
     
-    url3 = f"https://api.exchangerate.host//result?access_key={API_KEY}&conv_from={curr_from}&conv_to={curr_to}&amount={amount}"
-    
+    url3 = f"http://api.exchangerate.host/convert?access_key=92d940481351facd61fea59b25b2c978&from={curr_from}&to={curr_to}&amount={amount}"
+    print(url3)
     response = requests.get(url3)
-    res = response.json()
+    
+    
+    
+    
+    print(response)
+    
+    # rate = response.json()['result']
+
+    # result = round(rate * amount, 2)
+   
     print("********")
-    print(res)
+    print(response)
     print(curr_from)
     print(curr_to)
     print(amount)
     print("********")
     
-    return {"result": res}
+    return render_template("result.html", result=response)
 
 if __name__ == '__main__':
     app.run()

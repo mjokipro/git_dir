@@ -3,7 +3,7 @@
 {% block content %}
 <h1>Foreign Currency Exchange</h1>
 
-<form action="/call_api" id="form" method="post">
+<form action="/" id="form" method="post">
     <h3>Select currency to get lastest rates:</h3>
         <select name="curr_from" >
          {% for code in countries.symbols.keys() %}
@@ -18,29 +18,15 @@
          </select>
     <h3>Amount:</h3>
      <input name="amount" placeholder="Amount:  (ex: 50)" />
+    <!-- <h3>Rate:</h3>
+     <input name="rate" placeholder="rate:  (ex: 50)" /> -->
     <br />
     <br />
     <br />
      <button>Submit</button>
 </form>
 
-<p>
-  {{result}}
-</p>
-<!-- {% endblock %} -->
-
-<!-- {% block list %} -->
-
-<!-- {% for code, rate in result.rates.items() %} -->
-<!-- {% if curr == code %} -->
-
-<!-- <p>This currency: {{ code }}, and this is current rate: {{ rate }}</p> -->
-<!-- {% endif %} -->
-<!-- {% endfor %} -->
-
-
-<!-- <p>{{ curr_to }}</p> -->
-<!-- <p>{{ amount }}</p> -->
-
 
 {% endblock %}
+
+
