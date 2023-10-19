@@ -1,66 +1,72 @@
-from flask import Flask, session, request, render_template, redirect, make_response, flash, json, jsonify
-from helpers import countries_currency_code
-import collections
-from collections import abc
-from collections.abc import Mapping, MutableMapping
-collections.MutableMapping = abc.MutableMapping
-# import requests.api
-
-# import sys
-
-# if sys.version_info[:2] >= (3, 8):
-#     from collections.abc import MutableMapping
-# else:
-#     from collections import MutableMapping
-
-# import requests
-# import requests.api
-
-
-from flask_debugtoolbar import DebugToolbarExtension
-
-# key names will use to store some things in the session;
-# put here as constants so we're guaranteed to be consistent in
-# our spelling of these
+import requests
+from flask import Flask, request, render_template
 
 app = Flask(__name__)
-# Make Flask errors be real errors, not HTML pages with error info
-app.config['TESTING'] = False
 
-# This is a bit of hack, but don't use Flask DebugToolbar
-app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
-app.config['SECRET_KEY'] = "never-tell!"
-app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
-
-debug = DebugToolbarExtension(app)
+base_url = 'http://api.exchangerate.host/convert?access_key=92d940481351facd61fea59b25b2c978'
+# access_key = 'f25e3073d016e546572716b3c7ccb7e2'
 
 
+@app.route('/', methods=['GET', 'POST'])
+def currency_converter():
+    if request.method == 'POST':
+        from_currency = request.form['from_currency']
+        to_currency = request.form['to_currency']
+        amount = float(request.form['amount'])
 
-@app.route('/')
-def redirect_to_index():
-    """redirect to index.html from root"""
+        params = {
     
-    return render_template('index.html', countries=countries_currency_code)
+    'from': from_currency,
+    'to': to_currency,
+    'amount': amount,
+}
 
-@app.route('/call_api')
-def call_forex_api():
-    """call forex api, and update index.html"""
-    
-    API_KEY = "f25e3073d016e546572716b3c7ccb7e2"
-    conv_from = request.args.get("curr_from")
-    conv_to = request.args.get("curr_to")
-    amount = request.args.get("amount")
-    # url2 = f"https://api.exchangeratesapi.io/v1/symbols?access_key={API_KEY}"
-    url = f"https://api.exchangerate.host/convert?from={conv_from}&to={conv_to}&amount={amount}&places=2&access_key=API_KEY"
+        response = requests.get(base_url, params=params)
+        data = response.json()
+
+        if response.status_code == 200:
+            result = data['result']
+            
+            print("*****")
+            print(result)
+            print("*****")
+            formatted_result = format_currency(result, to_currency)
+            return render_template('converter.html', result=formatted_result, currencies=get_currency_list())
+        else:
+            error_message = data['error']
+            return render_template('converter.html', error=error_message, currencies=get_currency_list())
+
+    return render_template('index.html', currencies=get_currency_list())
+
+def get_currency_list():
+    # Make an API call to get a list of available currencies
+    currency_list_url = 'http://api.exchangerate.host/symbols?access_key=92d940481351facd61fea59b25b2c978'
+    response = requests.get(currency_list_url)
+    data = response.json()
+
+    print("******")
+    print(data)
+    print("******")
+
+    if response.status_code == 200:
+        # Extract currency symbols from the response
         
-    
-    response = requests.api.get(url)
-    r = response.json()
-    print("********")
-    print(r)
-    print("********")
-    
-    return jsonify({ "curr_from": conv_from, "curr_to": conv_to, "amount": amount })
+        currencies = data['symbols']
+        return list(currencies.keys())
+    else:
+        return []
 
-if __name__ == '__main__':
+def format_currency(amount, currency_code):
+    # Make an API call to get the currency symbol for a given currency code
+    currency_symbols_url = 'http://api.exchangerate.host/currencies'
+    response = requests.get(currency_symbols_url)
+    data = response.json()
+
+    if response.status_code == 200 and currency_code in data:
+        currency_symbol = data[currency_code]['symbol']
+        return f"{currency_symbol} {amount:.2f}"
+    else:
+        return f"{currency_code} {amount:.2f}"
+
+if __name__ == "__main__":
     app.run()

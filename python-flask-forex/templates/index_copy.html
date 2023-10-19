@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Foreign Currency Exchange</h1>
+
+<form action="/" id="form" method="post">
+    <h3>Select currency to get lastest rates:</h3>
+        <select name="curr_from" >
+         {% for code in countries.symbols.keys() %}
+           <option value="{{ code }}">{{ code }}</option>
+          {% endfor %}
+         </select>
+    <h3>Currency date:</h3>
+       <select name="curr_to">
+         {% for code in countries.symbols.keys() %}
+           <option value="{{ code }}">{{ code }}</option>
+          {% endfor %}
+         </select>
+    <h3>Amount:</h3>
+     <input name="amount" placeholder="Amount:  (ex: 50)" />
+    <!-- <h3>Rate:</h3>
+     <input name="rate" placeholder="rate:  (ex: 50)" /> -->
+    <br />
+    <br />
+    <br />
+     <button>Submit</button>
+</form>
+
+<div>Result: {{ result }}</div>
+
+{% endblock %}
+
+

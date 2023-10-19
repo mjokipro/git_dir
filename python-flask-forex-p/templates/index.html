@@ -1,35 +1,45 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Currency Converter</title>
+    <link rel="stylesheet" type="text/css" href="static/app.css">
+</head>
+<body>
+    <h1>Currency Converter</h1>
+    <form method="POST">
+        <label for="from_currency">From Currency:</label>
+        <select id="from_currency" name="from_currency" required>
+            {% for currency in currencies %}
+            <option value="{{ currency }}">{{ currency }}</option>
+            {% endfor %}
+        </select>
+        <br>
 
-{% block content %}
-<h1>Foreign Currency Exchange</h1>
+        <label for="to_currency">To Currency:</label>
+        <select id="to_currency" name="to_currency" required>
+            {% for currency in currencies %}
+            <option value="{{ currency }}">{{ currency }}</option>
+            {% endfor %}
+        </select>
+        <br>
 
-<form action="/call_api" id="form">
-    <h3>Currency from:</h3>
-        <select name="curr_from">
-         {% for code, country in countries.items() %}
-           <option value="{{ code }}">{{ country.currency_code }}</option>
-          {% endfor %}
-         </select>
-    <h3>Currency to:</h3>
-       <select name="curr_to">
-         {% for code, country in countries.items() %}
-           <option value="{{ code }}">{{ country.currency_code }}</option>
-          {% endfor %}
-         </select>
-    <h3>Amount:</h3>
-     <input name="amount" placeholder="Amount:  (ex: 50)" />
-    <br />
-    <br />
-    <br />
-     <button>Submit</button>
-</form>
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" name="amount" required>
+        <br>
 
-{% endblock %}
-<p>{{ curr_from }}</p>
-<p>{{ curr_to }}</p>
-<p>{{ amount }}</p>
-<p>{{ amount }}</p>
+        <input type="submit" value="Convert">
+    </form>
 
-{% block list %}
+    <div class="result-container">
+        {% if result %}
+        <h2>Result:</h2>
+        <div class="result">{{ result }}</div>
+        {% endif %}
 
-{% endblock %}
+        {% if error %}
+        <h2>Error:</h2>
+        <p>{{ error }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
