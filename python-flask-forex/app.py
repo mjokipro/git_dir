@@ -64,13 +64,15 @@ def converter():
     print("BBBBBBBBEFORE RRRRRRRRRATE")
     # rate = response.json()
     rate = response.json()
+    # import pdb; pdb.set_trace()
+
     app.logger.info(rate)
     
     if rate and curr_from and amount > 0:
         print("*******")
         print(rate)
         print("*******")
-        result = round(.5*amount, 2)    
+        result = round(1 * amount, 2)    
         return render_template('result.html', result=result)
     
     return render_template("/index.html")
