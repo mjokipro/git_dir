@@ -26,45 +26,54 @@ app.config['SECRET_KEY'] = "never-tell!"
 debug = DebugToolbarExtension(app)
 
 
+@app.route("/")
+def converter_form():
+    
+    return render_template("index.html")
 
-@app.route('/', methods=["GET", "POST"])
-def redirect_to_index():
-    """redirect to index.html from root"""
-    
-    bla = "bla"
-    
-    if request.method == 'POST':
-        curr_from = request.form['curr_from'].upper()
-        curr_to = request.form['curr_to'].upper()
-        amount = float(request.form['amount'])
+
+@app.route("/", methods=[ "POST"])
+def converter():
+    """redirect to index.html from root"""       
+    # YOUR_ACCESS_KEY = '92d940481351facd61fea59b25b2c978'
         
-        YOUR_ACCESS_KEY = '92d940481351facd61fea59b25b2c978'
+#     data = {
+#     'access_key': YOUR_ACCESS_KEY,
+#     'from': curr_from,
+#     'to': curr_to,
+#     'amount': amount,
+# }
+
+    print("converter()")
+    print("")
+    print("")
+    print("")
+    print("")
+
+    curr_from = request.form['curr_from'].upper()
+    curr_to = request.form['curr_to'].upper()
+    amount = float(request.form['amount'])
+    
+    url4 = f"http://api.exchangerate.host/convert?access_key=92d940481351facd61fea59b25b2c978&from={curr_from}&to={curr_to}&amount={amount}"
         
-        data = {
-    'access_key': YOUR_ACCESS_KEY,
-    'from': curr_from,
-    'to': curr_to,
-    'amount': amount,
-}
     
+    response = requests.get(url4)
+    app.logger.info(url4)
+    app.logger.info(response)
     
+    print("BBBBBBBBEFORE RRRRRRRRRATE")
+    # rate = response.json()
+    rate = response.json()
+    app.logger.info(rate)
     
-        url4 = f"http://api.exchangerate.host/convert"
-        
+    if rate and curr_from and amount > 0:
+        print("*******")
+        print(rate)
+        print("*******")
+        result = round(.5*amount, 2)    
+        return render_template('result.html', result=result)
     
-        response = requests.post(url4, data)
-        data = response.json()
-        # rate = data['result']
-    
-    
-        print("********")
-        print(response)
-        print(data)
-        print("********")
-    
-        return render_template('result.html', result=data)
-    
-    return render_template('index.html', result=bla)
+    return render_template("/index.html")
 
 
 
