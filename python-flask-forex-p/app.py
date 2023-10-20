@@ -22,10 +22,10 @@ def currency_converter():
 }
 
         response = requests.get(base_url, params=params)
-        data = response.json()
+        data = response.json()['result']
 
         if response.status_code == 200:
-            result = data['result']
+            result = data
             
             print("*****")
             print(result)

@@ -21,7 +21,7 @@ app.config['TESTING'] = False
 # This is a bit of hack, but don't use Flask DebugToolbar
 # app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
 app.config['SECRET_KEY'] = "never-tell!"
-# app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+# app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = True
 
 debug = DebugToolbarExtension(app)
 
@@ -38,20 +38,21 @@ def redirect_to_index():
         curr_to = request.form['curr_to'].upper()
         amount = float(request.form['amount'])
         
-        params = {
-    
+        YOUR_ACCESS_KEY = '92d940481351facd61fea59b25b2c978'
+        
+        data = {
+    'access_key': YOUR_ACCESS_KEY,
     'from': curr_from,
     'to': curr_to,
     'amount': amount,
 }
     
     
-        API_KEY = '92d940481351facd61fea59b25b2c978'
     
-        url4 = f"http://api.exchangerate.host/convert?access_key={API_KEY}"
+        url4 = f"http://api.exchangerate.host/convert"
         
     
-        response = requests.post(url4, params)
+        response = requests.post(url4, data)
         data = response.json()
         # rate = data['result']
     
