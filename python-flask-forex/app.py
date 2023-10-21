@@ -54,7 +54,7 @@ def converter():
     curr_to = request.form['curr_to'].upper()
     amount = float(request.form['amount'])
     
-    url4 = f"http://api.exchangerate.host/convert?access_key=92d940481351facd61fea59b25b2c978&from={curr_from}&to={curr_to}&amount={amount}"
+    url4 = f"http://api.exchangerate.host/convert?access_key=f25e3073d016e546572716b3c7ccb7e2&from={curr_from}&to={curr_to}&amount={amount}"
         
     
     response = requests.get(url4)
@@ -62,20 +62,25 @@ def converter():
     app.logger.info(response)
     
     print("BBBBBBBBEFORE RRRRRRRRRATE")
-    # rate = response.json()
-    rate = response.json()
+    result = response.json()
     # import pdb; pdb.set_trace()
 
-    app.logger.info(rate)
+    print("*****")
+    # print(f"response: {response.text}")
     
-    if rate and curr_from and amount > 0:
-        print("*******")
-        print(rate)
-        print("*******")
-        result = round(1 * amount, 2)    
+    print(result)
+    print("*****")
+    
+    app.logger.info(result)
+    
+    if result and curr_from and amount > 0:
+        # print("*******")
+        # print(result)
+        # print("*******")
+         
         return render_template('result.html', result=result)
     
-    return render_template("/index.html")
+    return render_template("index.html")
 
 
 
