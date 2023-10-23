@@ -28,9 +28,6 @@ debug = DebugToolbarExtension(app)
 
 @app.route("/")
 def converter_form():
-    """call api, load currency codes into drop-down menus"""
-    
-    
     
     return render_template("index.html")
 
@@ -38,6 +35,14 @@ def converter_form():
 @app.route("/", methods=[ "POST"])
 def converter():
     """redirect to index.html from root"""       
+    # YOUR_ACCESS_KEY = '92d940481351facd61fea59b25b2c978'
+        
+#     data = {
+#     'access_key': YOUR_ACCESS_KEY,
+#     'from': curr_from,
+#     'to': curr_to,
+#     'amount': amount,
+# }
 
     print("converter()")
     print("")
@@ -76,6 +81,44 @@ def converter():
         return render_template('result.html', result=result)
     
     return render_template("index.html")
+
+
+
+# @app.route("/", methods=["POST"])
+# def call_forex_api():
+#     """call forex api, and update index.html"""
+#     print("call_forex")
+    # curr_date = request.form.get("curr_date")
+    # url2 = f"https://api.exchangeratesapi.io/v1/symbols?access_key={API_KEY}"
+    # url = f"https://api.exchangerate.host/result?access_key={API_KEY}&from={conv_from}&to={conv_to}&amount={amount}"
+    # url4 = f"http://api.exchangerate.host/result?{API_KEY}"
+
+    # API_KEY = 'f25e3073d016e546572716b3c7ccb7e2'
+   
+    # curr_from = request.form["curr_from"].upper()
+    # curr_to = request.form["curr_to"].upper()
+    # amount = float(request.form["amount"])
+    
+    # url3 = f"http://api.exchangerate.host/convert?access_key=f25e3073d016e546572716b3c7ccb7e2&from={curr_from}&to={curr_to}&amount={amount}"
+    # print(url3)
+    # response = requests.post(url3)
+    
+    # data = response.text
+       
+    # print(data)
+    
+    # rate = response.json()['result']
+
+    # result = round(rate * amount, 2)
+   
+    # print("********")
+    # print(response)
+    # print(curr_from)
+    # print(curr_to)
+    # print(amount)
+    # print("********")
+    
+    # return render_template("result.html", result=data)
 
 if __name__ == '__main__':
     app.run()
