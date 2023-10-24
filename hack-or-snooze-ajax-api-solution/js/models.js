@@ -24,6 +24,7 @@ class Story {
   /** Parses hostname out of URL and returns it. */
 
   getHostName() {
+    console.debug("getHostName()")
     return new URL(this.url).host;
   }
 }
@@ -37,7 +38,7 @@ class StoryList {
   constructor(stories) {
     this.stories = stories;
   }
-
+  
   /** Generate a new StoryList. It:
    *
    *  - calls the API
@@ -47,6 +48,7 @@ class StoryList {
    */
 
   static async getStories() {
+    console.debug("getStories()")
     // Note presence of `static` keyword: this indicates that getStories is
     //  **not** an instance method. Rather, it is a method that is called on the
     //  class directly. Why doesn't it make sense for getStories to be an
@@ -60,7 +62,8 @@ class StoryList {
 
     // turn plain old story objects from API into instances of Story class
     const stories = response.data.stories.map(story => new Story(story));
-
+    console.debug("create Story(story)")
+    console.debug("return StoryList(stories)")
     // build an instance of our own class using the new array of stories
     return new StoryList(stories);
   }
@@ -73,6 +76,7 @@ class StoryList {
    */
 
   async addStory(user, { title, author, url }) {
+    console.debug("addStory(user, { title, author, url })")
     const token = user.loginToken;
     const response = await axios({
       method: "POST",
@@ -94,6 +98,7 @@ class StoryList {
    */
 
   async removeStory(user, storyId) {
+    console.debug("removeStory(user, storyId")
     const token = user.loginToken;
     await axios({
       url: `${BASE_URL}/stories/${storyId}`,
@@ -149,6 +154,7 @@ class User {
    */
 
   static async signup(username, password, name) {
+    console.debug("signup(username, password, name)")
     const response = await axios({
       url: `${BASE_URL}/signup`,
       method: "POST",
@@ -156,7 +162,7 @@ class User {
     });
 
     let { user } = response.data;
-
+    console.debug("return new User")
     return new User(
       {
         username: user.username,
@@ -176,6 +182,7 @@ class User {
    */
 
   static async login(username, password) {
+    console.debug("login(username, password)")
     const response = await axios({
       url: `${BASE_URL}/login`,
       method: "POST",
@@ -201,6 +208,7 @@ class User {
    */
 
   static async loginViaStoredCredentials(token, username) {
+    console.debug("loginViaStoredCredentials(token, username)")
     try {
       const response = await axios({
         url: `${BASE_URL}/users/${username}`,
@@ -231,6 +239,7 @@ class User {
    */
 
   async addFavorite(story) {
+    console.debug("addFavorite(story)")
     this.favorites.push(story);
     await this._addOrRemoveFavorite("add", story)
   }
@@ -240,6 +249,7 @@ class User {
    */
 
   async removeFavorite(story) {
+    console.debug("removeFavorite(story)")
     this.favorites = this.favorites.filter(s => s.storyId !== story.storyId);
     await this._addOrRemoveFavorite("remove", story);
   }
@@ -250,6 +260,7 @@ class User {
    * */
 
   async _addOrRemoveFavorite(newState, story) {
+    console.debug("addOrRemoveFavorite(newState, story)")
     const method = newState === "add" ? "POST" : "DELETE";
     const token = this.loginToken;
     await axios({
@@ -262,6 +273,7 @@ class User {
   /** Return true/false if given Story instance is a favorite of this user. */
 
   isFavorite(story) {
+    console.debug("isFavorite(story)")
     return this.favorites.some(s => (s.storyId === story.storyId));
   }
 }
