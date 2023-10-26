@@ -7,19 +7,65 @@ CREATE DATABASE air_traffic;
 
 \c air_traffic
 
-CREATE TABLE tickets
+CREATE TABLE customer
 (
   id SERIAL PRIMARY KEY,
   first_name TEXT NOT NULL,
   last_name TEXT NOT NULL,
-  seat TEXT NOT NULL,
+);
+
+CREATE TABLE airlines
+(
+  id SERIAL PRIMARY KEY,
+  airline_name TEXT NOT NULL,
+);
+
+CREATE TABLE planes
+(
+  id SERIAL PRIMARY KEY,
+  seat_assign VARCHAR(3)  NOT NULL,
+);
+
+CREATE TABLE airlines_planes_roles
+(
+  id SERIAL PRIMARY KEY,
+  airline_id INT REFERENCES airlines ON DELETE CASCADE,
+  seat_id INT REFERENCES planes ON DELETE CASCADE,
+
+);
+
+CREATE TABLE cities
+(
+  id SERIAL PRIMARY KEY,
+  connect_city TEXT NOT NULL,
+);
+
+CREATE TABLE countries
+(
+  id SERIAL PRIMARY KEY,
+  connect_country TEXT NOT NULL,
+);
+
+CREATE TABLE cities_countries_roles
+(
+  id SERIAL PRIMARY KEY,
+  city_id INT REFERENCES cities ON DELETE CASCADE,
+  country_id INT REFERENCES countries ON DELETE CASCADE,
+);
+
+CREATE TABLE tickets
+(
+  id SERIAL PRIMARY KEY,
+  first_name TEXT REFERENCES customer(first_name) ON DELETE CASCADE,
+  last_name TEXT REFERENCES customer(last_name) ON DELETE CASCADE,
+  seat VARCHAR(3) REFERENCES planes(seat_assign) ON DELETE CASCADE,
   departure TIMESTAMP NOT NULL,
   arrival TIMESTAMP NOT NULL,
-  airline TEXT NOT NULL,
-  from_city TEXT NOT NULL,
-  from_country TEXT NOT NULL,
-  to_city TEXT NOT NULL,
-  to_country TEXT NOT NULL
+  airline TEXT REFERENCES airlines(airline_name) ON DELETE CASCADE,
+  to_city TEXT REFERENCES cities ON DELETE CASCADE,
+  from_city TEXT REFERENCES cities ON DELETE CASCADE,
+  to_country TEXT REFERENCES countries ON DELETE CASCADE,
+  from_country TEXT REFERENCES countries ON DELETE CASCADE,
 );
 
 INSERT INTO tickets
