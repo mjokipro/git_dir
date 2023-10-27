@@ -45,3 +45,6 @@ def show_pet(pet_id):
 
     pet = Pet.query.get_or_404(pet_id)
     return render_template("detail.html", pet=pet)
+
+# if __name__ == '__main__':
+#     app.run()
