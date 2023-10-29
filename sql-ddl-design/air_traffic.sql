@@ -7,69 +7,90 @@ CREATE DATABASE air_traffic;
 
 \c air_traffic
 
-CREATE TABLE customer
-(
-  id SERIAL PRIMARY KEY,
-  first_name TEXT NOT NULL,
-  last_name TEXT NOT NULL,
+CREATE TABLE "customers" (
+    "id" int   NOT NULL,
+    "cust_f_name" string   NOT NULL,
+    "cust_l_name" string   NOT NULL,
+    CONSTRAINT "pk_customers" PRIMARY KEY (
+        "id"
+     )
 );
 
-CREATE TABLE airlines
-(
-  id SERIAL PRIMARY KEY,
-  airline_name TEXT NOT NULL,
+CREATE TABLE "locations" (
+    "id" int   NOT NULL,
+    "lc_cities_id" varchar(3)   NOT NULL,
+    "lc_countries_id" varchar(3)   NOT NULL,
+    CONSTRAINT "pk_locations" PRIMARY KEY (
+        "id"
+     )
 );
 
-CREATE TABLE planes
-(
-  id SERIAL PRIMARY KEY,
-  seat_assign VARCHAR(3)  NOT NULL,
+CREATE TABLE "planes" (
+    "id" int   NOT NULL,
+    "seat_nums" varchar(4)   NOT NULL,
+    "pl_model_num" varchar(6)   NOT NULL,
+    CONSTRAINT "pk_planes" PRIMARY KEY (
+        "id","seat_nums"
+     )
 );
 
-CREATE TABLE airlines_planes_roles
-(
-  id SERIAL PRIMARY KEY,
-  airline_id INT REFERENCES airlines ON DELETE CASCADE,
-  seat_id INT REFERENCES planes ON DELETE CASCADE,
-
+CREATE TABLE "airlines" (
+    "id" int   NOT NULL,
+    "airline_name" string   NOT NULL,
+    "plane_id" int   NOT NULL,
+    CONSTRAINT "pk_airlines" PRIMARY KEY (
+        "id"
+     )
 );
 
-CREATE TABLE cities
-(
-  id SERIAL PRIMARY KEY,
-  connect_city TEXT NOT NULL,
+CREATE TABLE "tickets" (
+    "id" int   NOT NULL,
+    "tk_f_name" int   NOT NULL,
+    "tk_l_name" int   NOT NULL,
+    "tk_seat_num" int   NOT NULL,
+    "depart_time" TIMESTAMP   NOT NULL,
+    "arrive_time" TIMESTAMP   NOT NULL,
+    "tk_airline_id" int   NOT NULL,
+    "tk_from_city_id" int   NOT NULL,
+    "tk_from_country_id" int   NOT NULL,
+    "tk_to_city_id" int   NOT NULL,
+    "tk_to_country_id" int   NOT NULL,
+    CONSTRAINT "pk_tickets" PRIMARY KEY (
+        "id"
+     )
 );
 
-CREATE TABLE countries
-(
-  id SERIAL PRIMARY KEY,
-  connect_country TEXT NOT NULL,
-);
+ALTER TABLE "airlines" ADD CONSTRAINT "fk_airlines_plane_id" FOREIGN KEY("plane_id")
+REFERENCES "planes" ("id");
 
-CREATE TABLE cities_countries_roles
-(
-  id SERIAL PRIMARY KEY,
-  city_id INT REFERENCES cities ON DELETE CASCADE,
-  country_id INT REFERENCES countries ON DELETE CASCADE,
-);
+ALTER TABLE "tickets" ADD CONSTRAINT "fk_tickets_tk_f_name" FOREIGN KEY("tk_f_name")
+REFERENCES "customers" ("id");
 
-CREATE TABLE tickets
-(
-  id SERIAL PRIMARY KEY,
-  first_name TEXT REFERENCES customer(first_name) ON DELETE CASCADE,
-  last_name TEXT REFERENCES customer(last_name) ON DELETE CASCADE,
-  seat VARCHAR(3) REFERENCES planes(seat_assign) ON DELETE CASCADE,
-  departure TIMESTAMP NOT NULL,
-  arrival TIMESTAMP NOT NULL,
-  airline TEXT REFERENCES airlines(airline_name) ON DELETE CASCADE,
-  to_city TEXT REFERENCES cities ON DELETE CASCADE,
-  from_city TEXT REFERENCES cities ON DELETE CASCADE,
-  to_country TEXT REFERENCES countries ON DELETE CASCADE,
-  from_country TEXT REFERENCES countries ON DELETE CASCADE,
-);
+ALTER TABLE "tickets" ADD CONSTRAINT "fk_tickets_tk_l_name" FOREIGN KEY("tk_l_name")
+REFERENCES "customers" ("id");
+
+ALTER TABLE "tickets" ADD CONSTRAINT "fk_tickets_tk_to_city_id" FOREIGN KEY("tk_to_city_id")
+REFERENCES "locations" ("id");
+
+ALTER TABLE "tickets" ADD CONSTRAINT "fk_tickets_tk_from_city_id" FOREIGN KEY("tk_from_city_id")
+REFERENCES "locations" ("id");
+
+ALTER TABLE "tickets" ADD CONSTRAINT "fk_tickets_tk_to_country_id" FOREIGN KEY("tk_to_country_id")
+REFERENCES "locations" ("id");
+
+ALTER TABLE "tickets" ADD CONSTRAINT "fk_tickets_tk_from_country_id" FOREIGN KEY("tk_from_country_id")
+REFERENCES "locations" ("id");
+
+ALTER TABLE "tickets" ADD CONSTRAINT "fk_tickets_tk_seat_num" FOREIGN KEY("tk_seat_num")
+REFERENCES "airlines" ("id");
+
+ALTER TABLE "tickets" ADD CONSTRAINT "fk_tickets_tk_airline_id" FOREIGN KEY("tk_airline_id")
+REFERENCES "airlines" ("id");
+
+
 
 INSERT INTO tickets
-  (first_name, last_name, seat, departure, arrival, airline, from_city, from_country, to_city, to_country)
+  (tk_f_name, tk_l_name, tk_seat_num, depart_time, arrive_time, tk_airline_id, tk_from_city_id, tk_from_country_id, tk_to_city_id, tk_to_country_id)
 VALUES
   ('Jennifer', 'Finch', '33B', '2018-04-08 09:00:00', '2018-04-08 12:00:00', 'United', 'Washington DC', 'United States', 'Seattle', 'United States'),
   ('Thadeus', 'Gathercoal', '8A', '2018-12-19 12:45:00', '2018-12-19 16:15:00', 'British Airways', 'Tokyo', 'Japan', 'London', 'United Kingdom'),
