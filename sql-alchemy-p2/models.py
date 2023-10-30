@@ -26,6 +26,12 @@ class Pet(db.Model):
             [<Pet ...>, <Pet...>]"""
         
         return cls.query.filter(Pet.hunger < 20).all()
+    
+    @classmethod
+    def delete_all_by_species(cls, species):
+        """delete method"""
+        
+        return cls.query.filter_by(species=species).delete()
 
     def __repr__(self):
         """Show info about pet"""

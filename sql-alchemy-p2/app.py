@@ -14,66 +14,73 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 debug = DebugToolbarExtension(app)
 
 connect_db(app)
+db.drop_all()
+db.create_all()
+   
+###########################
+# Create vars to combine
+names = ['sushi', 'yo momma', 'deez nuts', 'scout', 'dick','stup', 'carrot']
+species = ['pig', 'pig', 'turtle', 'cat', 'cat', 'dog', 'turtle']
+    
+# Combine vars
+zip(names, species)
+pets = [Pet(name=n, species=s) for n, s in zip(names, species)]
+db.session.add_all(pets)
+db.session.commit()
 
+####-####-("/")-####-####
 @app.route("/")
 def home_page():
     """show homepage"""
-    
     # drop / create
-    db.drop_all()
-    db_sess = db.create_all()
-   
-    ###########################
-    # Create vars to combine
-    names = ['sushi', 'scout', 'pig', 'carrot']
-    species = ['pig', 'cat', 'dog', 'turtle']
-    
-    # Combine vars
-    zip(names, species)
-    pets = [Pet(name=n, species=s) for n, s in zip(names, species)]
-    
-    # Create record (SQL INSERT)
-    stevie = Pet(name="Stevie", species="chick", hunger=13)
-
-    stevie.name = 'scout bla'
-         
-    db.session.add(stevie)
-    db.session.add_all(pets)
-    db.session.commit()
     
     ###########################
     
-    query = Pet.query.get(1)
-    hun = Pet.query.filter_by(hunger=20).all()
-    filt = Pet.query.filter(Pet.species=='turtle').all()
-    not_e = Pet.query.filter(Pet.species!='pig').first()
-    filt_hun = Pet.query.filter(Pet.hunger > 19).all()
-    filt_all = Pet.query.filter_by(species='cat').all()
-    filt_and = Pet.query.filter(Pet.species=='cat', Pet.hunger>19).all()
-    filt_one = Pet.query.filter_by(hunger=13).one()
     
     ### Demo of class method / decorator
-    all_pets = Pet.query.all()
-    
-    for p in all_pets:
-        print(p.feed())
-        
-    
-    ### Calls to custom class decorator get_all_by_species('turtle') ###    
-    ### Returns [<Pet 1...>, <Pet 2...>] ###    
-    turtles = Pet.get_all_by_species('turtle')
+    pets = Pet.query.all()
 
-    ### Calls to custom class decorator to get all hungry pets ###    
-    ### Returns [<Pet 1...>, <Pet 2...>] ###    
-    hungry = Pet.get_all_by_hunger()
     
-    ### get one Pet ###
-    pet2 = Pet.query.get(3)
-    pet2.hunger = 57
-    
-    ###  ###
-    
-    return render_template('home.html', pet2=pet2, hungry=hungry, turtles=turtles, filt_one=filt_one, filt_and=filt_and, not_e=not_e, db_sess=db_sess, pets=pets, stevie=stevie, query=query, filt=filt, filt_hun=filt_hun, hun=hun, filt_all=filt_all)
+    return render_template('list.html', pets=pets )
 
+###########################-("/", ["POST"])-####
+# creats single instance
+@app.route("/", methods=["POST"])
+def add_pet():
+    """Add pet and redirect to list."""
+    
+    
+    name = request.form['name']
+    species = request.form['species']
+    hunger = request.form['hunger']
+    hunger = int(hunger) if hunger else None
+    
+    pet = Pet(name=name, species=species, hunger=hunger)
+    
+    db.session.add(pet)
+    db.session.commit()
+    
+    return redirect(f"/{pet.id}")
+    
+############# /<int:pet_id> pet detail ########
+
+@app.route("/<int:pet_id>")
+def show_pet(pet_id):
+    """Show detail.html on single pet."""
+    
+    pet = Pet.query.get_or_404(pet_id)
+    
+    return render_template("detail.html", pet=pet)
+
+############ /<int:pet_id> species detail ########
+
+@app.route("/species/<species_id>")
+def show_pet_by_species(species_id):
+    """Show all species using get_by_spe."""
+    
+    pets = Pet.get_all_by_species(species_id)
+    
+    return render_template("species.html", pets=pets, species=species_id)
+    
 if __name__ == '__main__':
     app.run(debug=True)
