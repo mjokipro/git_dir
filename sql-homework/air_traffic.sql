@@ -85,8 +85,8 @@ REFERENCES "airlines" ("id");
 ALTER TABLE "tickets" ADD CONSTRAINT "fk_tickets_tk_airline_id" FOREIGN KEY("tk_airline_id")
 REFERENCES "airlines" ("id");
 
-INSERT INTO tickets
-  (tk_f_name, tk_l_name, tk_seat_num, depart_time, arrive_time, tk_airline_id, tk_from_city_id, tk_from_country_id, tk_to_city_id, tk_to_country_id)
+INSERT INTO customers
+  (tk_f_name, tk_l_name)
 VALUES
   ('Jennifer', 'Finch', '33B', '2018-04-08 09:00:00', '2018-04-08 12:00:00', 'United', 'Washington DC', 'United States', 'Seattle', 'United States'),
   ('Thadeus', 'Gathercoal', '8A', '2018-12-19 12:45:00', '2018-12-19 16:15:00', 'British Airways', 'Tokyo', 'Japan', 'London', 'United Kingdom'),
@@ -98,3 +98,49 @@ VALUES
   ('Alvin', 'Leathes', '1A', '2018-12-22 14:42:00', '2018-12-22 15:56:00', 'American Airlines', 'Cedar Rapids', 'United States', 'Chicago', 'United States'),
   ('Berkie', 'Wycliff', '32B', '2019-02-06 16:28:00', '2019-02-06 19:18:00', 'American Airlines', 'Charlotte', 'United States', 'New Orleans', 'United States'),
   ('Cory', 'Squibbes', '10D', '2019-01-20 19:30:00', '2019-01-20 22:45:00', 'Avianca Brasil', 'Sao Paolo', 'Brazil', 'Santiago', 'Chile');
+
+INSERT INTO customers(cust_l_name, cust_f_name)
+VALUES
+  ('Finch',	'Jennifer'),
+  ('Gathercoal',	'Thadeus'),
+  ('Leathes'	, 'Alvin'),
+  ('Pauley'	, 'Sonja'),
+  ('Skeleton',	'Waneta'),
+  ('Squibbes', 'Cory'),
+  ('Wycliff',	'Berkie');
+
+  INSERT INTO cities(city)
+VALUES
+ ('Beijing'), ('Casablanca'), ('Cedar Rapids'), ('Charlotte'),
+ ('Chicago'), ('Dubai'), ('Las Vegas'), ('London'), ('Los Angeles'),
+ ('Mexico City'), ('New Orleans'), ('New York'), ('Paris'),
+ ('Santiago'), ('Sao Paolo'), ('Seattle'), ('Tokyo'), ('Washington DC');
+
+INSERT INTO countries(country)
+VALUES
+ ('Brazil'), ( 'Chile'), ('China'), ('France'), ('Japan'),
+ ('Mexico'), ('Morocco'), ( 'UAE'), ( 'United Kingdom'), ( 'United States');
+
+INSERT INTO seats(seat_num)
+VALUES
+( '10D'), ( '12F'), ( '18C'), ( '1A'), ( '20A'), ( '23D'),
+( '32B'), ( '33B'), ( '8A'), ( '9E');
+
+INSERT INTO airlines(airline_name)
+VALUES
+( 'Air China'), ( 'American Airlines'), ( 'Avianca Brasil'), ( 'British Airways'),
+( 'Delta'), ( 'TUI Fly Belgium'), ( 'United');
+
+INSERT INTO tickets(tk_cust_id, tk_seat_id, tk_depart_time, tk_arrive_time, tk_airline_id, tk_from_city_id, tk_from_country_id, tk_to_city_id, tk_to_country_id)
+VALUES
+(8	, '2018-04-08 09:00:00'	, '2018-04-08 12:00:00',	7,	18	,10	,16,	10),
+(5	, '2018-04-15 16:50:00',	 '2018-04-15 21:00:00',	5,	16,	10,	10,	6),
+(9,	 '2018-12-19 12:45:00',	 '2018-12-19 16:15:00',	4,	17,	5,	8,	9),
+(3,	 '2018-10-31 01:15:00',	 '2018-10-31 12:55:00',	1,	6,	8,	1,	3),
+(4,	 '2018-12-22 14:42:00',	 '2018-12-22 15:56:00',	2	,3,	10,	5,	10),
+(2,	 '2018-01-02 07:00:00',	 '2018-01-02 08:03:00',	5,	9,	10,	7,	10),
+(6,	 '2018-08-01 18:30:00',	 '2018-08-01 21:50:00',	6,	13,	4,	2,	7),
+(1,	 '2019-01-20 19:30:00',	 '2019-01-20 22:45:00',	3,	15,	1,	14,	2),
+(10,	 '2019-02-06 06:00:00',	 '2019-02-06 07:47:00',	7,	12,	10,	4,	10),
+(7	, '2019-02-06 16:28:00',	 '2019-02-06 19:18:00',	2,	4,	10,	11,	10);
+
