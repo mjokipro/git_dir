@@ -14,19 +14,9 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 debug = DebugToolbarExtension(app)
 
 connect_db(app)
-db.drop_all()
-db.create_all()
+
    
-###########################
-# Create vars to combine
-names = ['sushi', 'yo momma', 'deez nuts', 'scout', 'dick','stup', 'carrot']
-species = ['pig', 'pig', 'turtle', 'cat', 'cat', 'dog', 'turtle']
-    
-# Combine vars
-zip(names, species)
-pets = [Pet(name=n, species=s) for n, s in zip(names, species)]
-db.session.add_all(pets)
-db.session.commit()
+
 
 ####-####-("/")-####-####
 @app.route("/")

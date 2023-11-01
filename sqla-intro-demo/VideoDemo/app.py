@@ -44,4 +44,4 @@ def show_pets_by_species(species_id):
     return render_template("species.html", pets=pets, species=species_id)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

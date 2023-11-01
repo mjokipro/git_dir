@@ -3,7 +3,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, User
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///blogly"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///blogly_db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'ihaveasecret'
 
@@ -42,6 +42,7 @@ def users_new_form():
     """Show a form to create a new user"""
 
     return render_template('users/new.html')
+
 
 
 @app.route("/users/new", methods=["POST"])
@@ -99,3 +100,6 @@ def users_destroy(user_id):
     db.session.commit()
 
     return redirect("/users")
+
+if __name__ == '__main__':
+    app.run(debug=True)
