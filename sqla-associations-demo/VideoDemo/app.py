@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template,  redirect, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
-from models import db,  connect_db, Department, Employee, get_directory, get_directory_join, get_directory_join_class, get_directory_all_join, Project, EmployeeProject
+from models import db,  connect_db, Department, Employee
 
 app = Flask(__name__)
 
@@ -23,15 +23,21 @@ def homepage():
 @app.route('/phones')
 def list_phones():
     """Renders directory of employees and phone numbers  (from dept)"""
+    # can only create single instances of dept because unique text constraint
+    # d = Department(dept_code="bla", dept_name="bla", phone="bla")
     
-    d = Department(dept_code="hr", dept_name="Human Resources", phone="555-5555")
     
-    db.session.add(d)
-    db.session.commit()
+    bob = Employee(name="tung")
+    # db.session.add(bob)
+    # db.session.commit()
     
-    emps = Employee.query.all()  
+    emps = Employee.query.get(1)  
+ 
+    depart = Department.query.get('mkg')
     
-    return render_template('phones.html', d=d, emps=emps)
+    
+    
+    return render_template('phones.html', depart=depart, bob=bob, emps=emps)
 
 if __name__ == '__main__':
     app.run(debug=True)

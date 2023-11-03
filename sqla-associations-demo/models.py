@@ -37,20 +37,20 @@ class Employee(db.Model):
     
     state = db.Column(db.Text, nullable=False, default='CA')
     
-    # dept_code = db.Column(db.Text, db.ForeignKey('departments.dept_code'))
+    dept_code = db.Column(db.Text, db.ForeignKey('departments.dept_code'))
     
-    # dept = db.relationship('Department')
-    
-
+    dept = db.relationship('Department')
     
 
-# if __name__ == "__main__":
+    
+
+if __name__ == "__main__":
     # As a convenience, if we run this module interactively, it will leave
     # you in a state of being able to work with the database directly.
 
     # So that we can use Flask-SQLAlchemy, we'll make a Flask app
-    # from app import app
-    # connect_db(app)
+    from app import app
+    connect_db(app)
 
-    # db.drop_all()
-    # db.create_all()
+    db.drop_all()
+    db.create_all()
