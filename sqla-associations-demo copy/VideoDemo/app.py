@@ -17,21 +17,13 @@ connect_db(app)
 def homepage():
     """homepage"""
     
-    
     return redirect('/phones')
 
 @app.route('/phones')
 def list_phones():
     """Renders directory of employees and phone numbers  (from dept)"""
-    
-    d = Department(dept_code="hr", dept_name="Human Resources", phone="555-5555")
-    
-    db.session.add(d)
-    db.session.commit()
-    
-    emps = Employee.query.all()  
-    
-    return render_template('phones.html', d=d, emps=emps)
+    emps = Employee.query.all()
+    return render_template('phones.html', emps=emps)
 
 if __name__ == '__main__':
     app.run(debug=True)
