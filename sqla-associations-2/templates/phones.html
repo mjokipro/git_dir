@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>phones</title>
+</head>
+<body>
+
+<p>p_dir:  {{ p_dir }}</p>
+
+<p>emp1:  {{ emp1.dept.dept_name }}</p>
+
+<div> 
+{% for emp in emps %}
+
+<h2>Employee:</h2>
+
+<p>emp id:  {{ emp.id }}</p>
+<p>emp name:  {{ emp.name }}</p>
+<p>emp dept_code:  {{ emp.dept_code }}</p>
+
+{% endfor %}
+</div>
+
+<div>
+{% for dept in depts %}
+<h2>Departments:</h2>
+<p>dep id:  {{ dept.phone }}</p>
+<p>dep name:  {{ dept.dept_name }}</p>
+<p>dep code:  {{ dept.dept_code }}</p>
+
+{% endfor %}
+</div>
+
+
+</body>
+</html>

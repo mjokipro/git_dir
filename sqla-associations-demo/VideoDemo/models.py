@@ -29,7 +29,7 @@ class Department(db.Model):
     dept_name = db.Column(db.Text, nullable=False, unique=True)
     phone = db.Column(db.Text)
     
-    employees = db.relationship('Employee', cascade='all, delete-orphan', single_parent=False)
+    employees = db.relationship('Employee', cascade='all, delete-orphan')
     
     def __repr__(self):
         return f"<Department {self.dept_code} {self.dept_name} {self.phone} >"
@@ -51,7 +51,7 @@ class Employee(db.Model):
     dept_code = db.Column(db.Text, db.ForeignKey('departments.dept_code'))
     
     # sets up one to many relationship
-    dept = db.relationship('Department',  backref='employees', cascade='all, delete-orphan')
+    dept = db.relationship('Department')
     
     
     def __repr__(self):

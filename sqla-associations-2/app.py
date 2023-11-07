@@ -1,11 +1,11 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, session
 from flask_debugtoolbar import DebugToolbarExtension
-from models import Employee, Department, db, connect_db
+from models import Employee, Department, db, connect_db, phone_dir_nav
 
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///employees_db'
-app.config['SQLALCHEMY_ECHO'] = True
+app.config['SQLALCHEMY_ECHO'] = False
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = "abc123"
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
@@ -13,7 +13,9 @@ toolbar = DebugToolbarExtension(app)
 
 connect_db(app)
 
-
+@app.route("/")
+def homepage():
+    return redirect("/phones")
 
 @app.route("/phones")
 def phone_list():
@@ -26,5 +28,17 @@ def phone_list():
     but don't worry about this for now.
     """
 
+    p_dir = phone_dir_nav()
+
+    emp1 = Employee.query.get(1)
+    
+    depts = Department.query.all()
+    
     emps = Employee.query.all()
-    return render_template("phones.html", emps=emps)
+    
+    
+    return render_template("phones.html", p_dir=p_dir, emps=emps, depts=depts, emp1=emp1)
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
