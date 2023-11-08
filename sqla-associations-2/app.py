@@ -28,16 +28,12 @@ def phone_list():
     but don't worry about this for now.
     """
 
-    p_dir = phone_dir_nav()
-
-    emp1 = Employee.query.get(1)
     
-    depts = Department.query.all()
     
     emps = Employee.query.all()
     
     
-    return render_template("phones.html", p_dir=p_dir, emps=emps, depts=depts, emp1=emp1)
+    return render_template("phones.html", emps=emps)
 
 
 if __name__ == '__main__':

@@ -26,18 +26,19 @@ def list_phones():
     # can only create single instances of dept because unique text constraint
     # d = Department(dept_code="bla", dept_name="bla", phone="bla")
     
+
+    emps = Employee.query.all()
     
-    bob = Employee(name="tung")
-    # db.session.add(bob)
-    # db.session.commit()
+    # # more advanced querying
+    more = Employee.query.filter(Employee.id >= 4)
+    ca_new_hires = more.filter(Employee.state== 'CA')
+    newh = ca_new_hires.all()
     
-    emps = Employee.query.get(1)  
- 
-    depart = Department.query.get('mkg')
+    # # tuples
+    sess = db.session.query(Employee.id, Employee.name).all()
     
     
-    
-    return render_template('phones.html', depart=depart, bob=bob, emps=emps)
+    return render_template('phones.html', sess=list(sess), ca_new_hires=newh, emps=emps)
 
 if __name__ == '__main__':
     app.run(debug=True)

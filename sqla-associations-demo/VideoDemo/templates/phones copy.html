@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>phones</title>
+</head>
+<body>
+
+  <p>employees.dept.dept_name:  {{ emps.dept.dept_name }}</p>
+  <p>employees.dept.phone:  {{ emps.dept.phone }}</p>
+
+  {% for dep in depart.employees %}
+  <p>depart:  {{ dep.name }}</p>
+  {% endfor %}
+  <p>Name:  {{ bob.name }}</p>
+
+</body>
+</html>
