@@ -19,3 +19,6 @@ def list_phones():
     """Renders directory of employees and phone numbers  (from dept)"""
     emps = Employee.query.all()
     return render_template('phones.html', emps=emps)
+
+if __name__ == '__main__':
+    app.run(debug=True)
