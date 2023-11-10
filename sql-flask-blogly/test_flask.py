@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from app import app
-from models import db, User
+from models import db, User, Post
 
 # Use test database and don't clutter tests with SQL
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly_tests'
@@ -23,8 +23,9 @@ class UserViewsTestCase(TestCase):
         """Add sample user."""
 
         User.query.delete()
+        Post.query.delete()
         # 'test' created here
-        user = User(first_name="TestPet", last_name="dog", image_url='bla')
+        user = User(first_name="Test123", last_name="Test321", image_url='test-img')
         db.session.add(user)
         db.session.commit()
 
@@ -36,13 +37,17 @@ class UserViewsTestCase(TestCase):
 
         db.session.rollback()
 
-    def test_list_pets(self):
+    def test_list_users(self):
         with app.test_client() as client:
             resp = client.get("/users")
             html = resp.get_data(as_text=True)
 
             self.assertEqual(resp.status_code, 200)
             # look for 'TestPet' created in setUp()
-            self.assertIn('TestPet', html)
+            self.assertIn('Test123', html)
 
 
+    def test_post(self):
+        """test post"""
+        
+        

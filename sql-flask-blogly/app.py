@@ -1,7 +1,7 @@
 """Demo app using SQLAlchemy."""
-from flask import Flask, request, redirect, render_template, flash, session
+from flask import Flask, request, redirect, render_template, flash, json, session
 from flask_debugtoolbar import DebugToolbarExtension
-from models import db, connect_db, User
+from models import db, connect_db, User, Post
 
 app = Flask(__name__)
 
@@ -21,13 +21,22 @@ db.create_all()
 def root():
     """Homepage redirects to list of users."""
 
-    return redirect("/users")
+    posts = Post.query.order_by(Post.created_at.desc()).all()
+
+    return render_template("posts/homepage.html", posts=posts)
+
+@app.errorhandler(404)
+def page_not_found():
+    """returns status code 404"""
+    
+    return render_template('404.html'), 404
 
 @app.route('/users')
 def users_index():
     """Show a page with info on all users"""
 
     users = User.query.order_by(User.last_name, User.first_name).all()
+
     return render_template('users/index.html', users=users)
 
 
@@ -94,6 +103,78 @@ def users_destroy(user_id):
     db.session.commit()
 
     return redirect("/users")
+
+############### Posts routes ########
+
+@app.route('/users/<int:user_id>/posts/new')
+def post_show(user_id):
+    """Show a page with info on a specific user"""
+
+    user = User.query.get_or_404(user_id)
+    
+    return render_template('posts/new.html', user=user)
+
+@app.route('/users/<int:user_id>/posts/new', methods=["POST"])
+def post_new_post(user_id):
+    """post a new post"""
+    
+    user = User.query.get(user_id)
+    
+    title = request.form['title']
+    content = request.form['content']
+    
+    new_post = Post(title=title, content=content, user_id=user.id)
+    
+    db.session.add(new_post)
+    db.session.commit()
+    
+    flash(f"Successfully created new post:  {new_post.title}")
+    
+    return redirect(f"/users/{user.id}")
+
+@app.route('/posts/<int:post_id>')
+def get_post(post_id):
+    """get a post"""
+    
+    post = Post.query.get_or_404(post_id)
+    
+    return render_template('posts/show.html', post=post)
+
+@app.route('/posts/<int:post_id>/edit', methods=["GET"])
+def edit_post(post_id):
+    """return form for edit post"""
+    
+    post = Post.query.get_or_404(post_id)
+    
+    return render_template('posts/edit.html', post=post)
+
+@app.route('/posts/<int:post_id>/edit', methods=["POST"])
+def update_post(post_id):
+    """post to db, redirect to posts"""
+    
+    post = Post.query.get_or_404(post_id)
+    post.title = request.form['title']
+    post.content = request.form['content']
+    
+    db.session.add(post)
+    db.session.commit()
+    
+    flash(f"Successfully added: '{ post.title }'. ")
+    
+    return redirect(f"/users/{post.user_id}")
+
+@app.route('/posts/<int:post_id>/delete', methods=["POST"])
+def delete_post(post_id):
+    """delete post and redirect"""
+    
+    post = Post.query.get_or_404(post_id)
+    
+    db.session.delete(post)
+    db.session.commit()
+    
+    flash(f"Successfully deleted post:  '{ post.title }'.")
+    
+    return redirect(f'/users/{ post.user_id }')
 
 if __name__ == '__main__':
     app.run(debug=True)
