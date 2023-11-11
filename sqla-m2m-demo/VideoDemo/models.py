@@ -19,6 +19,7 @@ class Department(db.Model):
     dept_name = db.Column(db.Text, nullable=False, unique=True)
     phone = db.Column(db.Text)
 
+    
     def __repr__(self):
         return f"<Department {self.dept_code} {self.dept_name} {self.phone} >"
 
@@ -36,68 +37,93 @@ class Employee(db.Model):
     # This is the magic line!
     # Sets up a dept attribute on each instance of Employee.
     # SQLA will populate it with data from the departments table automatically!
+
     dept = db.relationship('Department', backref='employees')
-
-    assignments = db.relationship('EmployeeProject', backref='employee')
-
-    projects = db.relationship(
-        'Project', secondary="employees_projects", backref="employees")
+   
 
     def __repr__(self):
         return f"<Employee {self.name} {self.state} {self.dept_code} >"
 
 
-class Project(db.Model):
-
-    __tablename__ = 'projects'
-
-    proj_code = db.Column(db.Text, primary_key=True)
-    proj_name = db.Column(db.Text, nullable=False, unique=True)
-
-    assignments = db.relationship('EmployeeProject', backref="project")
-
-
-class EmployeeProject(db.Model):
-
-    __tablename__ = 'employees_projects'
-
-    emp_id = db.Column(db.Integer, db.ForeignKey(
-        'employees.id'), primary_key=True)
-
-    proj_code = db.Column(db.Text, db.ForeignKey(
-        'projects.proj_code'), primary_key=True)
-
-    role = db.Column(db.Text)
-
 
 def get_directory():
-    all_emps = Employee.query.all()
+    """Show dept_name & phone"""
+    emps = Employee.query.all()
 
-    for emp in all_emps:
+    for emp in emps:
         if emp.dept is not None:
             print(emp.name, emp.dept.dept_name, emp.dept.phone)
         else:
             print(emp.name)
+            
+    return emps
 
+def phone_dir_nav():
+    """Show dept_code & phone"""
+    emps = Employee.query.all()
 
-def get_directory_join():
-    directory = db.session.query(
-        Employee.name, Department.dept_name, Department.phone).join(Department).all()
+    for emp in emps:  # [<Emp>, <Emp>, ...]
+        if emp.dept is not None:
+            print(emp.name, emp.dept.dept_code, emp.dept.phone)
+        else:
+            print(emp.name, "-", "-")
 
-    for name, dept, phone in directory:
-        print(name, dept, phone)
+    return emps
 
+def phone_dir_join():
+    """Show emps w/ a join."""
+    
+    directory = (db.session.query(Employee.name,
+                             Department.dept_name,
+                             Department.phone)
+            .join(Department).all())
 
-def get_directory_join_class():
-    directory = db.session.query(Employee, Department).join(Department).all()
+    for name, dept, phone in directory:  # [(n, d, p), (n, d, p), ...]
+        if dept is not None:
+            print(name, dept, phone)
+        else:
+            print(name, "-", "-")
 
-    for emp, dept in directory:
-        print(emp.name, dept.dept_name, dept.phone)
+    return directory
 
+def department_employee_id():
+    """Show emps w/ a join."""
+    
+    depts = (db.session.query(Department.dept_name,
+                              Employee.id)
+            .join(Department).all())
 
-def get_directory_all_join():
-    directory = db.session.query(
-        Employee.name, Department.dept_name, Department.phone).outerjoin(Department).all()
+    for dept, emp_id in depts:  # [(d, emp_id), (d, emp_id), ...]
+        if emp_id is not None:
+            print(dept, emp_id)
+        else:
+            print(dept, "-")
 
-    for name, dept, phone in directory:
-        print(name, dept, phone)
+    return depts
+
+def full_join():
+    """Show all emps and all depts"""
+    
+    depts = (db.session.query(Employee, Department).join(Department).all())
+    
+    for emp, dept in depts:
+        if dept is not None:
+            print(emp.name, dept.dept_name, dept.phone)
+        else:
+            print(dept, "-", "-")
+            
+    return depts
+
+def full_outer_join():
+    """Show all emps and all depts"""
+    
+    depts = (db.session.query(Employee.name,
+                              Department.dept_name,
+                              Department.phone).outerjoin(Department).all())
+    
+    for emp, dept, phone in depts:
+        
+            print(emp, dept, phone)
+         
+    return depts
+

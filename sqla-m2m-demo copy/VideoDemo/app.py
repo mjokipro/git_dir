@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template,  redirect, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
-from models import db,  connect_db, Department, Employee, phone_dir_join, department_employee_id, full_outer_join
+from models import db,  connect_db, Department, Employee, get_directory, get_directory_join, get_directory_join_class, get_directory_all_join, Project, EmployeeProject
 
 app = Flask(__name__)
 
@@ -13,12 +13,12 @@ debug = DebugToolbarExtension(app)
 
 connect_db(app)
 
+
 @app.route('/phones')
 def list_phones():
     """Renders directory of employees and phone numbers  (from dept)"""
     emps = Employee.query.all()
-    direct = phone_dir_join()
-    return render_template('phones.html', direct=direct, emps=emps)
+    return render_template('phones.html', emps=emps)
 
 if __name__ == '__main__':
     app.run(debug=True)
