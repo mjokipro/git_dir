@@ -55,10 +55,6 @@ class PostTag(db.Model):
 
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), primary_key=True)
     tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'), primary_key=True)
-    
-    def __repr__(self):
-        return f"<PostTag {self.post_id} {self.tag_id}>"
-
 
 class Tag(db.Model):
     """Tag that can be added to posts."""

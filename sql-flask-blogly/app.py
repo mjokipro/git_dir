@@ -110,10 +110,12 @@ def users_destroy(user_id):
 def post_show(user_id):
     """Show a page with info on a specific user"""
 
+    tags = Tag.query.all()
+
     user = User.query.get_or_404(user_id)
     
     
-    return render_template('posts/new.html', user=user)
+    return render_template('posts/new.html', tags=tags, user=user)
 
 @app.route('/users/<int:user_id>/posts/new', methods=["POST"])
 def post_new_post(user_id):
@@ -121,10 +123,13 @@ def post_new_post(user_id):
     
     user = User.query.get(user_id)
     
+    tag_ids = [int(num) for num in request.form.getlist("tags")]
+    tags = Tag.query.filter(Tag.id.in_(tag_ids)).all()
+    
     title = request.form['title']
     content = request.form['content']
     
-    new_post = Post(title=title, content=content, user_id=user.id)
+    new_post = Post(title=title, content=content, user=user, tags=tags)
     
     db.session.add(new_post)
     db.session.commit()
@@ -141,13 +146,15 @@ def get_post(post_id):
     
     return render_template('posts/show.html', post=post)
 
-@app.route('/posts/<int:post_id>/edit', methods=["GET"])
+@app.route('/posts/<int:post_id>/edit')
 def edit_post(post_id):
     """return form for edit post"""
     
     post = Post.query.get_or_404(post_id)
     
-    return render_template('posts/edit.html', post=post)
+    tags = Tag.query.all()
+    
+    return render_template('posts/edit.html', tags=tags, post=post)
 
 @app.route('/posts/<int:post_id>/edit', methods=["POST"])
 def update_post(post_id):
@@ -156,6 +163,9 @@ def update_post(post_id):
     post = Post.query.get_or_404(post_id)
     post.title = request.form['title']
     post.content = request.form['content']
+    
+    tag_ids = [int(num) for num in request.form.getlist("tags")]
+    post.tags = Tag.query.filter(Tag.id.in_(tag_ids)).all()
     
     db.session.add(post)
     db.session.commit()
