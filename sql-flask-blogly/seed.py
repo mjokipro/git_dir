@@ -1,6 +1,6 @@
 """Seed file to make sample data for pets db."""
 import datetime
-from models import db, User, Post
+from models import db, User, Post, Tag, PostTag
 from app import app
 
 
@@ -11,6 +11,8 @@ db.create_all()
 # If table isn't empty, empty it
 User.query.delete()
 Post.query.delete()
+PostTag.query.delete()
+Tag.query.delete()
 
 # create 3 instances of User class
 mike = User(first_name='Mike', last_name="Duley", image_url='bla')
@@ -46,4 +48,15 @@ post8 = Post(title="God is just!", content="God is love, but He must also be jus
 # # Add 8 posts and commit to db
 db.session.add_all([post1, post2, post3, post4, post5, post6, post7, post8])
 
+db.session.commit()
+
+tags = [Tag(name='happy'), Tag(name='sad'), Tag(name='saved'), Tag(name='forgiven')]
+
+db.session.add_all(tags)
+
+db.session.commit()
+
+tg1 = PostTag(post_id=1, tag_id=2)
+
+db.session.add(tg1)
 db.session.commit()

@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template,  redirect, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
-from models import db,  connect_db, Department, Employee, phone_dir_join, department_employee_id, full_outer_join
+from models import db,  connect_db, Department, Employee, Project, EmployeeProject, phone_dir_join, department_employee_id, full_outer_join
 
 app = Flask(__name__)
 
@@ -20,5 +20,5 @@ def list_phones():
     direct = phone_dir_join()
     return render_template('phones.html', direct=direct, emps=emps)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+#     app.run(debug=True)

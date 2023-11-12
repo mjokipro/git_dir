@@ -15,8 +15,10 @@ class Department(db.Model):
 
     __tablename__ = "departments"
 
-    dept_code = db.Column(db.Text, primary_key=True)
-    dept_name = db.Column(db.Text, nullable=False, unique=True)
+    dept_code = db.Column(db.Text,
+                            primary_key=True)
+    dept_name = db.Column(db.Text,
+                            nullable=False, unique=True)
     phone = db.Column(db.Text)
 
     
@@ -29,22 +31,65 @@ class Employee(db.Model):
 
     __tablename__ = "employees"
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.Text, nullable=False, unique=True)
-    state = db.Column(db.Text, nullable=False, default='CA')
+    id = db.Column(db.Integer,
+                    primary_key=True, autoincrement=True)
+    name = db.Column(db.Text, 
+                     nullable=False, unique=True)
+    state = db.Column(db.Text, 
+                      nullable=False, default='CA')
+    
+    """Employee -> Department relationships""" 
+    ### SQL ### employees.id -> departments.dept_code ### SQL ###
     dept_code = db.Column(db.Text, db.ForeignKey('departments.dept_code'))
 
-    # This is the magic line!
-    # Sets up a dept attribute on each instance of Employee.
-    # SQLA will populate it with data from the departments table automatically!
-
+    ### SQLA ### Employee.dept = Emp -> Dept -> Emp on Dept.dept_code
     dept = db.relationship('Department', backref='employees')
-   
-
+    
+    """Employee -> Projects relationships"""
+    ### SQLA ### Employee.assignments = Emp -> EmpProj -> Emp on EmpProj.emp_id
+    assignments = db.relationship('EmployeeProject', backref='employee')
+    
+    """through relationship - can run independant of above relationship"""
+    ### SQLA ### Emp -> EmpProj -> Proj -> Emp on EmpProj.proj_code
+    projs = db.relationship('Project', 
+                                secondary='employees_projects', backref='employees')
+     
     def __repr__(self):
         return f"<Employee {self.name} {self.state} {self.dept_code} >"
 
-
+class Project(db.Model):
+    """Project Model"""
+    
+    __tablename__ = "projects"
+    
+    proj_code = db.Column(db.Text, primary_key=True)
+    
+    proj_name = db.Column(db.Text, nullable=False, unique=True)
+    
+    """Project -> EmpProj relationship"""
+    ### SQLA ### Project.assignments = Proj -> EmpProj -> Proj on EmpProj.proj_code     
+    assignments = db.relationship('EmployeeProject', backref="project")
+    
+    def __repr__(self):
+        return f"<Project {self.proj_code} {self.proj_name} {self.assignments}>"
+    
+class EmployeeProject(db.Model):
+    """Mapping of an employee to a project."""
+    
+    __tablename__ = "employees_projects"
+    
+    ### SQL ### employees_projects.emp_id -> employees.id ### SQL ###
+    emp_id = db.Column(db.Integer, 
+                        db.ForeignKey("employees.id"), primary_key=True)
+    
+    ### SQL ### employees_projects.proj_code -> projects.proj_code ### SQL ###
+    proj_code = db.Column(db.Text,
+                            db.ForeignKey("projects.proj_code"), primary_key=True)
+    
+    role = db.Column(db.Text)
+        
+    def __repr__(self):
+        return f"<EmployeeProject {self.emp_id} {self.proj_code} {self.role}>"
 
 def get_directory():
     """Show dept_name & phone"""
