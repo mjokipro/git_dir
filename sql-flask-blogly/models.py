@@ -55,6 +55,7 @@ class PostTag(db.Model):
 
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), primary_key=True)
     tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'), primary_key=True)
+    
 
 class Tag(db.Model):
     """Tag that can be added to posts."""
@@ -70,6 +71,10 @@ class Tag(db.Model):
         # cascade="all,delete",
         backref="tags",
         )
+
+def get_tags():
+    """Get enum tags."""
+    
 
 def connect_db(app):
     """Connect this database to provided Flask app.

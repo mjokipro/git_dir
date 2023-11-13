@@ -261,5 +261,5 @@ def post_delete_tag(tag_id):
     
     return redirect(f"/tags")
     
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+#     app.run(debug=True)

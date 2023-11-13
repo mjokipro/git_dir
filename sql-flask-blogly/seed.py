@@ -58,5 +58,6 @@ db.session.commit()
 
 tg1 = PostTag(post_id=1, tag_id=2)
 
+
 db.session.add(tg1)
 db.session.commit()

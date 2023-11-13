@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from app import app
-from models import db, User, Post
+from models import db, User, Post, Tag, PostTag
 
 # Use test database and don't clutter tests with SQL
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///pet_shop_tests'
@@ -19,6 +19,8 @@ class UserModelTestCase(TestCase):
 
         User.query.delete()
         Post.query.delete()
+        Tag.query.delete()
+        PostTag.query.delete()
 
     def tearDown(self):
         """Clean up any fouled transaction."""
@@ -32,7 +34,7 @@ class UserModelTestCase(TestCase):
         self.assertEqual(user.first_name, "Test123")
         self.assertEqual(user.last_name, "Test321")
         self.assertEqual(user.image_url, "test-img")
+        # # self.assertEquals(user.full_name(), "Test123 Test321")
 
-        db.session.add(user)
-        db.session.commit()
+
 
