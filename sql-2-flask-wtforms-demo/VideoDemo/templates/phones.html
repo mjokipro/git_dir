@@ -11,6 +11,7 @@
 </head>
 
 <body>
+
   <div class="container">
     <h1 class="display-1">Phone Numbers</h1>
     <table class="table table-striped ">
@@ -24,11 +25,11 @@
         <tr>
           <td>{{emp.name}} <a class="btn btn-sm btn-info" href="/employees/{{emp.id}}/edit">Edit</a></td>
           <td>{{emp.dept.dept_name}}</td>
-          {% if emp.dept.phone %}
-          <td>{{emp.dept.phone}}</td>
-          {% else %}
-          <td class="text-danger">NO PHONE</td>
-          {% endif %}
+            {% if emp.dept.phone %}
+              <td>{{emp.dept.phone}}</td>
+            {% else %}
+              <td class="text-danger">NO PHONE</td>
+            {% endif %}
         </tr>
         {% endfor %}
       </tbody>
