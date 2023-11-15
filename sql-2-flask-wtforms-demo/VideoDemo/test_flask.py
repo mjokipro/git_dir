@@ -49,9 +49,8 @@ class EmployeeViewTestCase(TestCase):
         Department.query.delete()
         self.client = app.test_client()
         
-        dept = Department(dept_code="mktg", dept_name="Marketing")
-        db.session.add(dept)
-        db.session.commit()
+        dept = 'mktg'
+    
         emp = Employee(name="Test123", state="AL", dept_code="mktg")
         db.session.add(emp)
         db.session.commit()
