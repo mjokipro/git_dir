@@ -50,6 +50,9 @@ def show_new_pet_form():
 def edit_pet_form(pet_id):
         """Show detail / edit form for pet."""
         
+        pet = Pet.query.get_or_404(pet_id)
+        form = 
+        
         return render_template('pets/edit_pet_form.html')
         
 
