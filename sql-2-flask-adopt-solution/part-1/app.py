@@ -19,7 +19,7 @@ db.create_all()
 
 # Having the Debug Toolbar show redirects explicitly is often useful;
 # however, if you want to turn it off, you can uncomment this line:
-
+#
 # app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 toolbar = DebugToolbarExtension(app)
@@ -84,7 +84,3 @@ def api_get_pet(pet_id):
     info = {"name": pet.name, "age": pet.age}
 
     return jsonify(info)
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
