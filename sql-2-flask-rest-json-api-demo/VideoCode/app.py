@@ -1,12 +1,15 @@
 from flask import Flask, request, jsonify, render_template
-
+from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, Todo
 
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///todos_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = "oh-so-secret"
+app.config['SQLALCHEMY_ECHO'] = True
+app.config['SECRET_KEY'] = "chickenzarecool21837"
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+debug = DebugToolbarExtension(app)
 
 connect_db(app)
 
@@ -61,3 +64,6 @@ def delete_todo(id):
     db.session.delete(todo)
     db.session.commit()
     return jsonify(message="deleted")
+
+if __name__ == '__main__':
+    app.run(debug=True)

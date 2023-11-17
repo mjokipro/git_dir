@@ -1,4 +1,4 @@
-from models import db, connect_db, Todo
+from models import db, Todo
 from app import app
 
 db.drop_all()
