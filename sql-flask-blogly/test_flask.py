@@ -23,17 +23,14 @@ class UserViewsTestCase(TestCase):
         app.config['TESTING'] = True
         app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
         app.config['WTF_CSRF_ENABLED'] = False
+        
         db.create_all()
 
-
-    
     @classmethod
     def tearDownClass(cls):
-        """Drop db after tests."""
-        
+        """Drop db after tests."""     
         db.drop_all()
-
-            
+ 
     def setUp(self):
         """Add sample user, then a sample post for that user_id."""
 
@@ -43,17 +40,18 @@ class UserViewsTestCase(TestCase):
         
         # 'create test user'
         user = User(first_name="Test123", last_name="Test321", image_url='test-img')
-        db.session.add(user)
+        
+        self.user_id = user.id
+        self.user = user
+        post = Post(title="Test-title", content="Test-content", user_id=self.user_id)
+        db.session.add(post)
         db.session.commit()
         
         
         # 'create test post'
-        # post = Post (title="Test-title", content="Test-content", user_id=user)
         # db.session.add(post)
         # db.session.commit()
 
-        self.user_id = user.id
-        self.user = user
 
     def tearDown(self):
         """Clean up any fouled transaction."""
