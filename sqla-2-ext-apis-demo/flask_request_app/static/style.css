@@ -1,0 +1,16 @@
+body {
+  margin: 100px 200px;
+}
+
+label {
+  margin: 20px 0 10px 0;
+}
+
+input {
+  display: block;
+}
+
+div {
+  margin: 20px 0
+}
+
