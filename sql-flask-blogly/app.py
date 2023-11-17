@@ -16,7 +16,6 @@ debug = DebugToolbarExtension(app)
 connect_db(app)
 db.create_all()
 
-
 @app.route('/')
 def root():
     """Homepage redirects to list of users."""

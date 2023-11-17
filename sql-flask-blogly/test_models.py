@@ -18,9 +18,14 @@ class UserModelTestCase(TestCase):
         """Clean up any existing pets."""
 
         User.query.delete()
-        Post.query.delete()
-        Tag.query.delete()
-        PostTag.query.delete()
+        
+        self.client = app.test_client()
+        
+        user = User(first_name="Test123", last_name="Test321", image_url="test-img")
+        db.session.add(user)
+        db.session.commit()
+        
+        self.user_id = user.id
 
     def tearDown(self):
         """Clean up any fouled transaction."""
@@ -29,12 +34,12 @@ class UserModelTestCase(TestCase):
 
     def test_user(self):
         """create user instance"""
-        user = User(first_name="Test123", last_name="Test321", image_url="test-img")
-
-        self.assertEqual(user.first_name, "Test123")
-        self.assertEqual(user.last_name, "Test321")
-        self.assertEqual(user.image_url, "test-img")
-        # # self.assertEquals(user.full_name(), "Test123 Test321")
+        with self.client:
+            
+            self.assertEqual(self.user.first_name, "Test123")
+            self.assertEqual(self.user.last_name, "Test321")
+            self.assertEqual(self.user.image_url, "test-img")
+            # # self.assertEquals(user.full_name(), "Test123 Test321")
 
 
 

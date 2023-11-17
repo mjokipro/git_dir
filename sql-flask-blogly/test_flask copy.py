@@ -4,53 +4,36 @@ from app import app
 from models import db, User, Post, Tag
 
 # Use test database and don't clutter tests with SQL
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly_tests'
 
 # Make Flask errors be real errors, rather than HTML pages with error info
+app.config['TESTING'] = True
 
 # This is a bit of hack, but don't use Flask DebugToolbar
+app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
 
+db.drop_all()
+db.create_all()
 
 
 class UserViewsTestCase(TestCase):
     """Tests for views for Users."""
 
-    @classmethod
-    def setUpClass(cls):
-        """Connect & create postgresql db - set up class features."""
-        
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly_test_db'
-        app.config['SQLALCHEMY_ECHO'] = False
-        app.config['TESTING'] = True
-        app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
-        app.config['WTF_CSRF_ENABLED'] = False
-        db.create_all()
-
-
-    
-    @classmethod
-    def tearDownClass(cls):
-        """Drop db after tests."""
-        
-        db.drop_all()
-
-            
     def setUp(self):
-        """Add sample user, then a sample post for that user_id."""
+        """Add sample user."""
 
         User.query.delete()
         Post.query.delete()
+        Tag.query.delete()
         # # PostTag.query.delete()
         
-        # 'create test user'
+        # 'test' created here
         user = User(first_name="Test123", last_name="Test321", image_url='test-img')
         db.session.add(user)
         db.session.commit()
-        
-        
-        # 'create test post'
-        # post = Post (title="Test-title", content="Test-content", user_id=user)
-        # db.session.add(post)
-        # db.session.commit()
+
+        # # tag_ids = [int(num) for num in request.form.getlist("tags")]
+        # # tags = Tag.query.filter(Tag.id.in_(tag_ids)).all()
 
         self.user_id = user.id
         self.user = user
