@@ -17,7 +17,9 @@ class Todo(db.Model):
     done = db.Column(db.Boolean, default=False)
 
     def serialize(self):
-        """Returns a dict representation of todo which we can turn into JSON"""
+        """Prepare data for jsonify (return dict{})."""
+        #  create instance method
+        
         return {
             'id': self.id,
             'title': self.title,
