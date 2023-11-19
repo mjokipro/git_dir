@@ -1,10 +1,10 @@
-alert("I am here")
+// alert("I am here")
 console.debug("I am here")
-console.log("I am here heel")
+console.log("I am here yoyoyu")
 console.log("Hello")
 
-$('.delete-todo').click(function() {
+$('.delete-todo').click(function () {
     alert("You clicked")
-    console.log("I am here")
+    console.log("You clicked")
     console.debug("YOU CLICKED!!!")
 })

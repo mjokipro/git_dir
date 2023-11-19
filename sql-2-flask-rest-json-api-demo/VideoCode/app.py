@@ -3,12 +3,15 @@ from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, Todo
 
 app = Flask(__name__)
+app.config.update(TEMPLATES_AUTO_RELOAD=True)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///todos_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['SECRET_KEY'] = "chickenzarecool21837"
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+app.config['FLASK_ENV'] = 'development'
 debug = DebugToolbarExtension(app)
 
 connect_db(app)
