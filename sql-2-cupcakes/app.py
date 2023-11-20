@@ -31,11 +31,11 @@ def show_all_cupcakes_list():
     
     return jsonify(cupcakes=cupcakes)
 
-@app.route("/api/cupcakes/<int:cupcake_id>")
-def show_cupcake_detail(cupcake_id):
+@app.route("/api/cupcakes/<int:id>")
+def show_cupcake_detail(id):
     """Show a single cupcake."""
     
-    cupcake = Cupcake.query.get_or_404(cupcake_id)
+    cupcake = Cupcake.query.get_or_404(id)
     
     return jsonify(cupcake=cupcake.serialize())
 
@@ -57,6 +57,34 @@ def post_add_cupcake_form():
     serialized = cupcake.serialize()
     
     return (jsonify(cupcake=serialized), 201)
+
+@app.route('/api/cupcakes/<int:id>', methods=["PATCH"])
+def update_cupcake(id):
+    """'PATCH' and show info for a todo."""
+    data = request.json
+    cupcake = Cupcake.query.get_or_404(id)
+    
+    cupcake.flavor = data['flavor']
+    cupcake.size = data['rating']
+    cupcake.rating = data['size']
+    cupcake.image = data['image']
+    
+    db.session.add(cupcake)
+    db.session.commit()
+    # db.session.query(Todo).filter_by(id=id).update(request.json)
+    
+    return jsonify(cupcake=cupcake.serialize())
+
+@app.route('/api/cupcakes/<int:id>', methods=["DELETE"])
+def delete_cupcake(id):
+    """'DELETE' and show info for a todo."""
+    cupcake = Cupcake.query.get_or_404(id)
+    
+    db.session.delete(cupcake)
+    db.session.commit()
+    # db.session.query(Todo).filter_by(id=id).update(request.json)
+    
+    return jsonify(message="Deleted")
 
 if __name__ == '__main__':
     app.run(debug=True)
