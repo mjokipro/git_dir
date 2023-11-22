@@ -28,12 +28,12 @@ CUPCAKE_DATA_2 = {
     "image": "http://test.com/cupcake2.jpg"
 }
 
-CUPCAKE_DATA_3 = {
-    "flavor": "TestFlavor3",
-    "size": "TestSize3",
-    "rating": 10,
-    "image": "http://test.com/cupcake3.jpg"
-}
+# CUPCAKE_DATA_3 = {
+#     "flavor": "TestFlavor3",
+#     "size": "TestSize3",
+#     "rating": 10,
+#     "image": "http://test.com/cupcake3.jpg"
+# }
 
 class CupcakeViewsTestCase(TestCase):
     """Tests for views of API."""

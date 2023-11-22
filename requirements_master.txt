@@ -25,3 +25,4 @@ WTForms==2.2.1
 requests==2.22.0
 yapf==0.29.0
 urllib3==1.25.3
+gunicorn==21.2.0
