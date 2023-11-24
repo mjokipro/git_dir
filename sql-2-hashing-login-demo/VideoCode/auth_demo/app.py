@@ -3,6 +3,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from models import connect_db, db, User, Tweet
 from forms import UserForm, TweetForm
 from sqlalchemy.exc import IntegrityError
+from collections.abc import Container
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///auth_demo"
@@ -100,3 +101,6 @@ def logout_user():
     session.pop('user_id')
     flash("Goodbye!", "info")
     return redirect('/')
+
+if __name__ == '__main__':
+    app.run(debug=True)
