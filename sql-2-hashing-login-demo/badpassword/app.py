@@ -74,3 +74,5 @@ def secret():
     """Example hidden page for logged-in users only."""
 
     return render_template("secret.html")
+if __name__ == '__main__':
+    app.run(debug=True)

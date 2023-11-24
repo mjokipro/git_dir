@@ -1,8 +1,8 @@
-"""Example flask app that stores passwords hashed with Bcrypt. Yay!"""
+"""Example flask app that stores passwords in clear text. Yeck."""
 
 from flask import Flask, render_template, redirect, session, flash
 from flask_debugtoolbar import DebugToolbarExtension
-from models import connect_db, db, User
+from models import connect_db, db, BadUser
 from forms import RegisterForm, LoginForm
 
 app = Flask(__name__)
@@ -34,11 +34,9 @@ def register():
         name = form.username.data
         pwd = form.password.data
 
-        user = User.register(name, pwd)
+        user = BadUser(username=name, password=pwd)
         db.session.add(user)
         db.session.commit()
-
-        session["user_id"] = user.id
 
         # on successful login, redirect to secret page
         return redirect("/secret")
@@ -57,44 +55,22 @@ def login():
         name = form.username.data
         pwd = form.password.data
 
-        # authenticate will return a user or False
-        user = User.authenticate(name, pwd)
+        user = BadUser.query.filter_by(username=name).first()
 
-        if user:
-            session["user_id"] = user.id  # keep logged in
+        if user and user.password == pwd:
+            # on successful login, redirect to secret page
             return redirect("/secret")
 
         else:
+            # re-render the login page with an error
             form.username.errors = ["Bad name/password"]
 
     return render_template("login.html", form=form)
-# end-login
+# end_login
 
 
 @app.route("/secret")
 def secret():
     """Example hidden page for logged-in users only."""
 
-    if "user_id" not in session:
-        flash("You must be logged in to view!")
-        return redirect("/")
-
-        # alternatively, can return HTTP Unauthorized status:
-        #
-        # from werkzeug.exceptions import Unauthorized
-        # raise Unauthorized()
-
-    else:
-        return render_template("secret.html")
-
-
-@app.route("/logout")
-def logout():
-    """Logs user out and redirects to homepage."""
-
-    session.pop("user_id")
-
-    return redirect("/")
-
-# if __name__ == '__main__':
-#     app.run(debug=True)
+    return render_template("secret.html")

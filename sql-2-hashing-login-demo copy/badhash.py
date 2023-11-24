@@ -2,10 +2,6 @@
 
 from random import randint
 
-d = {
-    'name': 'Test1',
-    'house': 'Test_house'
-}
 
 def next_char(char):
     """Return next character.
