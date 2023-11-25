@@ -11,28 +11,38 @@ def connect_db(app):
 
     db.app = app
     db.init_app(app)
-
-
+    
 class Tweet(db.Model):
+    """'Tweet' model."""
+    
     __tablename__ = 'tweets'
-
+    
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    
     text = db.Column(db.Text, nullable=False)
+    
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-
-    user = db.relationship('User', backref="tweets")
-
+    
+    user = db.relationship('User', backref='tweets')
+    
+    def __repr__(self):
+        return f"<Tweet {self.text} {self.user_id} {self.user}>"
 
 class User(db.Model):
-
+    """'User' model."""
+    
     __tablename__ = 'users'
-
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-
-    username = db.Column(db.Text, nullable=False,  unique=True)
-
+    
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)   
+    
+    username = db.Column(db.Text, nullable=False, unique=True)
+    
     password = db.Column(db.Text, nullable=False)
-
+    
+    def __repr__(self):
+        return f"<User {self.username} {self.password}>"
+    
+     # start_register
     @classmethod
     def register(cls, username, pwd):
         """Register user w/hashed password & return user."""
@@ -43,7 +53,9 @@ class User(db.Model):
 
         # return instance of user w/username and hashed pwd
         return cls(username=username, password=hashed_utf8)
+    # end_register
 
+    # start_authenticate
     @classmethod
     def authenticate(cls, username, pwd):
         """Validate that user exists & password is correct.
@@ -58,3 +70,4 @@ class User(db.Model):
             return u
         else:
             return False
+    # end_authenticate    
