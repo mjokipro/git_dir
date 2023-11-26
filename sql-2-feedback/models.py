@@ -27,11 +27,11 @@ class User(db.Model):
     first_name = db.Column(db.String(30), nullable=False)
     last_name = db.Column(db.String(30), nullable=False)
     
-    # feedback = db.relationship("Feedback", backref="user", cascade="all, delete")
+    feedback = db.relationship("Feedback", backref="user", cascade="all, delete")
     
     def __repr__(self):
         s = self
-        return f"<User { s.username }, { s.email }, { s.first_name }, { s.last_name }>"
+        return f"<User { s.username }, { s.email }, { s.first_name }, { s.last_name } { s.feedback }>"
     
     @classmethod
     def register(cls, username, password, first_name, last_name, email):
