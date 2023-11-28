@@ -10,8 +10,11 @@
 </div>
 
 
-<div class="text-danger">
-  SHOW ALL OF THE SONGS IN THIS PLAYLIST HERE
+<div class="text-success">
+  
+{% for s in playlist.songs %}
+<p>{{ s }}</p>
+{% endfor %}
 </div>
 
 <p>
