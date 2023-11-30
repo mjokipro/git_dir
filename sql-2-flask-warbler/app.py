@@ -1,10 +1,10 @@
 import os
 
-from flask import Flask, render_template, request, flash, redirect, session, g
+from flask import Flask, render_template, request, flash, redirect, session, g, abort
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
 
-from forms import UserAddForm, LoginForm, MessageForm, UserEditForm
+from forms import UserAddForm, UserEditForm, LoginForm, MessageForm
 from models import db, connect_db, User, Message
 
 CURR_USER_KEY = "curr_user"
@@ -52,6 +52,7 @@ def do_logout():
     if CURR_USER_KEY in session:
         del session[CURR_USER_KEY]
 
+
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
     """Handle user signup.
@@ -63,7 +64,8 @@ def signup():
     If the there already is a user with that username: flash message
     and re-present form.
     """
-
+    if CURR_USER_KEY in session:
+        del session[CURR_USER_KEY]
     form = UserAddForm()
 
     if form.validate_on_submit():
@@ -76,15 +78,12 @@ def signup():
             )
             db.session.commit()
 
-        except IntegrityError:
+        except IntegrityError as e:
             flash("Username already taken", 'danger')
             return render_template('users/signup.html', form=form)
 
         do_login(user)
 
-        import pdb
-        pdb.set_trace()
-        
         return redirect("/")
 
     else:
@@ -105,11 +104,8 @@ def login():
             do_login(user)
             flash(f"Hello, {user.username}!", "success")
             return redirect("/")
-        
+
         flash("Invalid credentials.", 'danger')
-        
-    # import pdb
-    # pdb.set_trace()
 
     return render_template('users/login.html', form=form)
 
@@ -118,14 +114,14 @@ def login():
 def logout():
     """Handle logout of user."""
 
-    # IMPLEMENT THIS
     do_logout()
-    
-    flash("You have successfully logged out.", "success")
-    
+
+    flash("You have successfully logged out.", 'success')
     return redirect("/login")
 
-####################  General user routes:  ###########################################
+
+##############################################################################
+# General user routes:
 
 @app.route('/users')
 def list_users():
@@ -141,9 +137,6 @@ def list_users():
     else:
         users = User.query.filter(User.username.like(f"%{search}%")).all()
 
-    # import pdb
-    # pdb.set_trace()
-    
     return render_template('users/index.html', users=users)
 
 
@@ -152,7 +145,6 @@ def users_show(user_id):
     """Show user profile."""
 
     user = User.query.get_or_404(user_id)
-
     # snagging messages in order from the database;
     # user.messages won't be in order by default
     messages = (Message
@@ -161,10 +153,8 @@ def users_show(user_id):
                 .order_by(Message.timestamp.desc())
                 .limit(100)
                 .all())
-    # import pdb
-    # pdb.set_trace()
-    
-    return render_template('users/show.html', user=user, messages=messages)
+    likes = [message.id for message in user.likes]
+    return render_template('users/show.html', user=user, messages=messages, likes=likes)
 
 
 @app.route('/users/<int:user_id>/following')
@@ -176,10 +166,6 @@ def show_following(user_id):
         return redirect("/")
 
     user = User.query.get_or_404(user_id)
-    
-    # import pdb
-    # pdb.set_trace()
-    
     return render_template('users/following.html', user=user)
 
 
@@ -192,10 +178,6 @@ def users_followers(user_id):
         return redirect("/")
 
     user = User.query.get_or_404(user_id)
-    
-    # import pdb
-    # pdb.set_trace()
-    
     return render_template('users/followers.html', user=user)
 
 
@@ -211,9 +193,6 @@ def add_follow(follow_id):
     g.user.following.append(followed_user)
     db.session.commit()
 
-    # import pdb
-    # pdb.set_trace()
-    
     return redirect(f"/users/{g.user.id}/following")
 
 
@@ -228,11 +207,41 @@ def stop_following(follow_id):
     followed_user = User.query.get(follow_id)
     g.user.following.remove(followed_user)
     db.session.commit()
-    
-    # import pdb
-    # pdb.set_trace()
 
     return redirect(f"/users/{g.user.id}/following")
+
+@app.route('/users/<int:user_id>/likes', methods=["GET"])
+def show_likes(user_id):
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
+    user = User.query.get_or_404(user_id)
+    return render_template('users/likes.html', user=user, likes=user.likes)
+
+
+@app.route('/messages/<int:message_id>/like', methods=['POST'])
+def add_like(message_id):
+    """Toggle a liked message for the currently-logged-in user."""
+
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
+    liked_message = Message.query.get_or_404(message_id)
+    if liked_message.user_id == g.user.id:
+        return abort(403)
+
+    user_likes = g.user.likes
+
+    if liked_message in user_likes:
+        g.user.likes = [like for like in user_likes if like != liked_message]
+    else:
+        g.user.likes.append(liked_message)
+
+    db.session.commit()
+
+    return redirect("/")
 
 
 @app.route('/users/profile', methods=["GET", "POST"])
@@ -242,30 +251,24 @@ def edit_profile():
     if not g.user:
         flash("Access unauthorized.", "danger")
         return redirect("/")
-    
+
     user = g.user
-    # IMPLEMENT THIS
     form = UserEditForm(obj=user)
 
     if form.validate_on_submit():
         if User.authenticate(user.username, form.password.data):
-            user.username=form.username.data,
-            user.email=form.email.data,
-            user.image_url=form.image_url.data or User.image_url.default.arg,
-            user.bio = form.bio.data,
-            user.header_image_url = form.header_image_url.data
+            user.username = form.username.data
+            user.email = form.email.data
+            user.image_url = form.image_url.data or "/static/images/default-pic.png"
+            user.header_image_url = form.header_image_url.data or "/static/images/warbler-hero.jpg"
+            user.bio = form.bio.data
+
             db.session.commit()
-            return redirect(f'/users/{ user.id }')
+            return redirect(f"/users/{user.id}")
 
-        flash("Username already taken", 'danger')
+        flash("Wrong password, please try again.", 'danger')
 
-        # import pdb
-        # pdb.set_trace()
-
-    else:
-    
-        return render_template('users/edit.html', form=form, user_id=user.id)
-    
+    return render_template('users/edit.html', form=form, user_id=user.id)
 
 
 @app.route('/users/delete', methods=["POST"])
@@ -281,9 +284,6 @@ def delete_user():
     db.session.delete(g.user)
     db.session.commit()
 
-    # import pdb
-    # pdb.set_trace()
-    
     return redirect("/signup")
 
 
@@ -308,9 +308,6 @@ def messages_add():
         g.user.messages.append(msg)
         db.session.commit()
 
-        # import pdb
-        # pdb.set_trace()
-        
         return redirect(f"/users/{g.user.id}")
 
     return render_template('messages/new.html', form=form)
@@ -320,11 +317,7 @@ def messages_add():
 def messages_show(message_id):
     """Show a message."""
 
-    msg = Message.query.get(message_id)
-    
-    # import pdb
-    # pdb.set_trace()
-    
+    msg = Message.query.get_or_404(message_id)
     return render_template('messages/show.html', message=msg)
 
 
@@ -335,15 +328,15 @@ def messages_destroy(message_id):
     if not g.user:
         flash("Access unauthorized.", "danger")
         return redirect("/")
-    
 
-    msg = Message.query.get(message_id)
+    msg = Message.query.get_or_404(message_id)
+    if msg.user_id != g.user.id:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
     db.session.delete(msg)
     db.session.commit()
 
-    # import pdb
-    # pdb.set_trace()
-    
     return redirect(f"/users/{g.user.id}")
 
 
@@ -361,6 +354,7 @@ def homepage():
 
     if g.user:
         following_ids = [f.id for f in g.user.following] + [g.user.id]
+
         messages = (Message
                     .query
                     .filter(Message.user_id.in_(following_ids))
@@ -368,13 +362,19 @@ def homepage():
                     .limit(100)
                     .all())
 
-        # import pdb
-        # pdb.set_trace()
+        liked_msg_ids = [msg.id for msg in g.user.likes]
 
-        return render_template('home.html', messages=messages)
+        return render_template('home.html', messages=messages, likes=liked_msg_ids)
 
     else:
         return render_template('home-anon.html')
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    """404 NOT FOUND page."""
+
+    return render_template('404.html'), 404
 
 
 ##############################################################################
@@ -393,6 +393,7 @@ def add_header(req):
     req.headers["Expires"] = "0"
     req.headers['Cache-Control'] = 'public, max-age=0'
     return req
+
 
 if __name__ == '__main__':
     app.run(debug=True)
