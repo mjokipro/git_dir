@@ -1,6 +1,7 @@
 {
-  "name": "firstapp",
+  "name": "first-app",
   "version": "1.0.0",
+  "description": "",
   "main": "firstNodeFile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,6 +11,5 @@
   "dependencies": {
     "axios": "^0.19.2",
     "faker": "^4.1.0"
-  },
-  "description": ""
+  }
 }
