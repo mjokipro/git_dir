@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "bubble.db.elephantsql.com (bubble-01)",
+            "driver": "PostgreSQL",
+            "name": "warbler",
+            "connectString": "postgres://jpvfxmgs:4E7FQRdDsNsDHaSnurpmVks3GvzRB0ca@bubble.db.elephantsql.com/jpvfxmgs"
+        }
+    ]
+}
