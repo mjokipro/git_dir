@@ -6,3 +6,5 @@ p_venv/requirements.
 snap/
 PYTHON_DISTRIBUTIONS/
 Python36/
+venv/
+node_modules/
