@@ -1,73 +1,41 @@
-const express = require('express');
-
-const app = express();
-
-// To parse http request body on each request:
-app.use(express.json()); //For JSON
-app.use(express.urlencoded({ extended: true })); //For Form Data
+const express = require('express')
+const app = express()
+// app.use(express.json())
+// app.use(express.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
-  res.send("HOMEPAGE!")
-})
-
+  return res.redirect('/dogs')})
+  
 app.get('/dogs', (req, res) => {
-  console.log("YOU ASKED FOR /DOGS!")
-  res.send("<h1>I AM DOG WOOF WOOF</h1>")
-})
+  console.log("Root")
+  console.log(req)
+  // console.log(res)
+    return res.send('<h1>i am a dog</h1>')})
+    
+app.get('/dogs2', (req, res) => {
+  console.log("Root")
+  console.log(req)
+  // console.log(res)
+    return res.send([1, 2, 3])})
 
-// THIS WILL NEVER RUN!
-app.get('/dogs', (req, res) => {
-  res.send("MEOW MEOW MEOW")
-})
+app.get('/post', function getPost(req, res) {
+  res.send("You created new post!")})
 
-app.get('/chickens/', (req, res) => {
-  res.send("BOCK! BOCK! BOCK! (get request)")
-})
-// POST ROUTE
-app.post('/chickens', function createChicken(req, res) {
-  res.send("YOU CREATED A NEW CHICKEN  (not really) (Post request)")
-})
+app.post('/post', function createPost(req, res) {
+  res.send("You created new post!")})
 
-const greetings = {
-  en: "hello",
-  fr: 'bonjour',
-  ic: 'halló',
-  ja: 'konnichiwa'
-}
+// app.get('/staff/:fname', function(req, res){
+//     return res.send(`Instructor:  ${ req.params.fname }`)})
 
-// Path Parameters:
-app.get("/greet/:language", (req, res) => {
-  const lang = req.params.language;
-  const greeting = greetings[lang];
-  if (!greeting) return res.send("INVALID LANGUAGE");
-  return res.send(greeting.toUpperCase());
-})
+// app.post('/api/staff', function(req, res){
+//     return res.send( { fname: req.body.fname } )})
 
-// QUERY STRING!
-app.get('/search', (req, res) => {
-  const { term = 'piggies', sort = 'top' } = req.query;
-  return res.send(`SEARCH PAGE!  Term is: ${term}, sort is: ${sort}`)
-})
+// app.get('/api/staff/:fname', function(req, res){
+//     return res.json( { fname: req.params.fname } )})
 
-// REQ.HEADERS
-app.get('/show-me-headers', (req, res) => {
-  console.log(req.rawHeaders)
-  console.log(req.headers)
-  res.send(req.headers)
-})
+// app.get('/whoops', function(req, res){
+//     return res.status(404).json('Whoops')
+// })
 
-app.get('/show-language', (req, res) => {
-  const lang = req.headers['accept-language']
-  res.send(`Your language preference is: ${lang}`)
-})
-
-// ACCESSING REQUEST BODY 
-app.post('/register', (req, res) => {
-  res.send(`Welcome, ${req.body.username}!!!`);
-})
-
-app.listen(3000, () => {
-  console.log("Server running on port 3000")
-});
-
-
+//////  put app.listen() at end of file  //////
+app.listen(3000, function(){console.log("App on 3000")})

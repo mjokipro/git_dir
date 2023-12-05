@@ -3,6 +3,8 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+app.get('/', (req, res) => {return res.redirect('/dogs')})
+
 app.get('/dogs', function(req, res){
     return res.send('dogs bark')})
 
