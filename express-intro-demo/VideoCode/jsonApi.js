@@ -11,15 +11,20 @@ const CANDIES = [
 ]
 
 app.get('/candies', (req, res) => {
-  res.json(CANDIES);
+  res.json(CANDIES)
 })
 
+// app.post('/candies', (req, res) => {
+//   CANDIES.push(req.body)
+//   res.json(CANDIES)
+// })
+
 app.post('/candies', (req, res) => {
-  if (req.body.name.toLowerCase() === "circus peanuts") {
-    res.status(403).json({ msg: "HORRIBLE CHOICE.  CIRCUS PEANUTS FORBIDDEN!" })
+  if(req.body.name.toLowerCase() == "circ peanuts"){
+    res.status(403).json({msg: "bad choice"})
   }
-  CANDIES.push(req.body);
-  res.status(201).json(CANDIES);
+  CANDIES.push(req.body)
+  res.status(201).json(CANDIES)
 })
 
 app.listen(3000, () => {
