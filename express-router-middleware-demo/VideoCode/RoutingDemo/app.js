@@ -1,12 +1,34 @@
 const express = require("express");
 const ExpressError = require("./expressError");
-
+// const morgan = require("morgan")
+// const userRoutes = require("./userRoutes")
 const app = express();
+const middleware = require("./middleware")
+const catRoutes = require("./routes/cats")
 
 app.use(express.json());
+
 // app.use(middleware.logger)
+// app.use(morgan('dev'))
 
 
+// app.use('/api/users', userRoutes)
+// app.use('/users', userRoutes)
+app.use('/cats', catRoutes)
+
+
+
+// include to remove excess from call trace, stopping 404 in terminal //
+app.get('/favicon.ico', (req, res) => res.sendStatus(204))
+
+///  sample authentications routes  ///
+app.get('/secret', middleware.checkForPassword, (req, res, next) => {
+  return res.send("secret")
+})
+
+app.get('/private', middleware.checkForPassword, (req, res, next) => {
+  return res.send("private")
+})
 
 // 404 handler
 app.use(function (req, res, next) {
@@ -27,6 +49,4 @@ app.use(function (err, req, res, next) {
   });
 });
 
-app.listen(3000, function () {
-  console.log("Server is listening on port 3000");
-});
+module.exports = app

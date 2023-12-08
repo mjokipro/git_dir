@@ -13,7 +13,6 @@ Flask-DebugToolbar==0.10.1
 Flask-SQLAlchemy==2.4.4
 Flask-WTF==0.14.2
 gunicorn==21.0.0
-pip==22.0.0
 ipython==7.0.1
 ipython-genutils==0.2.0
 itsdangerous==1.1.0
