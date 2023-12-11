@@ -15,12 +15,16 @@ app.use(express.json());
 // })
 
 app.post('/', function(req, res) {
-  let developers = req.body.developers
-  request(`https://api.github.com/search/users?q=${developers}`, function(error, response, body) {
-    console.log(body)
-    return res.json(response.body)
+  let developers = req.body.developers;
+  request({
+    url: `https://api.github.com/search/users?q=${developers}`,
+    headers: {
+      'User-Agent': 'mjokipro' // Replace 'YourAppName' with your app name or GitHub username
+    }
+  }, function(error, response, body) {
+    console.log(body);
+    return res.json(JSON.parse(body)); // Parse the body to JSON before returning
   });
-
 });
 
 async function getGit(){
