@@ -15,11 +15,11 @@ app.use(express.json());
 
 app.post('/', function(req, res) {
   let developers = req.body.developers
-  request(`https://api.github.com/users?${developers}`, function(error, response, body) {
+  request(`https://api.github.com/search/users?q=${developers}`, function(error, response, body) {
     console.log(body)
+    return res.json(response.body)
   });
 
-  res.json(developers)
 });
 
 async function getGit(){
