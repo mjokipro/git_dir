@@ -3,13 +3,19 @@
 const express = require("express");
 const app = express();
 const ExpressError = require("./expressError");
+// const uRoutes = require("routes/users")
+const db = require("./db")
+
 
 // Parse request bodies for JSON
 app.use(express.json());
 
-const uRoutes = require("./routes/users");
-app.use("/users", uRoutes);
+// app.use("/users", uRoutes)
 
+app.get('/', async (req, res) => {
+  const results = await db.query(`SELECT * FROM usersdb`)
+  return res.json(results.rows)
+})
 /** 404 handler */
 
 app.use(function(req, res, next) {
@@ -33,6 +39,8 @@ app.use(function(err, req, res, next) {
     }
   });
 });
+
+// module.exports = app
 
 app.listen(3000, function () {
   console.log("Server started on 3000");
