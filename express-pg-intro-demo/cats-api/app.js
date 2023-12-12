@@ -1,7 +1,7 @@
 /** Express app for cats. */
 
 const express = require("express");
-const app = express();
+const app = new express();
 const catRoutes = require("./routes/cats");
 const ExpressError = require("./expressError");
 
