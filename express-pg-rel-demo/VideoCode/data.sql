@@ -72,3 +72,10 @@ VALUES
   (2, 'js'),
   (3, 'js'),
   (3, 'py');
+
+SELECT m.id, m.msg, t.tag
+FROM messages AS m 
+LEFT JOIN messages_tags AS mt
+ON m.id = mt.message_id
+LEFT JOIN tags AS t
+ON mt.tag_code = t.code

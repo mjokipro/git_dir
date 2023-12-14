@@ -8,9 +8,9 @@ const ExpressError = require('./expressError');
 app.use(express.json());
 
 const uRoutes = require('./routes/users');
-const mRoutes = require('./routes/messages');
+const mRoutes = require('./routes/messages')
 app.use('/users', uRoutes);
-app.use('/messages', mRoutes);
+app.use('/messages', mRoutes)
 
 /** 404 handler */
 
@@ -31,6 +31,4 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(3000, function () {
-  console.log('Server started on 3000');
-});
+module.exports = app
