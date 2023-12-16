@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+  <title>Box Models</title>
+  <style>
+
+    div {
+      width: 200px;
+      padding: 1em;
+      background-color: lightblue;
+      border: solid 5px black;
+      height: 200px;
+      margin-bottom: 2em;
+      margin-right: 500px;
+    }
+
+    #a {
+      /* box-sizing: content-box; */
+    }
+
+    #b {
+      box-sizing: border-box;
+    }
+
+    div:hover {
+      outline: solid 5px red;
+      outline-offset: 5px;
+    }
+
+  </style>
+</head>
+
+<body>
+<h1>Box Models</h1>
+<div id="a"></div>
+<div id="b"></div>
+</body>
+</html>  
+

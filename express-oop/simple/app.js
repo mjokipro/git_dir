@@ -1,13 +1,15 @@
 const express = require("express");
+const cRoutes = require("./routes/cats");
+const dRoutes = require("./routes/dogs");
 const app = express();
 const ExpressError = require("./expressError");
 
 // Parse request bodies for JSON
 app.use(express.json());
 
-const cRoutes = require("./routes/cats");
 app.use("/cats", cRoutes);
 
+app.use("/dogs", dRoutes);
 
 /** 404 handler */
 
