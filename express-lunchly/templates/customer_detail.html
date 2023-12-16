@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
-{% block title %}{{ customer.firstName }} {{ customer.lastName }}{% endblock %}
+{% block title %}{{ customer.fullName }}{% endblock %}
 
 {% block content %}
 
 
-<h1>{{ customer.firstName }} {{ customer.lastName }}</h1>
+<h1>{{ customer.fullName }}</h1>
+
 
 <div class="row">
 
@@ -19,7 +20,7 @@
     {% if reservations %}
     <ul>
       {% for reservation in reservations %}
-      <li><b>{{ reservation.getformattedStartAt() }}</b> for {{ reservation.numGuests }}</li>
+      <li><b>{{ reservation.formattedStartAt }}</b> for {{ reservation.numGuests }}</li>
       {% endfor %}
     </ul>
     {% else %}

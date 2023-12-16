@@ -4,11 +4,10 @@ const moment = require("moment");
 
 const db = require("../db");
 
-
 /** A reservation for a party */
 
 class Reservation {
-  constructor({id, customerId, numGuests, startAt, notes}) {
+  constructor({ id, customerId, numGuests, startAt, notes }) {
     this.id = id;
     this.customerId = customerId;
     this.numGuests = numGuests;
@@ -16,27 +15,33 @@ class Reservation {
     this.notes = notes;
   }
 
-  set numGuests(val){
-    if(val < 1) throw new Error("must have more than 1") 
-    this._numGuests = val
+  /** methods for getting/setting number of guests */
+
+  set numGuests(val) {
+    if (val < 1) throw new Error("Cannot have fewer than 1 guest.");
+    this._numGuests = val;
   }
 
-  get numGuests(){
-    return this._numGuests
+  get numGuests() {
+    return this._numGuests;
   }
 
-  set startAt(val){
-    if(val instanceof Data && !isNaN(val)) this._startAt = val
-    else throw new Error("not valid start at")
+  /** methods for setting/getting startAt time */
+
+  set startAt(val) {
+    if (val instanceof Date && !isNaN(val)) this._startAt = val;
+    else throw new Error("Not a valid startAt.");
   }
 
-  get startAt(){
-    return this._startAt
+  get startAt() {
+    return this._startAt;
   }
 
   get formattedStartAt() {
     return moment(this.startAt).format("MMMM Do YYYY, h:mm a");
   }
+
+  /** methods for setting/getting notes (keep as a blank string, not NULL) */
 
   set notes(val) {
     this._notes = val || "";
@@ -45,6 +50,8 @@ class Reservation {
   get notes() {
     return this._notes;
   }
+
+  /** methods for setting/getting customer ID: can only set once. */
 
   set customerId(val) {
     if (this._customerId && this._customerId !== val)
@@ -56,26 +63,25 @@ class Reservation {
     return this._customerId;
   }
 
-  getformattedStartAt() {
-    return moment(this.startAt).format('MMMM Do YYYY, h:mm a');
-  }
-
   /** given a customer id, find their reservations. */
 
   static async getReservationsForCustomer(customerId) {
     const results = await db.query(
-          `SELECT id, 
+      `SELECT id, 
            customer_id AS "customerId", 
            num_guests AS "numGuests", 
            start_at AS "startAt", 
            notes AS "notes"
          FROM reservations 
          WHERE customer_id = $1`,
-        [customerId]
+      [customerId]
     );
 
     return results.rows.map(row => new Reservation(row));
   }
+
+  /** find a reservation by id. */
+
   static async get(id) {
     const result = await db.query(
       `SELECT id, 
@@ -99,6 +105,8 @@ class Reservation {
     return new Reservation(reservation);
   }
 
+  /** save reservation. */
+
   async save() {
     if (this.id === undefined) {
       const result = await db.query(
@@ -112,11 +120,10 @@ class Reservation {
       await db.query(
         `UPDATE reservations SET num_guests=$1, start_at=$2, notes=$3
              WHERE id=$4`,
-             [this.numGuests, this.startAt, this.notes, this.id]
+        [this.numGuests, this.startAt, this.notes, this.id]
       );
     }
   }
 }
-
 
 module.exports = Reservation;
