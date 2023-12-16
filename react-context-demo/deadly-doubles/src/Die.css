@@ -1,0 +1,11 @@
+.Die {
+  border-radius: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3em;
+  width: 3em;
+  font-weight: bold;
+  color: white;
+  box-shadow: 0.1em 0.1em 1em #666;
+}

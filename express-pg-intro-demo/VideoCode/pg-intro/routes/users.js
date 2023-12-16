@@ -13,6 +13,7 @@ router.get('/', async (req, res, next) => {
     return next(e);
   }
 })
+
 router.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;

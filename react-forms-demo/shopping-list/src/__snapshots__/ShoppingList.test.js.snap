@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<ShoppingList>
+  <div
+    className="ShoppingList"
+  >
+    <NewListItemForm
+      addItem={[Function]}
+    >
+      <form
+        onSubmit={[Function]}
+      >
+        <label
+          htmlFor="name"
+        >
+          Name:
+        </label>
+        <input
+          id="name"
+          name="name"
+          onChange={[Function]}
+          value=""
+        />
+        <label
+          htmlFor="qty"
+        >
+          Qty:
+        </label>
+        <input
+          id="qty"
+          name="qty"
+          onChange={[Function]}
+          type="number"
+          value={0}
+        />
+        <button>
+          Add a new item!
+        </button>
+      </form>
+    </NewListItemForm>
+    <ul>
+      <li
+        key="1"
+      >
+        first
+        :
+        1
+      </li>
+    </ul>
+  </div>
+</ShoppingList>
+`;
