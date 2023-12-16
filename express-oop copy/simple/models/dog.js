@@ -29,21 +29,9 @@ class Dog{
         `INSERT INTO dogs (name, age)
         VALUES ($1, $2) RETURNING id`,
         [name, age]);
-    // const {id, name, age} = result.rows[0]
+
     let { id } = result.rows[0];
     return new Dog(id, name, age);
-  }
-  // instance method //
-  async delete_2(id){
-    await db.query(`
-        DELETE FROM dogs WHERE id = $1
-        `, [this.id])  
-  } 
-  async save(){
-    await db.query(
-      `UPDATE dogs SET name = $1, age = $2
-      WHERE id = $3`,
-      [this.name, this.age, this.id]);
   }
   speak(){
     console.log(`${ this.name } says Woof!`)
