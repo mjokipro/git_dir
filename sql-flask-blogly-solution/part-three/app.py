@@ -3,7 +3,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, User, Post, Tag
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///blogly"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://wtjudtns:dkZkE8vJ46BamdTzw0vMDjTwjnMCllAD@bubble.db.elephantsql.com/wtjudtns'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'ihaveasecret'
 
@@ -270,3 +270,7 @@ def tags_destroy(tag_id):
     flash(f"Tag '{tag.name}' deleted.")
 
     return redirect("/tags")
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
