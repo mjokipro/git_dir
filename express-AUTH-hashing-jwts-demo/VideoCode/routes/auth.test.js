@@ -14,6 +14,7 @@ const BCRYPT_WORK_FACTOR = 1;
 let testUserToken;
 let testAdminToken;
 
+// hash pword
 beforeEach(async function () {
   const hashedPassword = await bcrypt.hash(
     "secret", BCRYPT_WORK_FACTOR);

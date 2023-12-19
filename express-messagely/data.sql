@@ -1,3 +1,8 @@
+DROP DATABASE IF EXISTS messagely;
+CREATE DATABASE messagely;
+
+\c messagely
+
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS messages;
 
@@ -19,3 +24,14 @@ CREATE TABLE messages (
     sent_at timestamp with time zone NOT NULL,
     read_at timestamp with time zone
 );
+
+-- INSERT INTO users
+-- (username, password, first_name, last_name, phone)
+-- VALUES
+-- ('user1', 'pword1', 'test_fname1', 'test_lname1', '555-555-5555'),
+-- ('user2', 'pword2', 'test_fname2', 'test_lname2', '555-555-5556');
+
+-- INSERT INTO messages
+-- (from_username, to_username, body, sent_at, read_at)
+-- VALUES
+-- ('user1', 'user2', 'test_msg_1');

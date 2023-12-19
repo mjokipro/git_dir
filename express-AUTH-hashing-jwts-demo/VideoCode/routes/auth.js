@@ -7,6 +7,7 @@ const db = require("../db");
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const { BCRYPT_WORK_FACTOR, SECRET_KEY } = require("../config")
+const {ensureLoggedIn, ensureAdmin} = require("../middleware/auth")
 
 router.get('/', (req, res, next) => {
   res.send("APP IS WORKING!!!")
@@ -49,7 +50,7 @@ router.post('/login', async (req, res, next) => {
     const user = results.rows[0]
     if(user){
       if(await bcrypt.compare(password, user.password)){
-        const token = jwt.sign({username }, SECRET_KEY)
+        const token = jwt.sign({username, type: "admin" }, SECRET_KEY)
         return res.json({msg: `Logged in.`, token})
       }
     }
@@ -59,14 +60,24 @@ router.post('/login', async (req, res, next) => {
   }
 })
 
-router.get('/topsecret', (req, res, next) => {
+router.get('/topsecret', 
+ensureLoggedIn, 
+(req, res, next) => {
   try{
-    const token = req.body._token
-    const data = jwt.verify(token, SECRET_KEY)
+    // const token = req.body._token
+    // const data = jwt.verify(token, SECRET_KEY)
     return res.json({msg: "SIGNED IN!"})
   } catch(e){
     return next(new ExpressError("Please login first.", 401))
   }
+})
+
+router.get('/private', ensureLoggedIn, (req, res, next) => {
+  return res.json({msg: `Private Area: ${req.user.username}`})
+})
+
+router.get('/adminhome', ensureAdmin, (req, res, next) => {
+  return res.json({msg: `ADMIN DASHBOARD ${req.user.username}`})
 })
 
 module.exports = router;

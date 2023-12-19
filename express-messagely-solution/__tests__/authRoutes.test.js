@@ -17,7 +17,7 @@ describe("Auth Routes Test", function () {
       password: "password",
       first_name: "Test1",
       last_name: "Testy1",
-      phone: "+14155550000",
+      phone: "+13344254514",
     });
   });
 
