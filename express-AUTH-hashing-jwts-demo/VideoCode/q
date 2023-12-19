@@ -1,6 +1,0 @@
-        List of relations
- Schema | Name | Type  |  Owner   
---------+------+-------+----------
- public | pets | table | mjokipro
-(1 row)
-
