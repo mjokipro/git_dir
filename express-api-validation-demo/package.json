@@ -1,0 +1,17 @@
+{
+  "name": "express-api-validation-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "jsonschema": "^1.2.4",
+    "locus": "^2.0.1"
+  }
+}

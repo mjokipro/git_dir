@@ -1,8 +1,13 @@
-const express = require("express");
-const Book = require("../models/book");
+/** Routes for books in bookstore. */
 
+const express = require("express");
 const router = new express.Router();
 
+const { validate } = require("jsonschema");
+const bookSchemaNew = require("../schemas/bookSchemaNew");
+const bookSchemaUpdate = require("../schemas/bookSchemaUpdate");
+
+const Book = require("../models/book");
 
 /** GET / => {books: [book, ...]}  */
 

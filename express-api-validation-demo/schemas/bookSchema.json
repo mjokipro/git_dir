@@ -1,0 +1,108 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "book"
+  ],
+  "properties": {
+    "book": {
+      "$id": "#/properties/book",
+      "type": "object",
+      "title": "The Book Schema",
+      "required": [
+        "isbn",
+        "amazon-url",
+        "author",
+        "language",
+        "pages",
+        "publisher",
+        "title",
+        "year"
+      ],
+      "properties": {
+        "isbn": {
+          "$id": "#/properties/book/properties/isbn",
+          "type": "string",
+          "title": "The Isbn Schema",
+          "default": "",
+          "examples": [
+            "0691161518"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "amazon-url": {
+          "$id": "#/properties/book/properties/amazon-url",
+          "type": "string",
+          "title": "The Amazon-url Schema",
+          "default": "",
+          "examples": [
+            "http://a.co/eobPtX2"
+          ],
+          "pattern": "^(.*)$",
+          "format": "uri"
+        },
+        "author": {
+          "$id": "#/properties/book/properties/author",
+          "type": "string",
+          "title": "The Author Schema",
+          "default": "",
+          "examples": [
+            "Matthew Lane"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "language": {
+          "$id": "#/properties/book/properties/language",
+          "type": "string",
+          "title": "The Language Schema",
+          "default": "",
+          "examples": [
+            "english"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "pages": {
+          "$id": "#/properties/book/properties/pages",
+          "type": "integer",
+          "title": "The Pages Schema",
+          "default": 0,
+          "examples": [
+            264
+          ]
+        },
+        "publisher": {
+          "$id": "#/properties/book/properties/publisher",
+          "type": "string",
+          "title": "The Publisher Schema",
+          "default": "",
+          "examples": [
+            "Princeton University Press"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "title": {
+          "$id": "#/properties/book/properties/title",
+          "type": "string",
+          "title": "The Title Schema",
+          "default": "",
+          "examples": [
+            "Power-Up: Unlocking Hidden Math in Video Games"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "year": {
+          "$id": "#/properties/book/properties/year",
+          "type": "integer",
+          "title": "The Year Schema",
+          "default": 0,
+          "examples": [
+            2017
+          ]
+        }
+      }
+    }
+  }
+}
