@@ -65,11 +65,12 @@ class User {
     );
 
     const user = result.rows[0];
-
+      // bug fix 5 check for user first
+    if (!user) {
+      throw new ExpressError('Cannot authenticate', 401);
+    } 
     if (user && (await bcrypt.compare(password, user.password))) {
       return user;
-    } else {
-      throw new ExpressError('Cannot authenticate', 401);
     }
   }
 
@@ -78,8 +79,8 @@ class User {
    * [{username, first_name, last_name, email, phone}, ...]
    *
    * */
-
-  static async getAll(username, password) {
+// bug fix 4 remove username password
+  static async getAll() {
     const result = await db.query(
       `SELECT username,
                 first_name,

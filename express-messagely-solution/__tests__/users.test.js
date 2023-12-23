@@ -54,9 +54,8 @@ describe("Test User class", function () {
       username: "test",
       first_name: "Test",
       last_name: "Testy",
+      email: "test@test.com",
       phone: "+14155550000",
-      last_login_at: expect.any(Date),
-      join_at: expect.any(Date),
     });
   });
 

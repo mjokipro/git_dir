@@ -34,14 +34,13 @@ router.get('/', authUser, requireLogin, async function(req, res, next) {
  * If user cannot be found, return a 404 err.
  *
  */
-
-router.get('/:username', authUser, requireLogin, async function(
-  req,
-  res,
-  next
-) {
+// bug fix 7 add error logic
+router.get('/:username', authUser, requireLogin, async function(req, res, next) {
   try {
     let user = await User.get(req.params.username);
+    if (user == undefined) {
+      throw new ExpressError(`Username ${req.params.username} not found`, 404);
+    }
     return res.json({ user });
   } catch (err) {
     return next(err);
@@ -63,18 +62,22 @@ router.get('/:username', authUser, requireLogin, async function(
  *
  */
 
-router.patch('/:username', authUser, requireLogin, requireAdmin, async function(
-  req,
-  res,
-  next
-) {
+// bug fix 8 fix patch
+router.patch('/:username', authUser, requireLogin, async function(req, res, next) {
+  let acceptedData = ["first_name", "last_name", "phone", "email", "_token"]
   try {
     if (!req.curr_admin && req.curr_username !== req.params.username) {
-      throw new ExpressError('Only  that user or admin can edit a user.', 401);
+      throw new ExpressError('Only that user or admin can edit a user.', 401);
     }
 
-    // get fields to change; remove token so we don't try to change it
+    for (let each in req.body) {
+      if (!acceptedData.includes(each)) {
+        throw new ExpressError(`Cannot update invalid field name ${each}`, 401);
+      }
+    }
+
     let fields = { ...req.body };
+
     delete fields._token;
 
     let user = await User.update(req.params.username, fields);

@@ -2,15 +2,15 @@
 
 Answer the following questions below:
 
-- What is a JWT? can share tokens across different services.
+- What is a JWT?
 
-- What is the signature portion of the JWT?  What does it do? changes based on any other change made
+- What is the signature portion of the JWT?  What does it do?
 
-- If a JWT is intercepted, can the attacker see what's inside the payload? yes
+- If a JWT is intercepted, can the attacker see what's inside the payload?
 
-- How can you implement authentication with a JWT?  Describe how it works at a high level. You didnt explain it very well.
+- How can you implement authentication with a JWT?  Describe how it works at a high level.
 
-- Compare and contrast unit, integration and end-to-end tests. 
+- Compare and contrast unit, integration and end-to-end tests.
 
 - What is a mock? What are some things you would mock?
 

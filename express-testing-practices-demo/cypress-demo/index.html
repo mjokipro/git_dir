@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>I CAN HAZ MEMEZ</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="jumbotron pt-3 pb-3">
+    <div class="text-center">
+      <h4 class="display-4">I CAN HAZ MEMEZ?</h4>
+      <p>Fill out the form to start creating memes!</p>
+    </div>
+    <form id="meme-form">
+      <div class="form-group row">
+        <label for="image" class="col-sm-2 col-form-label">Image URL</label>
+        <div class="col-sm-10">
+          <input type="url" class="form-control" id="image" placeholder="What's the URL for your meme image?" required>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="text_above" class="col-sm-2 col-form-label">Text On Top</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="text_above" placeholder="(Optional) What text do you want at the top of the meme?">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="text_below" class="col-sm-2 col-form-label">Text On Bottom</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="text_below" placeholder="(Optional) What text do you want at the bottom of the meme?">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col d-flex justify-content-end">
+          <button type="submit" class="btn btn-primary">Add Meme</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="container">
+    <div class="row">
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

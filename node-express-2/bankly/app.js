@@ -33,6 +33,6 @@ app.use(function(err, req, res, next) {
   });
 });
 
-module.exports = app;
+// bug fix 1
 
 module.exports = app;
