@@ -1,7 +1,8 @@
-const db = require("../db");
-const User = require("./user");
-
-
+const bcrypt = require('bcrypt');
+const db = require('../db');
+const ExpressError = require('../helpers/expressError');
+const sqlForPartialUpdate = require('../helpers/partialUpdate');
+const { BCRYPT_WORK_FACTOR } = require("../config");
 
 describe("Test User class", function () {
   beforeEach(async function () {
