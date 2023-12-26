@@ -1,27 +1,18 @@
 const App = () => (
   <div>
     <Alert>
-      <h1>HELLO!!!!</h1>
+      <h1>hello</h1>
+    <RandomRange min={ 5 } max={ 8 } />
+    
+
     </Alert>
-    <RandomChoice choices={['red', 'green', 'yellow']} />
-    <RandomNumRange min={20} max={30} />
-    <RandomNumRange />
-
-    <Animal
-      name="Stevie Chicks"
-      species="Silkie Chicken"
-      emoji="🐔"
-      isCute
-    />
-    <Animal name="Patrick" species="Red Fox" emoji="🦊" />
+    <TodoList todo={['sit', 'stand']} />
+    <Bouncer age={ 6 } />
+    <RandomChoice choices={['red', 'green', 'blue']} />
+    <Animal name="yodog" species="dog" isCute age={{ age: 4 }}/>
+    <Animal name="nosepick" species="cat" />
     <RandomNum />
     <RandomNum />
-    <RandomNum />
-    <Bouncer age={19} />
-    <Bouncer age={11} />
-    <Bouncer age={39} />
-    <TodoList todos={['walk chickens', 'feed chickens', 'eat chickens']} />
-
   </div>
 )
 

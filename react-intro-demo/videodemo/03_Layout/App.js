@@ -1,12 +1,12 @@
 const App = () => (
-  <div>
-    <h2>Dogs!</h2>
-    <Shiba />
-    <SharPei />
-    <Shiba />
-  </div>
+    (
+      <div>
+        <h2>dogs</h2>
+        <Shiba />
+        <SharPei />
+        <Shiba />
+      </div>
+    )
 )
-
-
-
-ReactDOM.render(<App />, document.getElementById("root"))
+  
+  ReactDOM.render(<App />, document.getElementById("root"))
