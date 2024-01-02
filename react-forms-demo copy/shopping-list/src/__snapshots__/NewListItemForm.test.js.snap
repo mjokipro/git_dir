@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<NewListItemForm>
+  <form
+    onSubmit={[Function]}
+  >
+    <label
+      htmlFor="name"
+    >
+      Name:
+    </label>
+    <input
+      id="name"
+      name="name"
+      onChange={[Function]}
+      value="test"
+    />
+    <label
+      htmlFor="qty"
+    >
+      Qty:
+    </label>
+    <input
+      id="qty"
+      name="qty"
+      onChange={[Function]}
+      type="number"
+      value="10i"
+    />
+    <button>
+      Add a new item!
+    </button>
+  </form>
+</NewListItemForm>
+`;
