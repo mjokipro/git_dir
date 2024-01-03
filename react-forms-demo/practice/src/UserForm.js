@@ -1,71 +1,60 @@
 import React, { useState } from "react";
 
 const UserForm = () => {
-  // const [username, setUsername] = useState("")
-  // const [email, setEmail] = useState("")
-const INITIAL_STATE = {
+  const initialState = {
     username: "",
     email: "",
     password: ""
-}
-
-  const [formData, setFormData] = useState(INITIAL_STATE)
-
-  const handleChange = (e) => {
-    console.log(e.target.name)
-    console.log(e.target.value)
-    const {name, value} = e.target
+  }
+  const [formData, setFormData] = useState(initialState)
+  const handleChange = e => {
+    const { name, value } = e.target;
     setFormData(data => ({
       ...data,
       [name]: value
     }))
   }
 
-  // const handleEmailChange = (e) => {
-  //   setEmail(e.target.value)
-  // }
-
   const handleSubmit = (e) => {
-    e.preventDefault()
-    const {username, email, password} = formData
-    alert(`Created user:  ${username} email:  ${email} password:  ${password}`)
-    setFormData(INITIAL_STATE)
+    e.preventDefault();
+    const { username, email, password } = formData;
+    alert(`Created user, ${username} w/ email ${email} & password ${password}`)
+    setFormData(initialState)
   }
 
   return (
-    <form>
-    {/* <form onSubmit={handleSubmit}> */}
+    <form onSubmit={handleSubmit}>
       <label htmlFor="username">Username</label>
       <input
-      id="username"
-      type="text"
-      name="username"
-      placeholder="username"
-      value={formData.username}
-      onChange={handleChange} />
+        id="username"
+        type="text"
+        name="username"
+        placeholder="username"
+        value={formData.username}
+        onChange={handleChange}
+      />
 
       <label htmlFor="email">Email</label>
       <input
-      id="email"
-      type="email"
-      name="email"
-      placeholder="email"
-      value={formData.email}
-      onChange={handleChange}
+        type="email"
+        placeholder="email"
+        name="email"
+        id="email"
+        value={formData.email}
+        onChange={handleChange}
       />
 
       <label htmlFor="password">Password</label>
       <input
-      id="password"
-      type="test"
-      name="password"
-      placeholder="password"
-      value={formData.password}
-      onChange={handleChange}
+        type="password"
+        placeholder="password"
+        name="password"
+        id="password"
+        value={formData.password}
+        onChange={handleChange}
       />
 
-      <button onClick={handleSubmit}>Add todo</button>
-      {/* <button>Add todo</button> */}
+      <button>Add me to list!</button>
     </form>
   )
 }
