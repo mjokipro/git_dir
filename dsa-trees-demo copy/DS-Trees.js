@@ -32,14 +32,14 @@ class Node {
 }
 
 class Tree {
-  constructor(root){
-    this.root = root
+  constructor(root) {
+    this.root = root;
   }
-  findInTreeDFS(val){
-    return this.root.findDFS(val)
+  findInTreeDFS(val) {
+    return this.root.findDFS(val);
   }
-  findInTreeBFS(val){
-    return this.root.findBFS(val)
+  findInTreeBFS(val) {
+    return this.root.findBFS(val);
   }
 }
 
@@ -47,8 +47,6 @@ let htmlEl = new Node("html", [
   new Node("head", [new Node("title")]),
   new Node("body", [new Node("ul", [new Node("li"), new Node("li2")])]),
 ]);
-
-console.log(htmlEl)
 
 //             html
 //       head      body
