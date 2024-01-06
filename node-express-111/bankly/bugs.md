@@ -1,6 +1,0 @@
--- BUG FIX 1, app.js line 36, removed extra module.exports = app
--- bug fix 4 remove username password
--- bug fix 5 user.js line 69, check first for user
---  bug fix 6, auth.js in middleware, add jwt.verify(token, SECRET_KEY)
--- bug fix 7, users line 46 add error logic
--- bug fix 8, users.js routes, allow patch editing
