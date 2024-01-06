@@ -25,13 +25,13 @@ CREATE TABLE messages (
     read_at timestamp with time zone
 );
 
--- INSERT INTO users
--- (username, password, first_name, last_name, phone)
--- VALUES
--- ('user1', 'pword1', 'test_fname1', 'test_lname1', '555-555-5555'),
--- ('user2', 'pword2', 'test_fname2', 'test_lname2', '555-555-5556');
+INSERT INTO users
+(username, password, first_name, last_name, phone)
+VALUES
+('user1', 'pword1', 'test_fname1', 'test_lname1', '555-555-5555'),
+('user2', 'pword2', 'test_fname2', 'test_lname2', '555-555-5556');
 
--- INSERT INTO messages
--- (from_username, to_username, body, sent_at, read_at)
--- VALUES
--- ('user1', 'user2', 'test_msg_1');
+INSERT INTO messages
+(from_username, to_username, body, sent_at, read_at)
+VALUES
+('user1', 'user2', 'test_msg_1');
