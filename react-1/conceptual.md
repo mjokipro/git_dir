@@ -10,7 +10,7 @@ Answer the following questions below:
 
 - How is a Component created in React? in a file and imported
 
-- What are some difference between state and props? state is the local components changable state and props are the methods used to change them
+- What are some difference between state and props? state is the local components that have callback to control them, props pass state and methods to churren components.
 
 - What does "downward data flow" refer to in React? state and prop transfer to their components (parent to child), and the components call the parent's methods to update the state. unidirectional
 
