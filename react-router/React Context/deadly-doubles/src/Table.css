@@ -1,0 +1,15 @@
+.Table {
+  border: solid 1px black;
+  border-radius: 0.5em;
+  box-shadow: 0.1em 0.1em 1em #999;
+  padding: 0 1em;
+  margin-bottom: 1em;
+}
+
+.Table > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1em;
+}
+

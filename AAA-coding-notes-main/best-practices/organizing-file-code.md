@@ -1,0 +1,6 @@
+- `models.js` files typically:
+	- Manage the data of app
+	- Contain API calls
+	- Contain Classes & their methods
+	- No UI Stuff in here
+- UI Stuff may be broken down into multiple files handing the UI of that component of a page

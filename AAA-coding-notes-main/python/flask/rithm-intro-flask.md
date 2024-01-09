@@ -1,0 +1,406 @@
+## Goals
+
+-   Describe the purpose and responsibilities of a web framework
+-   Build small web applications using Python and Flask
+-   Set environmental variables for local Flask development
+-   Handle GET and POST requests with Flask
+-   Extract data from different parts of the URL with Flask
+
+## Web Frameworks
+- A web framework is an opinionated piece of software that gives you the tools to build web apps
+- % Django (an alternative to flask) is even more opinionated
+
+### A Quick Demo
+
+```terminal nums {4}
+(venv) $ FLASK_DEBUG=True flask run
+* Environment: development
+* Debug mode: on
+* Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+* Restarting with stat
+* Debugger is active!
+* Debugger PIN: 160-080-703
+
+```
+- Flask always runs on your localhost (127.0.0.1)
+	- Anyone with the appropriate installations can run a web server
+- For deploying apps, is different and will review later
+
+### What is a Web Server?
+
+- A program that’s running on a machine and waiting for a web request.
+
+- % _Note_: A web server is a technology that can process requests and issue responses via HTTP, a protocol used to distribute information on the world wide web. Though it’s also used to refer to computer systems and even internet “appliances”, we’ll use web server to refer to the software running on a machine that’s waiting to respond to HTTP requests.
+
+Browser makes request to server
+![diagram|300](https://rithm-students-assets.s3.amazonaws.com/r30/lectures/flask-intro/handout/_images/diagram-a2dbf029de0c21349f630d63ccf9d5877e52c375.png)
+
+Server responds w/headers & HTML
+![diagram|300](https://rithm-students-assets.s3.amazonaws.com/r30/lectures/flask-intro/handout/_images/diagram-54371198fd80cdec55e37bdf52cd7827e6354865.png)
+
+- The ability to start a server in listening for requests, and then issue responses:
+```
+GET /hello     (http://server/hello)
+```
+
+↓
+
+```html
+<html>
+  <body>
+    <h1>Hello World!</h1>
+  </body>
+</html>
+```
+
+- % _Note_: To keep code samples short in the presentation, we’re eliding some less-important HTML markup. The shortest valid HTML skeleton in modern HTML would actually be:
+```html
+<!doctype html>
+<html>
+  <head>
+    <title>Hello</title>
+  </head>
+  <body>
+    <h1>Hello World!</h1>
+  <body>
+</html>
+```
+
+### Flask is a Web Framework
+
+-   Set of functions and classes that help you define:
+    - &  **Which** requests to respond to
+        -   http://server/about-us
+        -   http://server/post/1
+    - &  **How** to respond to requests
+        -   Shows an “About Us” page
+        -   Show the 1st blog post
+
+-   Like a library, but bigger and more opinionated
+-   Usage is similar to the Python Standard Library.
+
+Using the Python Standard Library
+```python
+from random import choice, randint
+```
+
+Using Flask
+```python
+from flask import Flask, request
+```
+- & Note the capital F in Flask above, it is a class, and the Capital F is required
+
+### What Do Web Applications Need To Do?
+
+-   handle web requests
+-   produce dynamic HTML
+-   handle forms
+-   handle cookies
+-   connect to databases
+-   provide user log-in/log-out
+-   cache pages for performance
+-   & more!
+
+## Flask Apps
+
+### Installing Flask
+
+- Navigate to project folder, then…
+```terminal nums {4}
+$ python3 -m venv venv
+$ source venv/bin/activate
+
+(venv)$ pip3 install flask
+*... lots of stuff ...*
+Successfully installed flask Werkzeug Jinja2 ...
+Cleaning up...
+
+```
+- & Make sure (venv) shows in your terminal (so you know you are in your virtual environment) before installing things
+
+### Making An App
+
+Need to create a “flask application”:
+```terminal nums {3}
+from flask import Flask
+
+app = Flask(__name__)
+
+```
+- & When we create a Flask application, it needs to know what module to scan for things like routes (covered later)–so the `__name__` is _required_ and should always be written like that.
+- Line 3 also instantiates app as a flask app
+
+### Running Flask App
+
+- % Note: Name your application file `app.py`. It’s common convention to name your application file app.py — if, for some reason, you call it something else, you’ll need to tell Flask that when you try to start it up by using an _environmental variable_:
+```terminal
+(venv) $ FLASK_APP=other.py flask run
+```
+
+- @ Tip: Make sure you’re starting up in _development mode_. While building your application, you want to make sure Flask is running in _development mode_. This is a special mode for the server. It gives you:
+	-   Much better error messages
+	-   Automatically re-loads server when code changes on disk
+	- Both of these are very helpful when developing (and very bad for working on a live, production server, but we’ll talk about this when we teach you to deploy completed applications to a real server).
+	- Our installation instructions should set this automatically for you. However, when you start Flask, if it says you’re in _production mode_, you can fix this by starting Flask up like this:
+```terminal
+(venv) $ FLASK_DEBUG=True flask run
+```
+- You can make that the default for your current shell session by setting that environmental variable for the length of the shell session:
+```terminal
+(venv) $ export FLASK_DEBUG=True
+```
+
+- & Then you can just use `flask run`.
+- & Quit Flask with `Control-C `
+
+## Adding Routes
+
+### Making Responses
+-  The **route** is defined by a decorator, noted by the `@app`.
+	-  Specifies route handled and method (get/post).
+-  A function that returns *web response* is called a **view function**
+    -   Response is a **string**
+        -   Usually, a **string** of HTML
+        -   HTTP requests/responses must *always* be strings because it’s `Hypertext transfer protocol` 
+            - Note the *TEXT* piece of that
+-   Our function returns an HTML string here:
+```python nums
+@app.get('/hello').  # This line is called a decorator
+def say_hello():     # This is the view function because it returns the web response
+    """Return simple "Hello" Greeting."""
+    html = "<html><body><h1>Hello</h1></body></html>"
+    return html
+```
+
+- @ Note that here we are returning html, but what is really sent is a **response** 
+	- Under the hood, flask makes the actual response for us, with the returned html a piece on that response
+	- If however, you need to change something on the response explicitly, you can make it within your view function, change what you need, and then return it.
+```python
+@app.get("/complete")
+def say_thanks():
+	"""Thank user and list responses."""
+	
+	survey_id = session[CURRENT_SURVEY_KEY]
+	survey = surveys[survey_id]
+	responses = session[RESPONSES_KEY]
+	
+	html = render_template("completion.html",
+							survey=survey,
+							responses=responses)
+	
+	# Note: response manually made below, passing in html as arg. 
+	# Set cookie noting this survey is done — now, they can't re-do it
+	response = make_response(html)
+	response.set_cookie(f"completed_{survey_id}", "yes", max_age=60)
+	return response
+```
+(from flask-survey-solution)
+
+### Handling Requests
+
+- On requesting http://localhost:5000/hello in browser, function is called:
+
+```python 
+@app.get('/hello')   
+def say_hello():     
+    """Return simple "Hello" Greeting."""
+
+    html = "<html><body><h1>Hello</h1></body></html>"
+    return html
+
+```
+
+-   Flask lets you **route** a URL to a function
+-   `@app.get('/hello')` is a Python _decorator_
+    -   “`/hello`” in the decorator maps directly to the URL the user requested
+- Now we can get to this at `http://localhost:5000/hello`
+
+### Serving at the Root (Homepage)
+
+```python
+@app.get('/').  
+def index():    
+    """Show homepage"""
+    return """
+      <html>
+        <body>
+          <h1>I am the landing page</h1>
+        </body>
+      </html>
+      """
+```
+
+- This function will get called if the user requests http://localhost:5000/.
+- Now we can reach this page at [http://localhost:5000](http://localhost:5000/)
+
+### What Routes Return
+
+- Routes *always* return strings!
+
+## GET and POST
+
+- The server makes the rules of how a request must be made in order to return desired data, determined by the way the routes are coded to be handled. 
+	- & This is another reason why docstrings are so important, to tell your client how to make these requests
+
+### Requests
+- Flask provides an object, request, to represent web requests
+```python
+from flask import request
+```
+
+### Handling Query Arguments
+- For a url like `/search?term=fun`
+```python
+@app.get("/search")  
+def search():        
+    """Handle GET requests like /search?term=fun"""
+
+    term = request.args["term"]
+    return f"<h1>Searching for {term}</h1>"
+
+```
+
+- & `request.args` is a dict-like object of query parameters.
+	- To pull out data in GET requests, always use request.args
+	- It’s a dictionary-like object
+
+### Handling POST Requests
+
+- To accept POST requests, must specify POST vs GET: 
+```python
+@app.post("/my/route")          
+def handle_post_to_my_route():  
+   ...
+```
+
+Example:
+This route handles the GET requests at this url and returns an HTML form that makes a POST Request:
+```python
+@app.get("/add-comment").       
+def add_comment_form():         
+    """Show comment-add form."""
+	#                                # NOTE: "name" attr specified in the returned HTML form
+    return """
+      <form method="POST">
+        <input name="comment">         
+        <button>Submit</button>
+      </form>
+      """
+
+```
+This route handles the POST requests from this url, made from that form:
+```python
+@app.post("/add-comment").      
+def add_comment():              
+    """Handle adding comment."""
+
+    comment = request.form["comment"]   # Find me the value of the input at key "comment"
+    #                               # This is why the "name" attribute on forms is so important
+    # TODO: save into database
+
+    return f'<b>Got "{comment}"</b>'
+
+```
+
+- & `request.form` is a dict-like object of POST parameters.
+
+## Variables in a URL
+
+### Motivation
+
+-   Want user info pages for each user:
+    -   [http://localhost:5000/user/whiskey](http://localhost:5000/user/whiskey)
+    -   [http://localhost:5000/user/spike](http://localhost:5000/user/spike)
+    -   We don’t want every possible username as a separate route
+-   Want to show blog posts (read from database) by id:
+    -   [http://localhost:5000/post/1](http://localhost:5000/post/1)
+    -   [http://localhost:5000/post/2](http://localhost:5000/post/2)
+
+### Variables in a URL
+
+#### Argument capture in Flask:
+```python nums {6, 7, 10}
+USERS = {
+    "whiskey": "Whiskey The Dog",
+    "spike": "Spike The Porcupine",
+}
+
+@app.get('/user/<username>')
+def show_user_profile(username):
+    """Show user profile for user."""
+    
+    name = USERS[username]
+    return f"<h1>Profile for {name}</h1>"
+
+```
+-   `<variable_name>` in @app.route
+	-   View function must have same `var_name` as parameter
+
+#### Specifying ` int `variable:
+```python nums {6}
+POSTS = {
+    1: "Flask is pretty cool",
+    2: "Python is neat-o",
+}
+
+@app.get('/post/<int:post_id>')
+def show_post(post_id):
+    """Show post with given integer id."""
+
+    print("post_id is a ", type(post_id))
+
+    post = POSTS[post_id]
+
+    return f"<h1>Post #{post_id}</h1><p>{post}</p>"
+
+```
+- & Need: `<int:variable\_name>` in @app.route
+	-   Converts to integer when calling function
+
+#### More than one variable:
+```python nums {1, 2}
+@app.get("/products/<category>/<int:product_id>")
+def product_detail(category, product_id):
+   """Show detail page for product."""
+   ...
+   
+```
+
+### Query Params vs URL Params
+
+`http://localhost:5000/shop/spinning-top?color=red`
+
+```python
+@app.get("/shop/<toy>")
+def toy_detail(toy):
+    """Show detail about a toy."""
+
+    # Get color from req.args, falling back to None
+    color = request.args.get("color")
+
+    return f"<h1>{toy}</h1>Color: {color}"
+
+```
+
+### Which Should I Use?
+
+#### **URL Parameter**
+- Feels more like “subject of page”
+- `/shop/<toy>`
+
+#### **Query Parameter**
+- Feels more like “extra info about page” or “filter down info about a page”
+- Often used when coming from a form
+- `/shop?toy=elmo`
+
+## Looking Ahead
+-   HTML templates
+-   Handling cookies
+-   APIs and Flask
+-   Using databases with Flask
+-   Auto-generating forms
+-   Handling users and log in
+
+### Flask Documentation
+
+- The Flask documentation ([http://flask.pocoo.org/](http://flask.pocoo.org/))

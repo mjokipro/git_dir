@@ -1,0 +1,9 @@
+- `$ls -a`
+	- list all files (including hidden .files)
+- `$ hash -r`
+	- reload and clear cache in terminal (other way is to close out current terminal and open a new terminal window)
+- `$ zip -r filename.zip v`
+	- Compress folder/file and create zip file
+- `$ bat filename`
+	- Like a fancy cat - prints to shell but with some colors/formatting
+	- Installed with brew

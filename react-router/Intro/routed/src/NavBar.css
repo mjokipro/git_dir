@@ -1,0 +1,23 @@
+.NavBar {
+  background-color: tomato;
+  text-align: center;
+  font-weight: bold;
+}
+
+.NavBar a {
+  padding: 0.5em 0;
+  width: 10em;
+  display: inline-block;
+  color: white;
+  text-decoration: none;
+}
+
+.NavBar a:hover {
+  background-color: black;
+  color: white !important;
+}
+
+.NavBar a.active {
+  font-weight: bold;
+  color: black;
+}
