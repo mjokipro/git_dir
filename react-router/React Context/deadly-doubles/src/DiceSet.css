@@ -1,7 +1,0 @@
-.DiceSet {
-  display: flex;
-}
-
-.DiceSet > * {
-  margin:  0 0.5em;
-}
