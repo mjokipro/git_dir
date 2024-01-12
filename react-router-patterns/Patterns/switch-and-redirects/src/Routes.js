@@ -1,22 +1,31 @@
-import React from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
-import Home from "./Home";
-import About from "./About";
-import Contact from "./Contact";
-import BlogHome from "./BlogHome";
-import Post from "./Post";
+import {
+  Routes,
+  Route,
+  Navigate
+} from 'react-router-dom';
+import DogList from './DogList';
+import FilterDogDetails from './FilterDogDetails';
 
-function Routes() {
+function Routes({dogs}) {
   return (
-    <Switch>
-      <Route exact path="/about"><About /></Route>
-      <Route exact path="/contact"><Contact /></Route>
-      <Route exact path="/blog/:slug"><Post /></Route>
-      <Route exact path="/blog"><BlogHome /></Route>
-      <Route exact path="/"><Home /></Route>
-      <Redirect to="/" />
-    </Switch>
+    <Routes>
+      <Route
+        path="/dogs"
+        element={<DogList dogs={dogs} />}
+      />
+
+      <Route
+        path="/dogs/:name"
+        element={<FilterDogDetails dogs={dogs} />}
+      />
+
+      <Route
+        path="/*"
+        element={<Navigate to="/dogs" />}
+      />
+    </Routes>
   );
 }
 
 export default Routes;
+
