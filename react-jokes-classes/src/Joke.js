@@ -1,11 +1,8 @@
-import React, { Component } from "react";
 import "./Joke.css";
 
 /** A single joke, along with vote up/down buttons. */
 
-class Joke extends Component {
-  render() {
-    const { id, vote, votes, text } = this.props;
+function Joke({id, vote, votes, text}){
 
     return (
       <div className="Joke">
@@ -25,6 +22,5 @@ class Joke extends Component {
       </div>
     );
   }
-}
 
 export default Joke;
