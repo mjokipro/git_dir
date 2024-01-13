@@ -1,5 +1,5 @@
 {
-  "name": "deadly-doubles",
+  "name": "counter",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -8,7 +8,7 @@
     "@testing-library/user-event": "*",
     "react": "*",
     "react-dom": "*",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "*"
   },
   "scripts": {
     "start": "react-scripts start",
