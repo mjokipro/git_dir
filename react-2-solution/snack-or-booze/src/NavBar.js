@@ -7,18 +7,17 @@ function NavBar() {
   return (
     <div>
       <Navbar expand="md">
-
         <NavLink exact to="/" className="navbar-brand">
           Snack or Booze
         </NavLink>
-      <Nav className="m1" navbar>
-        <NavItem>
-          <NavLink to="/snacks">Snacks</NavLink>
-          <NavLink to="/drinks">Drinks</NavLink>
-          <NavLink to="/addFood">Add Item</NavLink>
-        </NavItem>
-      </Nav>
-   
+
+        <Nav className="ml" navbar>
+          <NavItem>
+            <NavLink to="/snacks">Snacks</NavLink>
+            <NavLink to='/drinks'>Drinks</NavLink>
+            <NavLink to='/addFood'>AddFood</NavLink>
+          </NavItem>
+        </Nav>
       </Navbar>
     </div>
   );

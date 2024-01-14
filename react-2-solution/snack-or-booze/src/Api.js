@@ -16,38 +16,44 @@ class SnackOrBoozeApi {
     return result.data;
   }
 
+  //get a list of all the drinks
   static async getDrinks() {
     const result = await axios.get(`${BASE_API_URL}/drinks`);
     return result.data;
   }
-
-  static async getTotItems(){
-    let snacks = await this.getSnacks()
-    let drinks = await this.getDrinks()
-    let totItems = {
-      snacks: snacks.length,
-      drinks: drinks.length,
-      totItems: snacks.length+drinks.length
-    }
-    return totItems
-  }
   
-  static async getAllItems(){
-    let snacks = await this.getSnacks()
-    let drinks = await this.getDrinks()
-    
-    let allItems = [snacks, drinks]
+  //get a list of every item we sell
+  static async getTotalCount(){
+    let snacks = await this.getSnacks();
+    let drinks = await this.getDrinks();
 
-    return allItems
+    let totalItems = {
+      snacks: snacks.length,        
+      drinks: drinks.length,
+      totalItems: drinks.length+snacks.length
+    }
+
+    return totalItems;
   }
 
+  //get a list of all the food items for displaying, placed in a list for very easy access
+  static async getFoodItems() {
+    let snacks = await this.getSnacks();
+    let drinks = await this.getDrinks();
+
+    let foodlist = [snacks, drinks];
+    return foodlist;
+  }
+
+  //add a new item to the "database"
+  //data is the id, name, description, recipe, serve
+  //type is which, snack or drink
   static async addFoodItem(data, type){
     console.log('data incoming', data, type);
     await axios.post(`${BASE_API_URL}/${type}`, data);
 
     console.log({message:'Thank you!'});
   }
-
 }
 
 export default SnackOrBoozeApi;

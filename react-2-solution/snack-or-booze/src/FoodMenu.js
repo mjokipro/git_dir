@@ -11,6 +11,8 @@ import {
 } from "reactstrap";
 
 function FoodMenu({ foods, type }) {
+
+  console.log(foods)
   return (
     <section className="col-md-4">
       <Card>
@@ -23,11 +25,11 @@ function FoodMenu({ foods, type }) {
             bulk of the card's content.
           </CardText>
           <ListGroup>
-            {foods.map(food => (
-              <Link to={`/${type}/${food.id}`} key={food.id}>
-                <ListGroupItem>{food.name}</ListGroupItem>
-              </Link>
-            ))}
+              {foods.map(foodItem => (
+                <Link to={`/${type}/${foodItem.id}`} key={foodItem.id}>
+                  <ListGroupItem>{foodItem.name}</ListGroupItem>
+                </Link>
+              ))}
           </ListGroup>
         </CardBody>
       </Card>
