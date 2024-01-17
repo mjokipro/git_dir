@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route, Routes, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import Homepage from "../homepage/Homepage";
 import CompanyList from "../companies/CompanyList";
 // import JobList from "../jobs/JobList";
@@ -8,12 +8,12 @@ import CompanyList from "../companies/CompanyList";
 // import ProfileForm from "../profiles/ProfileForm";
 // import SignupForm from "../auth/SignupForm";
 // import PrivateRoute from "./PrivateRoute";
-function Routes(){
+function RoutesList(){
 return (
 
         <Switch>
 
-           <Route exact path="/companies" element={<CompanyList />}>
+           <Route exact path="/companies">
             <CompanyList />
         </Route>
 
@@ -41,10 +41,10 @@ return (
          <Homepage />
         </Route>
 
-           {/* <Redirect to="/" /> */}
+           <Redirect to="/" />
         </Switch>
 
     )
 }
 
-export default Routes
+export default RoutesList

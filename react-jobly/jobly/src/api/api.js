@@ -38,9 +38,21 @@ class JoblyApi {
 
   /** Get details on a company by handle. */
 
+  static async getAllCompanies(name) {
+    let res = await this.request(`companies`, {name});
+    return res.companies;
+  }
+
+  /** Get details on a company by handle. */
+
   static async getCompany(handle) {
     let res = await this.request(`companies/${handle}`);
     return res.company;
+  }
+
+  static async getAllJobs(title) {
+    let res = await this.request(`jobs`, {title});
+    return res.jobs;
   }
 
   // obviously, you'll add a lot here ...
@@ -50,3 +62,5 @@ class JoblyApi {
 JoblyApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
 "eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTcwNTM3OTgwMn0." + 
 "x7CgDzIXbkX49O4Prt9ixCHPNxt0ett1vDsa32QyHAE";
+
+export default JoblyApi

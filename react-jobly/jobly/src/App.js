@@ -1,24 +1,16 @@
-import React from 'react'
+import React from "react";
+import Navigation from "./routes-nav/Navigation";
+import Routes404 from "./Routes404";
 import { BrowserRouter } from 'react-router-dom';
-// import Routes from './routes-nav/Routes'
-import Navigation from './routes-nav/Navigation';
-// import Homepage from './homepage/Homepage';
-
 
 function App() {
-
-
-
   
+
   return (
-    <div className="App">
-        <p>Hello</p>
+    <div>
       <BrowserRouter>
         <Navigation />
-        
-        {/* <Homepage/> */}
-        {/* <Routes /> */}
-        
+        <Routes404 />
       </BrowserRouter>
     </div>
   );
