@@ -88,8 +88,8 @@ class JoblyApi {
 }
 
 // for now, put token ("testuser" / "password" on class)
-// JoblyApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
-// "eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTcwNTM3OTgwMn0." + 
-// "x7CgDzIXbkX49O4Prt9ixCHPNxt0ett1vDsa32QyHAE";
+JoblyApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
+"eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTcwNTM3OTgwMn0." + 
+"x7CgDzIXbkX49O4Prt9ixCHPNxt0ett1vDsa32QyHAE";
 
 export default JoblyApi

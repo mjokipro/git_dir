@@ -36,6 +36,32 @@ class JoblyApi {
 
   // Individual API routes
 
+  static async getCurrentUser(username) {
+    let res = await this.request(`users/${username}`);
+    return res.user;
+  }
+  
+  static async login(data) {
+    let res = await this.request(`auth/token`, data, "post");
+    return res.token;
+  }
+  
+  static async signup(data) {
+    let res = await this.request(`auth/regiser`, data, "post");
+    return res.token;
+  }
+  
+  static async applyToJob(username, id) {
+    let res = await this.request(`users/${username}/jobs/${id}`, {}, "post");
+  }
+  
+  /** Get details on a company by handle. */
+
+  static async getAllCompanies(name) {
+    let res = await this.request(`companies`, {name});
+    return res.companies;
+  }
+
   /** Get details on a company by handle. */
 
   static async getCompany(handle) {
@@ -43,10 +69,27 @@ class JoblyApi {
     return res.company;
   }
 
+  static async getAllJobs(title) {
+    let res = await this.request(`jobs`, {title});
+    return res.jobs;
+  }
+  
+  static async getAllJobs(title) {
+    let res = await this.request(`jobs`, {title});
+    return res.jobs;
+  }
+
+  static async saveProfile(username, data){
+    let res = await this.request(`users/${username}`, data, "patch")
+    return res.user
+  }
+
   // obviously, you'll add a lot here ...
 }
 
 // for now, put token ("testuser" / "password" on class)
-JoblyApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
-"eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTcwNTM3OTgwMn0." + 
-"x7CgDzIXbkX49O4Prt9ixCHPNxt0ett1vDsa32QyHAE";
+// JoblyApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
+// "eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTcwNTM3OTgwMn0." + 
+// "x7CgDzIXbkX49O4Prt9ixCHPNxt0ett1vDsa32QyHAE";
+
+export default JoblyApi
