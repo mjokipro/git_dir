@@ -25,7 +25,7 @@ const JobList = () => {
     return (
         <div>
             <p>JobList</p>
-            <SearchForm />
+            <SearchForm searchFor={search}/>
             {jobs.length
                 ? (
                     <div>
