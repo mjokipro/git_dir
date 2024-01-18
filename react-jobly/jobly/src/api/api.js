@@ -53,6 +53,7 @@ class JoblyApi {
   
   static async applyToJob(username, id) {
     let res = await this.request(`users/${username}/jobs/${id}`, {}, "post");
+    console.log(res)
   }
   
   /** Get details on a company by handle. */
@@ -73,11 +74,6 @@ class JoblyApi {
     let res = await this.request(`jobs`, {title});
     return res.jobs;
   }
-  
-  static async getAllJobs(title) {
-    let res = await this.request(`jobs`, {title});
-    return res.jobs;
-  }
 
   static async saveProfile(username, data){
     let res = await this.request(`users/${username}`, data, "patch")
@@ -88,8 +84,8 @@ class JoblyApi {
 }
 
 // for now, put token ("testuser" / "password" on class)
-JoblyApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
-"eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTcwNTM3OTgwMn0." + 
-"x7CgDzIXbkX49O4Prt9ixCHPNxt0ett1vDsa32QyHAE";
+// JoblyApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
+// "eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTcwNTM3OTgwMn0." + 
+// "x7CgDzIXbkX49O4Prt9ixCHPNxt0ett1vDsa32QyHAE";
 
 export default JoblyApi

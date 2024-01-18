@@ -10,28 +10,28 @@ function Navigation({logout}) {
     
     function loggedInNav(){
         return (
-        <ul>
-            <li>
-                <NavLink to="/companies">
-                    Companies
-                </NavLink>
-            </li>
-            <li>
-                <NavLink to="/jobs">
-                    Jobs
-                </NavLink>
-            </li>
-            <li>
-                <NavLink to="/profile">
-                    Profile
-                </NavLink>
-            </li>
-            <li>
-                <NavLink to="/" onClick={logout}>
-                    Log Out {currentUser.first_name || currentUser.username}
-                </NavLink>
-            </li>
-        </ul>
+            <ul>
+                <li>
+                    <NavLink to="/companies">
+                        Companies
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink to="/jobs">
+                        Jobs
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink to="/profile">
+                        Profile
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink to="/" onClick={logout}>
+                        Log Out {currentUser.first_name || currentUser.username}
+                    </NavLink>
+                </li>
+            </ul>
         )
     }
 

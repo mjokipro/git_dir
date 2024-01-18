@@ -1,7 +1,7 @@
 import React from 'react'
 import JobCard from './JobCard'
 
-const JobCardList = ({jobs}) => {
+const JobCardList = ({jobs, apply}) => {
 
     return (
         <div>
