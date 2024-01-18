@@ -15,15 +15,15 @@ const SearchForm = ({searchFor}) => {
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor='searchTerm'>Search Term</label>
+            <form className="form-group" onSubmit={handleSubmit}>
                 <input 
+                    className="form-control"
                     name="searchTerm"
                     placeholder='Enter search term...'
                     value={searchTerm}
                     onChange={handleChange}
                 />
-                <button type='submit'>Submit</button>
+                <button className="btn btn-secondary mt-2" type='submit'>Submit</button>
             </form>
         </div>
     )

@@ -22,9 +22,10 @@ function CompanyList(){
 if (!companies) return <p>Loading...</p>
 
     return (
-        <div>
-            <p>Company List</p>
+        <div className='modal-dialog modal-lg'>
+            <div>
             <SearchForm searchFor={search}/>
+            </div>
             {companies.length 
                 ? (
                     <div>

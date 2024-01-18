@@ -7,12 +7,14 @@ const CompanyCard = ({name, description, logoUrl, handle}) => {
     return (
         
             <Link to={`/companies/${handle}`}>
-                <div>
+                <div className='CompanyCard card'>
+                    <div className='card-body'>
                     <h4>
                         {name}
                         {logoUrl && <img src={logoUrl} alt={name} />}
                     </h4>
                     <p><small>{description}</small></p>
+                    </div>
                 </div>
             </Link>
         

@@ -6,6 +6,9 @@ import { BrowserRouter } from 'react-router-dom';
 import UserContext from "./auth/UserContext";
 import jwt from 'jsonwebtoken'
 import JoblyApi from "./api/api";
+// import bootstrap from "bootstrap"
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Container, Row, Col } from "react-bootstrap"
 
 export const TOKEN_INIT = "jobly-token"
 

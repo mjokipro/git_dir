@@ -76,8 +76,8 @@ function ProfileForm() {
           <div className="card-body">
             <form>
               <div className="form-group">
-                <label>Username</label>
-                <p className="form-control-plaintext">{formData.username}</p>
+                <h4>Username</h4>
+                <h5>{formData.username}</h5>
               </div>
               <div className="form-group">
                 <label>First Name</label>
@@ -133,8 +133,8 @@ function ProfileForm() {
                 Save Changes
               </button>
             </form>
-            <p>My Job Applications</p>
-            <ul>{currentUser.applications.map(a => <li>Job ID:  {a}</li>)}</ul>{}
+            {/* <p>My Job Applications</p> */}
+            {/* <ul>{currentUser.applications.map(a => <li>Job ID:  {a}</li>)}</ul>{} */}
           </div>
         </div>
       </div>

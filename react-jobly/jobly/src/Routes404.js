@@ -9,14 +9,14 @@ import JobList from "./jobs/JobList"
 import ProfileForm from "./profiles/ProfileForm";
 import LoginForm from './auth/LoginForm'
 import PrivateRoute from './routes-nav/PrivateRoute'
-import NotFound from "./NotFound";
+// import NotFound from "./NotFound";
 
 function Routes({login, signup}) {
 
   console.debug(
     "Routes",
     `login=${typeof login}`,
-    `register=${typeof register}`,
+    `register=${typeof signup}`,
   )
 
   return (

@@ -23,8 +23,7 @@ const JobList = () => {
     if (!jobs) return <p>Loading...</p>
 
     return (
-        <div>
-            <p>JobList</p>
+        <div className='modal-dialog modal-lg'>
             <SearchForm searchFor={search}/>
             {jobs.length
                 ? (

@@ -33,12 +33,14 @@ function JobCard({ id, title, salary, equity, companyName }) {
   return (
       <div className="JobCard card"> {applied}
         <div className="card-body">
-          <h6 className="card-title">{title}</h6>
-          <p>{companyName}</p>
+          <h4 className="card-title">{title}</h4>
+          <h6>{companyName}</h6>
           {salary && <div><small>Salary: {formatSalary(salary)}</small></div>}
           {equity !== undefined && <div><small>Equity: {equity}</small></div>}
           <button
               className="btn btn-danger font-weight-bold text-uppercase float-right"
+              data-toggle="buttons"
+              
               onClick={handleApply}
               disabled={applied}
           >

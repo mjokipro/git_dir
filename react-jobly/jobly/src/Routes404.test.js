@@ -1,27 +1,26 @@
 import React from "react";
 import {render} from "@testing-library/react"
-import Homepage from "./Homepage"
+import Routes404 from "./Routes404"
 import { MemoryRouter } from "react-router-dom/cjs/react-router-dom.min";
-import {UserProvider} from "../testUtils"
+import {UserProvider} from './testUtils'
+
+it("renders without crashing", () => {
+    render(
+        <MemoryRouter>
+            <UserProvider>
+                <Routes404 />
+            </UserProvider>
+        </MemoryRouter>
+    )
+})
 
 it("matches snapshot", () => {
     const {asFragment} = render (
         <MemoryRouter>
             <UserProvider>
-                <Homepage />
+                <Routes404 />
             </UserProvider>
         </MemoryRouter>
     )
     expect(asFragment()).toMatchSnapshot()
 })
-it("matches snapshot when logged out", () => {
-    const {asFragment} = render (
-        <MemoryRouter>
-            <UserProvider currentUser={null}>
-                <Homepage />
-            </UserProvider>
-        </MemoryRouter>
-    )
-    expect(asFragment()).toMatchSnapshot()
-})
-
