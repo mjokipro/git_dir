@@ -4,7 +4,7 @@ const {
   NotFoundError,
   BadRequestError,
   UnauthorizedError,
-} = require("../expressError");
+} = require("../expressError.js");
 const db = require("../db.js");
 const User = require("./user.js");
 const {
@@ -13,7 +13,7 @@ const {
   commonAfterEach,
   commonAfterAll,
   testJobIds,
-} = require("./_testCommon");
+} = require("./_testCommon.js");
 
 beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);

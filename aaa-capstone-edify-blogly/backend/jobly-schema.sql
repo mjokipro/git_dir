@@ -1,10 +1,3 @@
-CREATE TABLE companies (
-  handle VARCHAR(25) PRIMARY KEY CHECK (handle = lower(handle)),
-  name TEXT UNIQUE NOT NULL,
-  num_employees INTEGER CHECK (num_employees >= 0),
-  description TEXT NOT NULL,
-  logo_url TEXT
-);
 
 CREATE TABLE users (
   username VARCHAR(25) PRIMARY KEY,
@@ -14,6 +7,14 @@ CREATE TABLE users (
   email TEXT NOT NULL
     CHECK (position('@' IN email) > 1),
   is_admin BOOLEAN NOT NULL DEFAULT FALSE
+);
+
+CREATE TABLE companies (
+  handle VARCHAR(25) PRIMARY KEY CHECK (handle = lower(handle)),
+  name TEXT UNIQUE NOT NULL,
+  num_employees INTEGER CHECK (num_employees >= 0),
+  description TEXT NOT NULL,
+  logo_url TEXT
 );
 
 CREATE TABLE jobs (
