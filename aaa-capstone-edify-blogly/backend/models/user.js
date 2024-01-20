@@ -24,11 +24,12 @@ class User {
   static async authenticate(username, password) {
     // try to find the user first
     const result = await db.query(
-          `SELECT username,
+          `SELECT id, username,
                   password,
                   first_name AS "firstName",
                   last_name AS "lastName",
                   email,
+                  logo_url As "logoUrl",
                   is_admin AS "isAdmin"
            FROM users
            WHERE username = $1`,
@@ -57,7 +58,7 @@ class User {
    **/
 
   static async register(
-      { username, password, firstName, lastName, email, isAdmin }) {
+      { username, password, firstName, lastName, email, logoUrl, isAdmin }) {
     const duplicateCheck = await db.query(
           `SELECT username
            FROM users
@@ -78,15 +79,17 @@ class User {
             first_name,
             last_name,
             email,
+            logo_url,
             is_admin)
-           VALUES ($1, $2, $3, $4, $5, $6)
-           RETURNING username, first_name AS "firstName", last_name AS "lastName", email, is_admin AS "isAdmin"`,
+           VALUES ($1, $2, $3, $4, $5, $6, $7)
+           RETURNING username, first_name AS "firstName", last_name AS "lastName", email, logo_url AS "logoUrl", is_admin AS "isAdmin"`,
         [
           username,
           hashedPassword,
           firstName,
           lastName,
           email,
+          logoUrl,
           isAdmin,
         ],
     );
@@ -103,10 +106,11 @@ class User {
 
   static async findAll() {
     const result = await db.query(
-          `SELECT username,
+          `SELECT id, username,
                   first_name AS "firstName",
                   last_name AS "lastName",
                   email,
+                  logo_url AS "logoUrl",
                   is_admin AS "isAdmin"
            FROM users
            ORDER BY username`,
@@ -125,10 +129,11 @@ class User {
 
   static async get(username) {
     const userRes = await db.query(
-          `SELECT username,
+          `SELECT id, username,
                   first_name AS "firstName",
                   last_name AS "lastName",
                   email,
+                  logo_url AS "logoUrl",
                   is_admin AS "isAdmin"
            FROM users
            WHERE username = $1`,
@@ -139,12 +144,18 @@ class User {
 
     if (!user) throw new NotFoundError(`No user: ${username}`);
 
-    const userApplicationsRes = await db.query(
-          `SELECT a.job_id
-           FROM applications AS a
-           WHERE a.username = $1`, [username]);
+      const posts = await db.query(
+        `SELECT p.id, p.title, p.content
+        FROM posts AS p
+        WHERE p.user_id = $1`, [username]
+      )
 
-    user.applications = userApplicationsRes.rows.map(a => a.job_id);
+    // const userApplicationsRes = await db.query(
+    //       `SELECT a.job_id
+    //        FROM applications AS a
+    //        WHERE a.username = $1`, [username]);
+
+    user.posts = posts.rows.map(a => a.job_id);
     return user;
   }
 
@@ -154,9 +165,9 @@ class User {
    * all the fields; this only changes provided ones.
    *
    * Data can include:
-   *   { firstName, lastName, password, email, isAdmin }
+   *   { firstName, lastName, password, email, logoUrl, isAdmin }
    *
-   * Returns { username, firstName, lastName, email, isAdmin }
+   * Returns { username, firstName, lastName, email, logoUrl, isAdmin }
    *
    * Throws NotFoundError if not found.
    *
@@ -186,6 +197,7 @@ class User {
                                 first_name AS "firstName",
                                 last_name AS "lastName",
                                 email,
+                                logo_url AS "logoUrl",
                                 is_admin AS "isAdmin"`;
     const result = await db.query(querySql, [...values, username]);
     const user = result.rows[0];
@@ -217,14 +229,14 @@ class User {
    * - jobId: job id
    **/
 
-  static async applyToJob(username, jobId) {
+  static async tagPost(username, postId) {
     const preCheck = await db.query(
-          `SELECT id
-           FROM jobs
-           WHERE id = $1`, [jobId]);
-    const job = preCheck.rows[0];
+          `SELECT id, title, content
+           FROM posts
+           WHERE id = $1`, [postId]);
+    const post = preCheck.rows[0];
 
-    if (!job) throw new NotFoundError(`No job: ${jobId}`);
+    if (!post) throw new NotFoundError(`No job: ${postId}`);
 
     const preCheck2 = await db.query(
           `SELECT username
@@ -235,9 +247,9 @@ class User {
     if (!user) throw new NotFoundError(`No username: ${username}`);
 
     await db.query(
-          `INSERT INTO applications (job_id, username)
+          `INSERT INTO posts_tags (post_id, tag_id)
            VALUES ($1, $2)`,
-        [jobId, username]);
+        [postId, tagId]);
   }
 }
 

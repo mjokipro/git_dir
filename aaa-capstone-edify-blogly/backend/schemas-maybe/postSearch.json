@@ -3,17 +3,10 @@
   "$id": "http://our.company.com/companySearch.schema.json",
   "type": "object",
   "properties": {
-    "minEmployees": {
-      "type": "integer",
-      "minimum": 0
-    },
-    "maxEmployees": {
-      "type": "integer",
-      "minimum": 0
-    },
-    "name": {
+    "title": {
       "type": "string",
-      "minLength": 1
+      "minLength": 1,
+      "maxLength": 30
     }
   },
   "additionalProperties": false,

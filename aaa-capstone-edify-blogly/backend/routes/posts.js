@@ -1,128 +1,127 @@
 "use strict";
 
-/** Routes for companies. */
+/** Routes for jobs. */
 
 const jsonschema = require("jsonschema");
+
 const express = require("express");
-
 const { BadRequestError } = require("../expressError");
-const { ensureAdmin } = require("../middleware/auth");
-const Company = require("../models/company");
+const { Tag } = require("../models/tag");
+const { ensureCorrectUserOrAdmin } = require("../middleware/auth")
+const Post = require("../models/post");
+const postNewSchema = require("../schemas/postNew.json");
+const postUpdateSchema = require("../schemas-maybe/postUpdate.json");
+const postSearchSchema = require("../schemas-maybe/postSearch.json");
 
-const companyNewSchema = require("../schemas/companyNew.json");
-const companyUpdateSchema = require("../schemas/companyUpdate.json");
-const companySearchSchema = require("../schemas/companySearch.json");
-
-const router = new express.Router();
+const router = express.Router({ mergeParams: true });
 
 
-/** POST / { company } =>  { company }
+/** POST / { post } => { post }
  *
- * company should be { handle, name, description, numEmployees, logoUrl }
+ * post should be { title, content }
  *
- * Returns { handle, name, description, numEmployees, logoUrl }
+ * Returns { id, title, content }
  *
  * Authorization required: admin
  */
 
-router.post("/", ensureAdmin, async function (req, res, next) {
+router.post("/", ensureCorrectUserOrAdmin, async function (req, res, next) {
   try {
-    const validator = jsonschema.validate(req.body, companyNewSchema);
+    const validator = jsonschema.validate(req.body, postNewSchema);
     if (!validator.valid) {
       const errs = validator.errors.map(e => e.stack);
       throw new BadRequestError(errs);
     }
 
-    const company = await Company.create(req.body);
-    return res.status(201).json({ company });
+    const post = await Post.create(req.body);
+    return res.status(201).json({ post });
   } catch (err) {
     return next(err);
   }
 });
 
-/** GET /  =>
- *   { companies: [ { handle, name, description, numEmployees, logoUrl }, ...] }
- *
- * Can filter on provided search filters:
- * - minEmployees
- * - maxEmployees
- * - nameLike (will find case-insensitive, partial matches)
+/** SEARCHPOSTS
+ * GET / =>
+ *   { posts: [ { id, title, content }, ...] }
+ *   
+ * Returns { id, title, content, tags }
+ *    where tags is [{ id, name }, ...]
  *
  * Authorization required: none
  */
 
 router.get("/", async function (req, res, next) {
   const q = req.query;
-  // arrive as strings from querystring, but we want as ints
-  if (q.minEmployees !== undefined) q.minEmployees = +q.minEmployees;
-  if (q.maxEmployees !== undefined) q.maxEmployees = +q.maxEmployees;
+  // arrive as strings from querystring, but we want as int/bool
+  // if (!q.title) return
 
   try {
-    const validator = jsonschema.validate(q, companySearchSchema);
+    const validator = jsonschema.validate(q, postSearchSchema);
     if (!validator.valid) {
       const errs = validator.errors.map(e => e.stack);
       throw new BadRequestError(errs);
     }
 
-    const companies = await Company.findAll(q);
-    return res.json({ companies });
+    const posts = await Post.findAll(q);
+    return res.json({ posts });
   } catch (err) {
     return next(err);
   }
 });
 
-/** GET /[handle]  =>  { company }
+/** GET /[post.id] => { post }
  *
- *  Company is { handle, name, description, numEmployees, logoUrl, jobs }
- *   where jobs is [{ id, title, salary, equity }, ...]
+ * Returns { id, title, content, tags }
+ *   where tags is [{ id, name }, ...]
  *
  * Authorization required: none
  */
 
-router.get("/:handle", async function (req, res, next) {
+router.get("/:id", async function (req, res, next) {
   try {
-    const company = await Company.get(req.params.handle);
-    return res.json({ company });
+    const post = await Post.get(req.params.id);
+    const tags = await Tag.get(req.params.id);
+    return res.json({ post });
   } catch (err) {
     return next(err);
   }
 });
 
-/** PATCH /[handle] { fld1, fld2, ... } => { company }
+
+/** PATCH /[post.id]  { fld1, fld2, ... } => { post }
  *
- * Patches company data.
+ * Data can include: { title, content }
  *
- * fields can be: { name, description, numEmployees, logo_url }
- *
- * Returns { handle, name, description, numEmployees, logo_url }
+ * Returns { id, title, content, tags }
+ *   where tags is [{ id, name }, ...]
  *
  * Authorization required: admin
  */
 
-router.patch("/:handle", ensureAdmin, async function (req, res, next) {
+router.patch("/:id", ensureCorrectUserOrAdmin, async function (req, res, next) {
   try {
-    const validator = jsonschema.validate(req.body, companyUpdateSchema);
+    const validator = jsonschema.validate(req.body, postUpdateSchema);
     if (!validator.valid) {
       const errs = validator.errors.map(e => e.stack);
       throw new BadRequestError(errs);
     }
 
-    const company = await Company.update(req.params.handle, req.body);
-    return res.json({ company });
+    const post = await Post.update(req.params.id, req.body);
+    return res.json({ post });
   } catch (err) {
     return next(err);
   }
 });
 
-/** DELETE /[handle]  =>  { deleted: handle }
+/** DELETE /[post.id]  =>  { deleted: id }
  *
- * Authorization: admin
+ * Authorization required: admin
  */
 
-router.delete("/:handle", ensureAdmin, async function (req, res, next) {
+router.delete("/:id", ensureCorrectUserOrAdmin, async function (req, res, next) {
   try {
-    await Company.remove(req.params.handle);
-    return res.json({ deleted: req.params.handle });
+    await Post.remove(req.params.id);
+    return res.json({ deleted: +req.params.id });
   } catch (err) {
     return next(err);
   }

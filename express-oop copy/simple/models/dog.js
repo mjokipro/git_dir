@@ -8,6 +8,7 @@ class Dog{
     this.age = age
     this.species = "DOG"
   }
+
   static async getAll(){
     const results = await db.query(`SELECT id, name, age FROM dogs`)
     console.log(results.rows)
@@ -15,6 +16,7 @@ class Dog{
     console.log(dogs)
       return dogs
   }
+
   static async getById(id){
     let results = await db.query(`SELECT id, name, age FROM dogs 
     WHERE id = $1`, [id])
@@ -24,6 +26,7 @@ class Dog{
     }
       return new Dog(d.id, d.name, d.age)
   }
+  
   static async addDog(name, age) {
     const result = await db.query(
         `INSERT INTO dogs (name, age)

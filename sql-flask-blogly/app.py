@@ -5,11 +5,11 @@ from models import db, connect_db, User, Post, Tag
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://rundbzxf:6FHiZuIGn2yBGmd3MrVAxguUQ8FjRYrk@heffalump.db.elephantsql.com/rundbzxf'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 
-app.config['SECRET_KEY'] = "SECRET!"
+app.config['SECRET_KEY'] = "secret-dev"
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 debug = DebugToolbarExtension(app)
 

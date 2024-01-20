@@ -63,9 +63,9 @@ router.get("/", ensureAdmin, async function (req, res, next) {
 
 /** GET /[username] => { user }
  *
- * Returns { username, firstName, lastName, isAdmin, jobs }
- *   where jobs is { id, title, companyHandle, companyName, state }
- *
+ * Returns { username, firstName, lastName, email, isAdmin, posts }
+ *   where posts is [{ id, title, content }, ...]
+ * 
  * Authorization required: admin or same user-as-:username
  **/
 
@@ -82,9 +82,9 @@ router.get("/:username", ensureCorrectUserOrAdmin, async function (req, res, nex
 /** PATCH /[username] { user } => { user }
  *
  * Data can include:
- *   { firstName, lastName, password, email }
+ *   { firstName, lastName, password, email, logoUrl }
  *
- * Returns { username, firstName, lastName, email, isAdmin }
+ * Returns { username, firstName, lastName, email, logoUrl, isAdmin }
  *
  * Authorization required: admin or same-user-as-:username
  **/
@@ -120,18 +120,18 @@ router.delete("/:username", ensureCorrectUserOrAdmin, async function (req, res, 
 });
 
 
-/** POST /[username]/jobs/[id]  { state } => { application }
+/** POST /[username]/posts/[id]  { state } => { tagged }
  *
- * Returns {"applied": jobId}
+ * Returns {"tagged": postId}
  *
  * Authorization required: admin or same-user-as-:username
  * */
 
-router.post("/:username/jobs/:id", ensureCorrectUserOrAdmin, async function (req, res, next) {
+router.post("/:username/posts/:id", ensureCorrectUserOrAdmin, async function (req, res, next) {
   try {
-    const jobId = +req.params.id;
-    await User.applyToJob(req.params.username, jobId);
-    return res.json({ applied: jobId });
+    const postId = +req.params.id;
+    await User.tagPost(req.params.username, postId);
+    return res.json({ tagged: postId });
   } catch (err) {
     return next(err);
   }

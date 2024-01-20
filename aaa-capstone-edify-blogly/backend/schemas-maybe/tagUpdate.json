@@ -6,15 +6,7 @@
     "title": {
       "type": "string",
       "minLength": 1,
-      "maxLength": 30
-    },
-    "salary": {
-      "type": "integer",
-      "minimum": 0
-    },
-    "equity": {
-      "type": "string",
-      "pattern": "0|(0?\\.[0-9]+)"
+      "maxLength": 25
     }
   },
   "additionalProperties": false,

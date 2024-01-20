@@ -6,6 +6,7 @@ class Cat{
         let results = await db.query(`SELECT id, name, age FROM cats`);
           return results.rows
     }
+
     static async getById(id){
         let results = await db.query(`SELECT id, name, age FROM cats 
             WHERE id = $1`, [id])
@@ -14,6 +15,7 @@ class Cat{
         }
         return results.rows[0]
     }
+
     static async post_create(name, age){
         if(!name || !age){
             throw new ExpressError("Cannot create", 400)
@@ -27,6 +29,7 @@ class Cat{
         }
         return result.rows[0]
     }
+
     static async delete(id){
         const result = await db.query(`
             DELETE FROM cats
@@ -36,6 +39,7 @@ class Cat{
             throw new ExpressError("Cat not found", 404)
         }
     } 
+    
     static async update(id, newName, newAge){
         const result = await db.query(`
             UPDATE cats SET name = $1, age = $2

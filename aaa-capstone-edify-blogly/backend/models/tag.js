@@ -1,76 +1,81 @@
 "use strict";
 
 const db = require("../db");
-const { NotFoundError} = require("../expressError");
+const { BadRequestError, NotFoundError } = require("../expressError");
 const { sqlForPartialUpdate } = require("../helpers/sql");
 
+/** Related functions for tags. */
 
-/** Related functions for companies. */
-
-class Job {
-  /** Create a job (from data), update db, return new job data.
+class Tag {
+  /** Create a tag (from data), update db, return new company data.
    *
-   * data should be { title, salary, equity, companyHandle }
+   * data should be {name }
    *
-   * Returns { id, title, salary, equity, companyHandle }
-   **/
-
-  static async create(data) {
-    const result = await db.query(
-          `INSERT INTO jobs (title,
-                             salary,
-                             equity,
-                             company_handle)
-           VALUES ($1, $2, $3, $4)
-           RETURNING id, title, salary, equity, company_handle AS "companyHandle"`,
-        [
-          data.title,
-          data.salary,
-          data.equity,
-          data.companyHandle,
-        ]);
-    let job = result.rows[0];
-
-    return job;
-  }
-
-  /** Find all jobs (optional filter on searchFilters).
+   * Returns { name }
    *
-   * searchFilters (all optional):
-   * - minSalary
-   * - hasEquity (true returns only jobs with equity > 0, other values ignored)
-   * - title (will find case-insensitive, partial matches)
-   *
-   * Returns [{ id, title, salary, equity, companyHandle, companyName }, ...]
+   * Throws BadRequestError if company already in database.
    * */
 
-  static async findAll({ minSalary, hasEquity, title } = {}) {
-    let query = `SELECT j.id,
-                        j.title,
-                        j.salary,
-                        j.equity,
-                        j.company_handle AS "companyHandle",
-                        c.name AS "companyName"
-                 FROM jobs j 
-                   LEFT JOIN companies AS c ON c.handle = j.company_handle`;
+  static async create({ name }) {
+    const duplicateCheck = await db.query(
+          `SELECT name
+           FROM tags
+           WHERE name = $1`,
+        [name]);
+
+    if (duplicateCheck.rows[0])
+      throw new BadRequestError(`Duplicate tag: ${name}`);
+
+    const result = await db.query(
+          `INSERT INTO tags
+           (name)
+           VALUES ($1)
+           RETURNING name`,
+        [
+          name,
+        ],
+    );
+    const tag = result.rows[0];
+    console.debug("Create a tag (from data), update db", tag)
+
+    return tag;
+  }
+
+  /** Find all tags (optional filter on searchFilters).
+   *
+   * 
+   *
+   * Returns [{tags }, ...]
+   * */
+
+  static async findAll(searchFilters = {}) {
+    let query = `SELECT name,
+                 FROM tags`;
     let whereExpressions = [];
     let queryValues = [];
 
-    // For each possible search term, add to whereExpressions and
-    // queryValues so we can generate the right SQL
+    const { name } = searchFilters;
 
-    if (minSalary !== undefined) {
-      queryValues.push(minSalary);
-      whereExpressions.push(`salary >= $${queryValues.length}`);
+    if (!name) {
+      throw new BadRequestError("Min employees cannot be greater than max");
     }
 
-    if (hasEquity === true) {
-      whereExpressions.push(`equity > 0`);
-    }
+    // For each possible search term, add to whereExpressions and queryValues so
+    // we can generate the right SQL
 
-    if (title !== undefined) {
-      queryValues.push(`%${title}%`);
-      whereExpressions.push(`title ILIKE $${queryValues.length}`);
+    // if (minEmployees !== undefined) {
+    //   queryValues.push(minEmployees);
+    //   whereExpressions.push(`num_employees >= $${queryValues.length}`);
+    // }
+
+    // if (maxEmployees !== undefined) {
+    //   queryValues.push(maxEmployees);
+    //   whereExpressions.push(`num_employees <= $${queryValues.length}`);
+    // }
+
+    if (name) {
+      queryValues.push(`%${name}%`);
+      whereExpressions.push(`name ILIKE $${queryValues.length}`);
     }
 
     if (whereExpressions.length > 0) {
@@ -79,56 +84,57 @@ class Job {
 
     // Finalize query and return results
 
-    query += " ORDER BY title";
-    const jobsRes = await db.query(query, queryValues);
-    return jobsRes.rows;
+    query += " ORDER BY name";
+    const tagsRes = await db.query(query, queryValues);
+    console.degug("find all tags", tagsRes.rows)
+    return tagsRes.rows;
   }
 
-  /** Given a job id, return data about job.
+  /** Given a tag id, return data about tag.
    *
-   * Returns { id, title, salary, equity, companyHandle, company }
-   *   where company is { handle, name, description, numEmployees, logoUrl }
+   * Returns { handle, name, description, numEmployees, logoUrl, jobs }
+   *   where jobs is [{ id, title, salary, equity }, ...]
    *
    * Throws NotFoundError if not found.
    **/
 
   static async get(id) {
-    const jobRes = await db.query(
-          `SELECT id,
-                  title,
-                  salary,
-                  equity,
-                  company_handle AS "companyHandle"
-           FROM jobs
-           WHERE id = $1`, [id]);
+    const postRes = await db.query(
+      `SELECT id, title, content
+      FROM posts
+      WHERE id = $1
+      ORDER BY id`,
+   [id],
+      );
 
-    const job = jobRes.rows[0];
+    const post = postRes.rows[0];
+    console.debug("Tag - get(id)", id, "post", post)
+    
+    if (!post) throw new NotFoundError(`No post: ${title}`);
+    
+    const tagsRes = await db.query(
+      `SELECT * FROM tags
+      `,
+      [],
+      );
 
-    if (!job) throw new NotFoundError(`No job: ${id}`);
+    console.debug("Tag - tagsRes", tagsRes)
+    
+    post.tags = tagsRes.rows;
+    
+    console.debug("Return this Post:  ", post)
 
-    const companiesRes = await db.query(
-          `SELECT handle,
-                  name,
-                  description,
-                  num_employees AS "numEmployees",
-                  logo_url AS "logoUrl"
-           FROM companies
-           WHERE handle = $1`, [job.companyHandle]);
-
-    delete job.companyHandle;
-    job.company = companiesRes.rows[0];
-
-    return job;
+    return post;
   }
 
-  /** Update job data with `data`.
+  /** Update company data with `data`.
    *
-   * This is a "partial update" --- it's fine if data doesn't contain
-   * all the fields; this only changes provided ones.
+   * This is a "partial update" --- it's fine if data doesn't contain all the
+   * fields; this only changes provided ones.
    *
-   * Data can include: { title, salary, equity }
+   * Data can include: {name, description, numEmployees, logoUrl}
    *
-   * Returns { id, title, salary, equity, companyHandle }
+   * Returns {handle, name, description, numEmployees, logoUrl}
    *
    * Throws NotFoundError if not found.
    */
@@ -136,26 +142,25 @@ class Job {
   static async update(id, data) {
     const { setCols, values } = sqlForPartialUpdate(
         data,
-        {});
-    const idVarIdx = "$" + (values.length + 1);
+        {
+          name: "name",
+        });
+    const handleVarIdx = "$" + (values.length + 1);
 
-    const querySql = `UPDATE jobs 
+    const querySql = `UPDATE tags 
                       SET ${setCols} 
-                      WHERE id = ${idVarIdx} 
+                      WHERE id = ${handleVarIdx} 
                       RETURNING id, 
-                                title, 
-                                salary, 
-                                equity,
-                                company_handle AS "companyHandle"`;
+                                name `;
     const result = await db.query(querySql, [...values, id]);
-    const job = result.rows[0];
+    const tag = result.rows[0];
 
-    if (!job) throw new NotFoundError(`No job: ${id}`);
+    if (!tag) throw new NotFoundError(`No tag: ${id}`);
 
-    return job;
+    return tag;
   }
 
-  /** Delete given job from database; returns undefined.
+  /** Delete given company from database; returns undefined.
    *
    * Throws NotFoundError if company not found.
    **/
@@ -163,13 +168,15 @@ class Job {
   static async remove(id) {
     const result = await db.query(
           `DELETE
-           FROM jobs
+           FROM tags
            WHERE id = $1
-           RETURNING id`, [id]);
-    const job = result.rows[0];
+           RETURNING id`,
+        [id]);
+    const tag = result.rows[0];
 
-    if (!job) throw new NotFoundError(`No job: ${id}`);
+    if (!tag) throw new NotFoundError(`No tag: ${tag.id}`);
   }
 }
 
-module.exports = Job;
+
+module.exports = Tag;

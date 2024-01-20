@@ -23,6 +23,11 @@
       "minLength": 6,
       "maxLength": 60,
       "format": "email"
+    },
+    "logoUrl": {
+      "type": "string",
+      "minLength": 6,
+      "maxLength": 100
     }
   },
   "additionalProperties": false,
