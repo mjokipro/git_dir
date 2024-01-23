@@ -153,7 +153,9 @@ result = await knex('companies').update(data)
 ![](../../assets/image/node-express-wrap-up-1681489178229.jpeg)
 
 ```sql
-CREATE TABLE users (name VARCHAR(25) PRIMARY KEY);
+CREATE TABLE users (
+  name VARCHAR(25) PRIMARY KEY
+  );
 
 CREATE TABLE hobbies (
   id SERIAL PRIMARY KEY,

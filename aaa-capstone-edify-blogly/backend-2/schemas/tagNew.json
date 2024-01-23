@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://our.company.com/jobUpdate.schema.json",
+  "$id": "http://our.company.com/tagNew.schema.json",
   "type": "object",
   "properties": {
     "name": {

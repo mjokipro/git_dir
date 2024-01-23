@@ -89,6 +89,18 @@ router.get("/meh", async function (req, res, next) {
 ### Getting All Cats
 
 Cat model
+
+routes
+```js
+/** (fixed) get all cats: [{id, name, age}] */
+
+router.get("/", async function (req, res, next) {
+  const cats = await Cat.getAll();
+  return res.json(cats);
+});
+```
+
+model
 ```js
   /** get all cats: returns [{id, name, age}, ...] */
 
@@ -102,17 +114,21 @@ Cat model
 ```
 (that’s a method inside class Cat)
 
-routes
-```js
-/** (fixed) get all cats: [{id, name, age}] */
-
-router.get("/", async function (req, res, next) {
-  const cats = await Cat.getAll();
-  return res.json(cats);
-});
-```
 
 ### Getting A Cat
+
+Cat model
+
+routes
+```js
+/** get cat by id: {id, name, age} */
+
+router.get("/:id", async function (req, res, next) {
+  const cat = await Cat.getById(req.params.id);
+  return res.json(cat);
+});
+
+```
 
 Cat model
 ```js
@@ -126,24 +142,28 @@ Cat model
     const cat = result.rows[0];
 
     if (!cat) throw new NotFoundError(`No such cat: ${id}`);
+    
+    ////// non-oop just return general row /////
     return result.rows[0];
   }
 ```
 
-routes
-```js
-/** get cat by id: {id, name, age} */
-
-router.get("/:id", async function (req, res, next) {
-  const cat = await Cat.getById(req.params.id);
-  return res.json(cat);
-});
-
-```
 
 ### Creating a Cat
 
-Cat model
+routes
+```js
+/** create cat from {name, age}: return {name, age} */
+
+router.post("/", async function (req, res, next) {
+  if (req.body === undefined) throw new BadRequestError();
+  const cat = await Cat.create(req.body.name, req.body.age);
+  return res.json(cat);
+});
+```
+
+Cat Model
+model
 ```js
   /** create a cat: returns {id, name, age} */
 
@@ -159,18 +179,17 @@ Cat model
   }
 ```
 
+### Deleting a Cat
+
 routes
 ```js
-/** create cat from {name, age}: return {name, age} */
+/** delete cat from {id}; returns "deleted" */
 
-router.post("/", async function (req, res, next) {
-  if (req.body === undefined) throw new BadRequestError();
-  const cat = await Cat.create(req.body.name, req.body.age);
-  return res.json(cat);
+router.delete("/:id", async function (req, res, next) {
+  await Cat.remove(req.params.id);
+  return res.json("deleted");
 });
 ```
-
-### Deleting a Cat
 
 Cat model
 ```js
@@ -188,16 +207,6 @@ Cat model
   }
 ```
 
-routes
-```js
-/** delete cat from {id}; returns "deleted" */
-
-router.delete("/:id", async function (req, res, next) {
-  await Cat.remove(req.params.id);
-  return res.json("deleted");
-});
-```
-
 ### Aging a Cat
 
 - What if we want to something special?
@@ -205,8 +214,20 @@ router.delete("/:id", async function (req, res, next) {
 - @ #rithmQ  How does aging a cat work if there are no instances of the cat?
 	- Instances are *in the database* instead of in js
 
+routes
+```js
+/** age cat: returns new age */
+
+router.post("/:id/age", async function (req, res, next) {
+  const newAge = await Cat.makeOlder(req.params.id);
+  return res.json(newAge);
+});
+```
+
+
 Cat model
 ```js
+
   /** age cat by 1 year, return new age */
 
   static async makeOlder(id) {
@@ -220,17 +241,7 @@ Cat model
     if (!cat) throw new NotFoundError(`No such cat: ${id}`);
     return cat.age;
   }
-}
-```
 
-routes
-```js
-/** age cat: returns new age */
-
-router.post("/:id/age", async function (req, res, next) {
-  const newAge = await Cat.makeOlder(req.params.id);
-  return res.json(newAge);
-});
 ```
 
 - ! Meh. Annoying to have to make special function.
@@ -282,14 +293,26 @@ await fido.remove();
 
 Dog model
 ```js
+class Dog {
   constructor({ id, name, age }) {
     this.id = id;
     this.name = name;
     this.age = age;
   }
+}
 ```
 
 ### Getting All Dogs
+
+routes
+```js
+/** get all dogs: [{id, name, age}, ...] */
+
+router.get("/", async function (req, res, next) {
+  const dogs = await Dog.getAll();
+  return res.json(dogs);
+});
+```
 
 Dog model
 ```js nums {7}
@@ -303,19 +326,19 @@ Dog model
   }
 ```
 
-routes
-```js
-/** get all dogs: [{id, name, age}, ...] */
-
-router.get("/", async function (req, res, next) {
-  const dogs = await Dog.getAll();
-  return res.json(dogs);
-});
-```
-
 - & We get Dog instances, but Express can turn them into JSON
 
 ### Getting A Dog
+
+routes
+```js
+/** get dog by id: {id, name, age} */
+
+router.get("/:id", async function (req, res, next) {
+  const dog = await Dog.getById(req.params.id);
+  return res.json(dog);
+});
+```
 
 Dog model
 ```js nums {12}
@@ -330,21 +353,23 @@ Dog model
 
     if (!dog) throw new NotFoundError(`No such dog: ${id}`);
 
+    ////// returns instance of dog ///////
     return new Dog(dog);  
   }
 ```
 
+### Creating a Dog
+
 routes
 ```js
-/** get dog by id: {id, name, age} */
+/** create dog from {name, age}: return id */
 
-router.get("/:id", async function (req, res, next) {
-  const dog = await Dog.getById(req.params.id);
+router.post("/", async function (req, res, next) {
+  if (req.body === undefined) throw new BadRequestError();
+  const dog = await Dog.create(req.body.name, req.body.age);
   return res.json(dog);
 });
 ```
-
-### Creating a Dog
 
 Dog model
 ```js nums {11}
@@ -362,27 +387,7 @@ Dog model
   }
 ```
 
-routes
-```js
-/** create dog from {name, age}: return id */
-
-router.post("/", async function (req, res, next) {
-  if (req.body === undefined) throw new BadRequestError();
-  const dog = await Dog.create(req.body.name, req.body.age);
-  return res.json(dog);
-});
-```
-
 ### Deleting a Dog
-
-Dog model
-```js
-  /** delete dog */
-
-  async remove() {
-    await db.query(`DELETE FROM dogs WHERE id = $1`, [this.id]);
-  }
-```
 
 routes
 ```js nums {5-6}
@@ -394,23 +399,21 @@ router.delete("/:id", async function (req, res, next) {
   return res.json("deleted");
 });
 ```
+
+Dog model
+```js
+  /** delete dog */
+
+  async remove() {
+    await db.query(`DELETE FROM dogs WHERE id = $1`, [this.id]);
+  }
+```
 - & Notice: it’s just a method that acts on current dog!
 
 ### Aging a Dog
 
 - Now, we don’t need special functionality to age a dog
 - We can just update age on instance and *.save()* it!
-
-Dog model
-```js
-  async save() {
-    await db.query(
-        `UPDATE dogs
-         SET name=$1,
-             age=$2
-           WHERE id = $3`, [this.name, this.age, this.id]);
-  }
-```
 
 routes
 ```js nums {5-6}
@@ -422,6 +425,17 @@ router.post("/:id/age", async function (req, res, next) {
   await dog.save(); 
   return res.json(dog.age);
 });
+```
+
+Dog model
+```js
+  async save() {
+    await db.query(
+        `UPDATE dogs
+         SET name=$1,
+             age=$2
+           WHERE id = $3`, [this.name, this.age, this.id]);
+  }
 ```
 
 ### Simple vs. Smarter

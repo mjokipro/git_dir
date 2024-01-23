@@ -6,7 +6,7 @@ const jsonschema = require("jsonschema");
 const express = require("express");
 
 const { BadRequestError } = require("../expressError");
-// const { ensureAdmin, ensureCorrectUserOrAdmin } = require("../middleware/auth");
+const { ensureAdmin, ensureCorrectUserOrAdmin } = require("../middleware/auth");
 const Tag = require("../models/tag");
 
 const tagNewSchema = require("../schemas/tagNew.json");
@@ -48,19 +48,19 @@ router.post("/", async function (req, res, next) {
  */
 
 router.get("/", async function (req, res, next) {
-  // const q = req.query;
+  const q = req.query;
   // arrive as strings from querystring, but we want as ints
 
-  // if(!q) return
+  if(!q) return
 
   try {
-    // const validator = jsonschema.validate( tagSearchSchema);
-    // if (!validator.valid) {
-    //   const errs = validator.errors.map(e => e.stack);
-    //   throw new BadRequestError(errs);
-    // }
+    const validator = jsonschema.validate(q, tagSearchSchema);
+    if (!validator.valid) {
+      const errs = validator.errors.map(e => e.stack);
+      throw new BadRequestError(errs);
+    }
 
-    const tags = await Tag.findAll();
+    const tags = await Tag.findAll(q);
     console.debug("GET / { tags: [ { name }, ...] }", tags)
 
     return res.json({ tags });
@@ -106,7 +106,7 @@ router.patch("/:id", async function (req, res, next) {
       throw new BadRequestError(errs);
     }
     
-    const tag = await Tag.update(req.params.id, req.body);
+    const tag = await Tag.update(req.params.name, req.body);
     console.debug("PATCH / tags/:id", tag)
     return res.json({ tag });
   } catch (err) {
@@ -121,9 +121,9 @@ router.patch("/:id", async function (req, res, next) {
 
 router.delete("/:id", async function (req, res, next) {
   try {
-    await Tag.remove(req.params.id);
-    console.debug("DELETE / tags/:id", req.params.id)
-    return res.json({ deleted: req.params.id });
+    await Tag.remove(req.params.name);
+    console.debug("DELETE / tags/:id", req.params.name)
+    return res.json({ deleted: req.params.name });
   } catch (err) {
     return next(err);
   }

@@ -48,45 +48,13 @@ class Tag {
    * Returns [{tags }, ...]
    * */
 
-  static async findAll(searchFilters = {}) {
-    let query = `SELECT name,
-                 FROM tags`;
-    let whereExpressions = [];
-    let queryValues = [];
-
-    const { name } = searchFilters;
-
-    if (!name) {
-      throw new BadRequestError("Min employees cannot be greater than max");
-    }
-
-    // For each possible search term, add to whereExpressions and queryValues so
-    // we can generate the right SQL
-
-    // if (minEmployees !== undefined) {
-    //   queryValues.push(minEmployees);
-    //   whereExpressions.push(`num_employees >= $${queryValues.length}`);
-    // }
-
-    // if (maxEmployees !== undefined) {
-    //   queryValues.push(maxEmployees);
-    //   whereExpressions.push(`num_employees <= $${queryValues.length}`);
-    // }
-
-    if (name) {
-      queryValues.push(`%${name}%`);
-      whereExpressions.push(`name ILIKE $${queryValues.length}`);
-    }
-
-    if (whereExpressions.length > 0) {
-      query += " WHERE " + whereExpressions.join(" AND ");
-    }
-
-    // Finalize query and return results
-
-    query += " ORDER BY name";
-    const tagsRes = await db.query(query, queryValues);
-    console.degug("find all tags", tagsRes.rows)
+  static async findAll() {
+    let query = `SELECT name
+                 FROM tags
+                 ORDER BY name`;
+    
+    const tagsRes = await db.query(query);
+    console.debug("find all tags", tagsRes.rows)
     return tagsRes.rows;
   }
 
@@ -99,32 +67,30 @@ class Tag {
    **/
 
   static async get(id) {
-    const postRes = await db.query(
-      `SELECT id, title, content
-      FROM posts
+    const tagsRes = await db.query(
+      `SELECT id, name
+      FROM tags
       WHERE id = $1
       ORDER BY id`,
    [id],
       );
+    
+    if (!id) throw new NotFoundError(`No post: ${id}`);
+    
+    // const tagsRes = await db.query(
+    //   `SELECT t.name
+    //   FROM tags AS t 
+    //   LEFT JOIN posts_tags AS pt ON t.id = pt.tag_id
+    //   LEFT JOIN posts AS p ON p.id == pt.post_id
+    //   WHERE p.id = $1
+    //   `,
+    //   [id]
+    //   );
+      
+      const tags = tagsRes.rows
+      console.debug("Tag - tagsRes", tags)
 
-    const post = postRes.rows[0];
-    console.debug("Tag - get(id)", id, "post", post)
-    
-    if (!post) throw new NotFoundError(`No post: ${title}`);
-    
-    const tagsRes = await db.query(
-      `SELECT * FROM tags
-      `,
-      [],
-      );
-
-    console.debug("Tag - tagsRes", tagsRes)
-    
-    post.tags = tagsRes.rows;
-    
-    console.debug("Return this Post:  ", post)
-
-    return post;
+    return tags;
   }
 
   /** Update company data with `data`.
@@ -139,21 +105,14 @@ class Tag {
    * Throws NotFoundError if not found.
    */
 
-  static async update(id, data) {
-    const { setCols, values } = sqlForPartialUpdate(
-        data,
-        {
-          name: "name",
-        });
-    const handleVarIdx = "$" + (values.length + 1);
+  static async update(id, {name}) {
 
-    const querySql = `UPDATE tags 
-                      SET ${setCols} 
-                      WHERE id = ${handleVarIdx} 
-                      RETURNING id, 
-                                name `;
-    const result = await db.query(querySql, [...values, id]);
-    const tag = result.rows[0];
+    const tags = await db.query(`UPDATE tags 
+                      SET name = $1
+                      WHERE id = $2 
+                      RETURNING id, name `, [name, id])
+  
+    const tag = tags.rows[0];
 
     if (!tag) throw new NotFoundError(`No tag: ${id}`);
 
@@ -174,7 +133,7 @@ class Tag {
         [id]);
     const tag = result.rows[0];
 
-    if (!tag) throw new NotFoundError(`No tag: ${tag.id}`);
+    if (!tag) throw new NotFoundError(`No tag: ${tag}`);
   }
 }
 

@@ -7,7 +7,7 @@ const jsonschema = require("jsonschema");
 const express = require("express");
 const { BadRequestError } = require("../expressError");
 const { Tag } = require("../models/tag");
-const { ensureCorrectUserOrAdmin } = require("../middleware/auth")
+// const { ensureCorrectUserOrAdmin } = require("../middleware/auth")
 const Post = require("../models/post");
 const postNewSchema = require("../schemas/postNew.json");
 const postUpdateSchema = require("../schemas-maybe/postUpdate.json");
@@ -51,9 +51,18 @@ router.post("/", async function (req, res, next) {
  */
 
 router.get("/", async function (req, res, next) {
+  const q = req.query;
+  // arrive as strings from querystring, but we want as int/bool
+  // if (!q.title) return
 
   try {
-    const posts = await Post.getAll();
+    const validator = jsonschema.validate(q, postSearchSchema);
+    if (!validator.valid) {
+      const errs = validator.errors.map(e => e.stack);
+      throw new BadRequestError(errs);
+    }
+
+    const posts = await Post.findAll(q);
     return res.json({ posts });
   } catch (err) {
     return next(err);
@@ -71,7 +80,7 @@ router.get("/", async function (req, res, next) {
 router.get("/:id", async function (req, res, next) {
   try {
     const post = await Post.get(req.params.id);
-    // const tags = await Tag.get(req.params.id);
+    const tags = await Tag.get(req.params.id);
     return res.json({ post });
   } catch (err) {
     return next(err);

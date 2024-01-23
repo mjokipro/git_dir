@@ -1,12 +1,17 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://our.company.com/jobSearch.schema.json",
+  "$id": "http://our.company.com/companyUpdate.schema.json",
   "type": "object",
   "properties": {
-    "name": {
+    "title": {
       "type": "string",
       "minLength": 1,
-      "maxLength": 25
+      "maxLength": 30
+    },
+    "content": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500
     }
   },
   "additionalProperties": false,
