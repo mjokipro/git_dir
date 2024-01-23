@@ -118,5 +118,20 @@ router.delete("/:id", async function (req, res, next) {
   }
 });
 
+/** POST /[post.id]/tags/[id]  { state } => { tagged }
+ *
+ * Returns {"tagged": tag_id}
+ *
+ * */
+
+router.post(`/:id/tags/:code`, async function (req, res, next) {
+  try {
+    const id = +req.params.id;
+    await Post.createPostTag(id, req.params.code);
+    return res.json({ tagged: code });
+  } catch (err) {
+    return next(err);
+  }
+});
 
 module.exports = router;

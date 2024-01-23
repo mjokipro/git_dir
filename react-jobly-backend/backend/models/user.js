@@ -57,7 +57,7 @@ class User {
    **/
 
   static async register(
-      { username, password, firstName, lastName, email, isAdmin }) {
+      { username, password, firstName, lastName, email, logoUrl, isAdmin }) {
     const duplicateCheck = await db.query(
           `SELECT username
            FROM users
@@ -78,15 +78,17 @@ class User {
             first_name,
             last_name,
             email,
+            logoUrl,
             is_admin)
-           VALUES ($1, $2, $3, $4, $5, $6)
-           RETURNING username, first_name AS "firstName", last_name AS "lastName", email, is_admin AS "isAdmin"`,
+           VALUES ($1, $2, $3, $4, $5, $6, $7)
+           RETURNING username, first_name AS "firstName", last_name AS "lastName", email, logoUrl, is_admin AS "isAdmin"`,
         [
           username,
           hashedPassword,
           firstName,
           lastName,
           email,
+          logoUrl,
           isAdmin,
         ],
     );
@@ -107,6 +109,7 @@ class User {
                   first_name AS "firstName",
                   last_name AS "lastName",
                   email,
+                  logoUrl,
                   is_admin AS "isAdmin"
            FROM users
            ORDER BY username`,
@@ -129,6 +132,7 @@ class User {
                   first_name AS "firstName",
                   last_name AS "lastName",
                   email,
+                  logoUrl,
                   is_admin AS "isAdmin"
            FROM users
            WHERE username = $1`,
@@ -139,12 +143,12 @@ class User {
 
     if (!user) throw new NotFoundError(`No user: ${username}`);
 
-    const userApplicationsRes = await db.query(
-          `SELECT a.job_id
-           FROM applications AS a
-           WHERE a.username = $1`, [username]);
+    const posts = await db.query(
+          `SELECT p.id, p.title, p.content
+          FROM posts AS p
+          WHERE user_id = username`, [username]);
 
-    user.applications = userApplicationsRes.rows.map(a => a.job_id);
+    user.posts = posts.rows.map(p => p.id);
     return user;
   }
 
@@ -186,6 +190,7 @@ class User {
                                 first_name AS "firstName",
                                 last_name AS "lastName",
                                 email,
+                                logoUrl,
                                 is_admin AS "isAdmin"`;
     const result = await db.query(querySql, [...values, username]);
     const user = result.rows[0];

@@ -2,38 +2,35 @@
 
 const db = require("../db");
 const { BadRequestError, NotFoundError } = require("../expressError");
-const { sqlForPartialUpdate } = require("../helpers/sql");
 
 /** Related functions for tags. */
 
 class Tag {
   /** Create a tag (from data), update db, return new company data.
    *
-   * data should be {name }
+   * data should be {name}
    *
    * Returns { name }
    *
    * Throws BadRequestError if company already in database.
    * */
 
-  static async create({ name }) {
+  static async create(data) {
     const duplicateCheck = await db.query(
           `SELECT name
            FROM tags
            WHERE name = $1`,
-        [name]);
+        [data.name]);
 
     if (duplicateCheck.rows[0])
-      throw new BadRequestError(`Duplicate tag: ${name}`);
+      throw new BadRequestError(`Duplicate tag: ${data.name}`);
 
     const result = await db.query(
           `INSERT INTO tags
            (name)
            VALUES ($1)
-           RETURNING name`,
-        [
-          name,
-        ],
+           RETURNING id, name`,
+        [data.name]
     );
     const tag = result.rows[0];
     console.debug("Create a tag (from data), update db", tag)
@@ -41,11 +38,10 @@ class Tag {
     return tag;
   }
 
-  /** Find all tags (optional filter on searchFilters).
-   *
-   * 
+  /** Find all tags 
    *
    * Returns [{tags }, ...]
+   * 
    * */
 
   static async findAll() {
@@ -60,8 +56,8 @@ class Tag {
 
   /** Given a tag id, return data about tag.
    *
-   * Returns { handle, name, description, numEmployees, logoUrl, jobs }
-   *   where jobs is [{ id, title, salary, equity }, ...]
+   * Returns { id, tag, posts }
+   *   where posts are [{ postId, title, content }, ...]
    *
    * Throws NotFoundError if not found.
    **/
@@ -70,42 +66,40 @@ class Tag {
     const tagsRes = await db.query(
       `SELECT id, name
       FROM tags
-      WHERE id = $1
-      ORDER BY id`,
-   [id],
-      );
+      WHERE id = $1`,
+    [id]);
     
-    if (!id) throw new NotFoundError(`No post: ${id}`);
+  const tag = tagsRes.rows[0]
     
-    // const tagsRes = await db.query(
-    //   `SELECT t.name
-    //   FROM tags AS t 
-    //   LEFT JOIN posts_tags AS pt ON t.id = pt.tag_id
-    //   LEFT JOIN posts AS p ON p.id == pt.post_id
-    //   WHERE p.id = $1
-    //   `,
-    //   [id]
-    //   );
-      
-      const tags = tagsRes.rows
-      console.debug("Tag - tagsRes", tags)
+  if (!tag) throw new NotFoundError(`No post: ${id}`);
+  
+  const postsRes = await db.query(
+    `SELECT p.id AS postId, p.title, p.content
+    FROM posts_tags AS pt 
+    LEFT JOIN posts AS p ON p.id = pt.post_id
+    WHERE pt.tag_id = $1
+    `, [id]);
+    
+  if (!postsRes) throw new NotFoundError(`No post: ${id}`);
 
-    return tags;
+  tag.posts = postsRes.rows
+      
+  console.debug("Tag - tagsRes", tag)
+
+  return tag;
+
   }
 
-  /** Update company data with `data`.
+  /** Update tag name with `{ name }`.
    *
-   * This is a "partial update" --- it's fine if data doesn't contain all the
-   * fields; this only changes provided ones.
+   * { name } can include: { name }
    *
-   * Data can include: {name, description, numEmployees, logoUrl}
-   *
-   * Returns {handle, name, description, numEmployees, logoUrl}
+   * Returns { id, name }
    *
    * Throws NotFoundError if not found.
    */
 
-  static async update(id, {name}) {
+  static async update(id, { name }) {
 
     const tags = await db.query(`UPDATE tags 
                       SET name = $1
@@ -119,9 +113,9 @@ class Tag {
     return tag;
   }
 
-  /** Delete given company from database; returns undefined.
+  /** Delete given tag from database; returns undefined.
    *
-   * Throws NotFoundError if company not found.
+   * Throws NotFoundError if tag not found.
    **/
 
   static async remove(id) {
@@ -133,7 +127,7 @@ class Tag {
         [id]);
     const tag = result.rows[0];
 
-    if (!tag) throw new NotFoundError(`No tag: ${tag}`);
+    if (!tag) throw new NotFoundError(`No tag: ${id}`);
   }
 }
 

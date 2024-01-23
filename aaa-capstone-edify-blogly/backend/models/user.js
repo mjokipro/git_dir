@@ -136,26 +136,30 @@ class User {
                   logo_url AS "logoUrl",
                   is_admin AS "isAdmin"
            FROM users
-           WHERE username = $1`,
+           WHERE id = $1`,
         [username],
     );
 
     const user = userRes.rows[0];
 
-    if (!user) throw new NotFoundError(`No user: ${username}`);
+    if (user) throw new NotFoundError(`No user: ${user}`);
 
-      const posts = await db.query(
+      const postsRes = await db.query(
         `SELECT p.id, p.title, p.content
         FROM posts AS p
-        WHERE p.user_id = $1`, [username]
+        JOIN users AS u
+        WHERE u.username = $1`, [username]
       )
+      const posts = postsRes.rows
+
+      if (!posts) throw new NotFoundError(`No posts`);
 
     // const userApplicationsRes = await db.query(
     //       `SELECT a.job_id
     //        FROM applications AS a
     //        WHERE a.username = $1`, [username]);
 
-    user.posts = posts.rows.map(a => a.job_id);
+    user.posts = posts.rows.map(p => p.id);
     return user;
   }
 
