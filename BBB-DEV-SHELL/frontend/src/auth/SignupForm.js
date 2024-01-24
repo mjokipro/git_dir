@@ -13,20 +13,20 @@ import Alert from "../common/Alert";
  * Routed as /signup
  */
 
-function SignupForm({ register }) {
+function SignupForm({ signup }) {
   const history = useHistory();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
     firstName: "",
     lastName: "",
-    phone: "",
+    email: "",
   });
   const [formErrors, setFormErrors] = useState([]);
 
   console.debug(
       "SignupForm",
-      // "register=", typeof register,
+      "signup=", typeof signup,
       "formData=", formData,
       "formErrors=", formErrors,
   );
@@ -38,9 +38,9 @@ function SignupForm({ register }) {
 
   async function handleSubmit(evt) {
     evt.preventDefault();
-    let result = await register(formData);
+    let result = await signup(formData);
     if (result.success) {
-      history.push("/users");
+      history.push("/companies");
     } else {
       setFormErrors(result.errors);
     }
@@ -55,14 +55,13 @@ function SignupForm({ register }) {
   return (
       <div className="SignupForm">
         <div className="container col-md-6 offset-md-3 col-lg-4 offset-lg-4">
-          <h2 className="mb-3">Register</h2>
+          <h2 className="mb-3">Sign Up</h2>
           <div className="card">
             <div className="card-body">
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
                   <label>Username</label>
                   <input
-                      type="text"
                       name="username"
                       className="form-control"
                       value={formData.username}
@@ -83,7 +82,6 @@ function SignupForm({ register }) {
                 <div className="form-group">
                   <label>First name</label>
                   <input
-                      type="text"
                       name="firstName"
                       className="form-control"
                       value={formData.firstName}
@@ -93,7 +91,6 @@ function SignupForm({ register }) {
                 <div className="form-group">
                   <label>Last name</label>
                   <input
-                      type="text"
                       name="lastName"
                       className="form-control"
                       value={formData.lastName}
@@ -101,12 +98,12 @@ function SignupForm({ register }) {
                   />
                 </div>
                 <div className="form-group">
-                  <label>Phone</label>
+                  <label>Email</label>
                   <input
-                      type="text"
-                      name="phone"
+                      type="email"
+                      name="email"
                       className="form-control"
-                      value={formData.phone}
+                      value={formData.email}
                       onChange={handleChange}
                   />
                 </div>
