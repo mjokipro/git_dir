@@ -10,10 +10,10 @@ function ProfileForm() {
   const { user, setUser } = useContext(UserContext);
   const [formData, setFormData] = useState({
     username: user.username,
-    password: "",
+    password: user.password,
     first_name: user.first_name,
     last_name: user.last_name,
-    phone: user.phone,
+    phone: user.phone
   });
   const [formErrors, setFormErrors] = useState([]);
 
@@ -27,18 +27,18 @@ function ProfileForm() {
       "formData=", formData,
       "formErrors=", formErrors,
       "saveConfirmed=", saveConfirmed,
-      // "user Apps=", user.applications
+      // "currentUser Apps=", currentUser.applications
   );
 
   async function handleSubmit(evt) {
     evt.preventDefault();
 
     let profileData = {
-      username: user.username,
-      password: "",
-      first_name: user.first_name,
-      last_name: user.last_name,
-      phone: user.phone,
+      username: formData.username,
+      password: formData.password,
+      first_name: formData.first_name,
+      last_name: formData.last_name,
+      phone: formData.phone,
     };
 
     let username = formData.username;
@@ -81,6 +81,15 @@ function ProfileForm() {
                 <h5>{formData.username}</h5>
               </div>
               <div className="form-group">
+                <label>Email</label>
+                <input
+                    name="username"
+                    className="form-control"
+                    value={formData.username}
+                    onChange={handleChange}
+                />
+              </div>
+              <div className="form-group">
                 <label>Confirm password to make changes:</label>
                 <input
                     type="password"
@@ -93,7 +102,7 @@ function ProfileForm() {
               <div className="form-group">
                 <label>First Name</label>
                 <input
-                    name="firstName"
+                    name="first_name"
                     className="form-control"
                     value={formData.first_name}
                     onChange={handleChange}
@@ -102,16 +111,16 @@ function ProfileForm() {
               <div className="form-group">
                 <label>Last Name</label>
                 <input
-                    name="lastName"
+                    name="last_name"
                     className="form-control"
                     value={formData.last_name}
                     onChange={handleChange}
                 />
               </div>
               <div className="form-group">
-                <label>Email</label>
+                <label>Phone</label>
                 <input
-                    name="email"
+                    name="phone"
                     className="form-control"
                     value={formData.phone}
                     onChange={handleChange}
