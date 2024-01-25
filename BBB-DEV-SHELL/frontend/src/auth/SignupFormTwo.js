@@ -13,7 +13,7 @@ import Alert from "../common/Alert";
  * Routed as /signup
  */
 
-function SignupForm({ signup }) {
+function SignupFormTwo({ signup }) {
   const history = useHistory();
   const [formData, setFormData] = useState({
     username: "",
@@ -128,4 +128,4 @@ function SignupForm({ signup }) {
   );
 }
 
-export default SignupForm;
+export default SignupFormTwo;

@@ -27,7 +27,7 @@ function ProfileForm() {
       "formData=", formData,
       "formErrors=", formErrors,
       "saveConfirmed=", saveConfirmed,
-      "currentUser Apps=", currentUser.applications
+      // "currentUser Apps=", currentUser.applications
   );
 
   async function handleSubmit(evt) {

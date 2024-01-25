@@ -13,17 +13,17 @@ function Navigation({logout}) {
             <ul className='nav nav-pills'>
                 <li className='nav-item mr-4'>
                     <NavLink className="nav-link" to="/companies">
-                        Companies
+                        ENTER LINK HERE
                     </NavLink>
                 </li>
                 <li className='nav-item mr-4'>
                     <NavLink className="nav-link" to="/jobs">
-                        Jobs
+                    ENTER LINK HERE
                     </NavLink>
                 </li>
                 <li className='nav-item mr-4'>
                     <NavLink className="nav-link" to="/profile">
-                        Profile
+                    ENTER LINK HERE
                     </NavLink>
                 </li>
                 <li className='nav-item mr-4'>

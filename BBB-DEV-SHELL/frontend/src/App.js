@@ -15,7 +15,7 @@ export const TOKEN_INIT = "jobly-token"
 function App() {
   
   const [noMoreRecs, setNoMoreRecs] = useState(false)
-  const [applicationIds, setApplicationIds] = useState(new Set([]))
+  // const [applicationIds, setApplicationIds] = useState(new Set([]))
   const [currentUser, setCurrentUser] = useState(null)
   const [token, setToken] = useLocalStorage(TOKEN_INIT)
 
@@ -30,7 +30,7 @@ function App() {
               JoblyApi.token = token
               let currentUser = await JoblyApi.getCurrentUser(username)
               setCurrentUser(currentUser)
-              setApplicationIds(new Set(currentUser.applications))
+              // setApplicationIds(new Set(currentUser.applications))
           } catch(err) {
               console.log("user error", err)
               setCurrentUser(null)
@@ -69,21 +69,21 @@ function App() {
     setToken(null)
   }
 
-  function hasAppliedToJob(id){
-    return applicationIds.has(id)
-  }
+  // function hasAppliedToJob(id){
+  //   return applicationIds.has(id)
+  // }
 
-  function applyToJob(id){
-    if (hasAppliedToJob(id)) return
-    JoblyApi.applyToJob(currentUser.username, id)
-    setApplicationIds(new Set([...applicationIds, id]))
-  }
+  // function applyToJob(id){
+  //   if (hasAppliedToJob(id)) return
+  //   JoblyApi.applyToJob(currentUser.username, id)
+  //   setApplicationIds(new Set([...applicationIds, id]))
+  // }
 
   if (!noMoreRecs) return <p>Loading...</p>
 
   return (
       <BrowserRouter>
-        <UserContext.Provider value={{currentUser, setCurrentUser, hasAppliedToJob, applyToJob}}>
+        <UserContext.Provider value={{currentUser, setCurrentUser}}>
           <div>
           <Navigation logout={logout} />
           <Routes404 login={login} signup={signup} />

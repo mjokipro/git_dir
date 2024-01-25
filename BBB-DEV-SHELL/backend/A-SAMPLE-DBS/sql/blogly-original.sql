@@ -10,9 +10,11 @@ CREATE DATABASE blogly_db;
 CREATE TABLE users
 (
     id SERIAL PRIMARY KEY,
+    username VARCHAR(25) UNIQUE NOT NULL,
+    password TEXT NOT NULL,
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
-    image_url TEXT
+    phone TEXT
 );
 
 CREATE TABLE posts
@@ -20,21 +22,22 @@ CREATE TABLE posts
     id SERIAL PRIMARY KEY,
     title TEXT NOT NULL,
     content TEXT NOT NULL,
-    user_id INTEGER REFERENCES users,
+    user_id VARCHAR(25) REFERENCES users,
     created_at DATE
 );
 
 CREATE TABLE tags
 (
     id SERIAL PRIMARY KEY,
-    name TEXT UNIQUE NOT NULL
+    name VARCHAR(25) UNIQUE NOT NULL
 );
 
 CREATE TABLE posts_tags
 (
-    id SERIAL PRIMARY KEY,
+    -- id SERIAL PRIMARY KEY,
     post_id INTEGER REFERENCES posts ON DELETE CASCADE,
-    tag_id INTEGER REFERENCES tags ON DELETE CASCADE
+    tag_id VARCHAR(25) REFERENCES tags ON DELETE CASCADE,
+    PRIMARY KEY (post_id, tag_id)
 );
 
 INSERT INTO users
