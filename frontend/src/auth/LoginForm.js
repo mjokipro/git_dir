@@ -38,7 +38,7 @@ function LoginForm({ login }) {
     let result = await login(formData);
     console.debug("result", result)
     if (result.success) {
-      history.push("/companies");
+      history.push("/users");
     } else {
       setFormErrors(result.errors);
     }

@@ -12,18 +12,18 @@ function Navigation({logout}) {
             <div className='navbar-nav ml-auto'>
             <ul className='nav nav-pills'>
                 <li className='nav-item mr-4'>
-                    <NavLink className="nav-link" to="/companies">
-                        ENTER LINK HERE
+                    <NavLink className="nav-link" to="/users">
+                        Users
                     </NavLink>
                 </li>
                 <li className='nav-item mr-4'>
-                    <NavLink className="nav-link" to="/jobs">
-                    ENTER LINK HERE
+                    <NavLink className="nav-link" to="/messages">
+                    Messages
                     </NavLink>
                 </li>
                 <li className='nav-item mr-4'>
-                    <NavLink className="nav-link" to="/profile">
-                    ENTER LINK HERE
+                    <NavLink className="nav-link" to="/tags">
+                    Tags
                     </NavLink>
                 </li>
                 <li className='nav-item mr-4'>

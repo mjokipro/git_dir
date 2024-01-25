@@ -139,12 +139,12 @@ class User {
 
     if (!user) throw new NotFoundError(`No user: ${username}`);
 
-    const posts = await db.query(
-          `SELECT p.id, p.title, p.content
-          FROM posts AS p
-          WHERE user_id = username`, [username]);
+    // const posts = await db.query(
+    //       `SELECT p.id, p.title, p.content
+    //       FROM posts AS p
+    //       WHERE user_id = username`, [username]);
 
-    user.posts = posts.rows.map(p => p.id);
+    // user.posts = posts.rows.map(p => p.id);
     return user;
   }
 

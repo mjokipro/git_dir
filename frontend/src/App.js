@@ -29,6 +29,7 @@ function App() {
               let {username} = jwt.decode(token)
               JoblyApi.token = token
               let currentUser = await JoblyApi.getCurrentUser(username)
+              // let currentUser = await JoblyApi.getCurrentUser(username)
               setCurrentUser(currentUser)
               // setApplicationIds(new Set(currentUser.applications))
           } catch(err) {

@@ -6,6 +6,7 @@ import SignupForm from './auth/SignupForm'
 import ProfileForm from "./profiles/ProfileForm";
 import LoginForm from './auth/LoginForm'
 import PrivateRoute from './routes-nav/PrivateRoute'
+import UserList from "./users/UserList";
 // import NotFound from "./NotFound";
 
 function Routes({login, signup}) {
@@ -20,9 +21,11 @@ function Routes({login, signup}) {
     <Switch>
       <Route exact path="/"><Homepage /></Route>
 
+      
       <Route exact path="/login"><LoginForm login={login}/></Route>
       <Route exact path="/signup"><SignupForm signup={signup}/></Route>
       
+      <PrivateRoute exact path="/users"><UserList /></PrivateRoute>
       <PrivateRoute exact path="/profile"><ProfileForm /></PrivateRoute>
       {/* <PrivateRoute exact path="/jobs"><JobList /></PrivateRoute> */}
       {/* <PrivateRoute exact path="/companies/:handle"><CompanyDetail /></PrivateRoute> */}
