@@ -40,7 +40,7 @@ function SignupFormTwo({ signup }) {
     evt.preventDefault();
     let result = await signup(formData);
     if (result.success) {
-      history.push("/users");
+      history.push("/");
     } else {
       setFormErrors(result.errors);
     }

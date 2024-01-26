@@ -10,8 +10,9 @@ const { authenticateJWT } = require("./middleware/auth");
 // const usersRoutes = require("./routes/users");
 const authRoutes = require("./routes/auth");
 const usersRoutes = require("./routes/users");
-// const messagesRoutes = require("./routes/messages");
-// const tagsRoutes = require("./routes/tags");
+const messagesRoutes = require("./routes/messages");
+const postsRoutes = require("./routes/posts");
+const tagsRoutes = require("./routes/tags");
 const morgan = require("morgan");
 
 app.use(cors());
@@ -21,8 +22,9 @@ app.use(authenticateJWT);
 
 app.use("/auth", authRoutes);
 app.use("/users", usersRoutes);
-// app.use("/messages", messagesRoutes);
-// app.use("/tags", tagsRoutes);
+app.use("/messages", messagesRoutes);
+app.use("/tags", tagsRoutes);
+app.use("/posts", postsRoutes);
 
 // app.use("/", routes);
 

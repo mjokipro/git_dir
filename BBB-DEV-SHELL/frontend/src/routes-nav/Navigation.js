@@ -13,7 +13,7 @@ function Navigation({logout}) {
             <ul className='nav nav-pills'>
                 <li className='nav-item mr-4'>
                     <NavLink className="nav-link" to="/users">
-                        Users
+                    Users
                     </NavLink>
                 </li>
                 <li className='nav-item mr-4'>
@@ -27,8 +27,13 @@ function Navigation({logout}) {
                     </NavLink>
                 </li>
                 <li className='nav-item mr-4'>
+                    <NavLink className="nav-link" to="/posts">
+                    Posts
+                    </NavLink>
+                </li>
+                <li className='nav-item mr-4'>
                     <NavLink className="nav-link" to="/" onClick={logout}>
-                        Log Out {currentUser.first_name || currentUser.username}
+                    Log Out {currentUser.first_name || currentUser.username}
                     </NavLink>
                 </li>
             </ul>
@@ -58,7 +63,7 @@ function Navigation({logout}) {
     return (
         <nav className="Navigation navbar">
             <Link className="navbar-brand lg" to="/">
-                Jobly
+                Edify.com
             </Link>
             {currentUser ? loggedInNav() : loggedOutNav()}
         </nav>

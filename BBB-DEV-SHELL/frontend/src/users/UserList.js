@@ -1,8 +1,9 @@
 import React, {useState, useEffect}  from "react";
 // import UserListDetail from './UserListDetail'
-import UserCard from './UserCard'
+// import UserCard from './UserCard'
 import JoblyApi from "../api/api";
 import SearchForm from "../common/SearchForm";
+import UserCard from "./UserCard";
 
 const UserList = () => {
     console.degug("Users List")
@@ -27,6 +28,7 @@ const UserList = () => {
             <div>
             <SearchForm searchFor={search} />
             </div>
+            <h1>UserList</h1>
             { users.length
                 ? (
                     <div>
@@ -40,6 +42,7 @@ const UserList = () => {
                                 lastName={u.lastName}
                                 email={u.email}
                         />))}
+                     
                     </div>
                 ) : (<p>No results</p>)
             }

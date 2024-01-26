@@ -5,7 +5,7 @@
 const jsonschema = require("jsonschema");
 
 const express = require("express");
-const { ensureCorrectUserOrAdmin, ensureAdmin } = require("../middleware/auth");
+const { ensureCorrectUserOrAdmin, ensureAdmin, ensureLoggedIn } = require("../middleware/auth");
 const { BadRequestError } = require("../expressError");
 const User = require("../models/user");
 const { createToken } = require("../helpers/tokens");
@@ -51,7 +51,7 @@ router.post("/", async function (req, res, next) {
  * Authorization required: admin
  **/
 
-router.get("/", ensureCorrectUserOrAdmin, async function (req, res, next) {
+router.get("/", ensureLoggedIn, async function (req, res, next) {
   try {
     const users = await User.findAll();
     return res.json({ users });
@@ -69,7 +69,7 @@ router.get("/", ensureCorrectUserOrAdmin, async function (req, res, next) {
  * Authorization required: admin or same user-as-:username
  **/
 
-router.get("/:username",  async function (req, res, next) {
+router.get("/:username", ensureLoggedIn, async function (req, res, next) {
   try {
     const user = await User.get(req.params.username);
     return res.json({ user });
@@ -89,7 +89,7 @@ router.get("/:username",  async function (req, res, next) {
  * Authorization required: admin or same-user-as-:username
  **/
 
-router.patch("/:username", ensureCorrectUserOrAdmin, async function (req, res, next) {
+router.patch("/:username", ensureLoggedIn, async function (req, res, next) {
   try {
     const validator = jsonschema.validate(req.body, userUpdateSchema);
     if (!validator.valid) {
@@ -110,7 +110,7 @@ router.patch("/:username", ensureCorrectUserOrAdmin, async function (req, res, n
  * Authorization required: admin or same-user-as-:username
  **/
 
-router.delete("/:username", ensureCorrectUserOrAdmin, async function (req, res, next) {
+router.delete("/:username", ensureLoggedIn, async function (req, res, next) {
   try {
     await User.remove(req.params.username);
     return res.json({ deleted: req.params.username });
@@ -127,12 +127,71 @@ router.delete("/:username", ensureCorrectUserOrAdmin, async function (req, res, 
  * Authorization required: admin or same-user-as-:username
  * */
 
-router.post("/:username/jobs/:id", ensureCorrectUserOrAdmin, async function (req, res, next) {
+// router.post("/:username/jobs/:id", ensureCorrectUserOrAdmin, async function (req, res, next) {
+//   try {
+//     const jobId = +req.params.id;
+//     await User.applyToJob(req.params.username, jobId);
+//     return res.json({ applied: jobId });
+//   } catch (err) {
+//     return next(err);
+//   }
+// });
+
+/** get list of users.
+ *
+ * => {users: [{username, first_name, last_name, phone}, ...]}
+ *
+ **/
+
+// router.get("/", ensureLoggedIn, async function (req, res, next) {
+//   try {
+//     let users = await User.all();
+//     return res.json({users});
+//   }
+
+//   catch (err) {
+//     return next(err);
+//   }
+// });
+
+/** get messages to user
+ *
+ * => {messages: [{id,
+ *                 body,
+ *                 sent_at,
+ *                 read_at,
+ *                 from_user: {username, first_name, last_name, phone}}, ...]}
+ *
+ **/
+
+router.get("/:username/to", ensureLoggedIn, async function (req, res, next) {
   try {
-    const jobId = +req.params.id;
-    await User.applyToJob(req.params.username, jobId);
-    return res.json({ applied: jobId });
-  } catch (err) {
+    let messages = await User.messagesTo(req.params.username);
+    return res.json({messages});
+  }
+
+  catch (err) {
+    return next(err);
+  }
+});
+
+/** get messages from user
+ *
+ * => {messages: [{id,
+ *                 body,
+ *                 sent_at,
+ *                 read_at,
+ *                 to_user: {username, first_name, last_name, phone}}, ...]}
+ *
+ **/
+
+router.get("/:username/from", ensureLoggedIn, async function (req, res, next) {
+  try {
+    let messages = await User.messagesFrom(req.params.username);
+    return res.json({messages});
+  }
+
+  catch (err) {
     return next(err);
   }
 });

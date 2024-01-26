@@ -10,7 +10,7 @@ function Homepage() {
   return (
       <div className="Homepage">
         <div className="container text-center">
-          <h1 className="mb-4 font-weight-bold">Edify</h1>
+          <h1 className="mb-4 font-weight-bold">Edify.com</h1>
           <p className="lead">All the encouragement in one, convenient place.</p>
           {currentUser
               ? <h2>

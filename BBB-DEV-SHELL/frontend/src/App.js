@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import useLocalStorage from './hooks/useLocalStorage'
 import Navigation from "./routes-nav/Navigation";
-import Routes404 from "./Routes404";
+import Routes404 from "./routes/Routes404";
 import { BrowserRouter } from 'react-router-dom';
 import UserContext from "./auth/UserContext";
 import jwt from 'jsonwebtoken'
