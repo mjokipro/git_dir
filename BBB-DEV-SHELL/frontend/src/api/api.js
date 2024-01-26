@@ -88,8 +88,8 @@ class JoblyApi {
     return res.post;
   }
 
-  static async getAllTags(name) {
-    let res = await this.request(`tags`, {name});
+  static async getAllTags() {
+    let res = await this.request(`tags`, {});
     return res.tags;
   }
 

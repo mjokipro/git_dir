@@ -49,17 +49,22 @@ class Tag {
    * Returns [{tags }, ...]
    * */
 
-  // static async findAll(searchFilters = {}) {
-  //   let query = `SELECT name,
-  //                FROM tags`;
-  //   let whereExpressions = [];
-  //   let queryValues = [];
+  static async findAll() {
+    let results = await db.query(`
+      SELECT id, name
+      FROM tags`)
 
-  //   const { name } = searchFilters;
+      if (!results) throw new BadRequestError("no results for tags")
+      
+      return results.rows
+    // let whereExpressions = [];
+    // let queryValues = [];
 
-  //   if (!name) {
-  //     throw new BadRequestError("Min employees cannot be greater than max");
-  //   }
+    // const { name } = searchFilters;
+
+    // if (!name) {
+    //   throw new BadRequestError("Min employees cannot be greater than max");
+    // }
 
     // For each possible search term, add to whereExpressions and queryValues so
     // we can generate the right SQL
@@ -89,7 +94,7 @@ class Tag {
   //   const tagsRes = await db.query(query, queryValues);
   //   console.degug("find all tags", tagsRes.rows)
   //   return tagsRes.rows;
-  // }
+  }
 
   /** Given a tag id, return data about tag.
    *

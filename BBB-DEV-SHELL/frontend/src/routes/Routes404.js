@@ -13,7 +13,7 @@ import MessageList from "../messages/MessageList"
 import PostList from "../posts/PostList"
 import PostDetail from "../posts/PostDetail"
 import TagList from "../tags/TagList"
-import TagDetail from "../tags/TagCardList"
+import TagDetail from "../tags/TagDetail"
 // import NotFound from "./NotFound";
 
 function Routes({login, signup}) {

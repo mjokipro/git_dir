@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TagCard from "./TagCard"
 
-const TagCardList = () => {
+const TagDetail = () => {
 //   const [count, setCount] = useState(0);
 
 
@@ -11,7 +11,7 @@ const TagCardList = () => {
 
   return (
     <div>
-      <h1>Tag Card List</h1>
+      <h1>Tag Detail</h1>
       <TagCard
 
       />
@@ -19,4 +19,4 @@ const TagCardList = () => {
   );
 };
 
-export default TagCardList;
+export default TagDetail;

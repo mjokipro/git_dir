@@ -1,20 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import {Link} from "react-router-dom"
 
-const TagCard = () => {
-//   const [count, setCount] = useState(0);
-
-
-//   useEffect(() => {
-
-//   }, []);
+const TagCard = ({id, name}) => {
 
   return (
-    <div>
-        <h1>Tag Card</h1>
-      <TagCard
-
-      />
-    </div>
+      <Link to={`/tags/${id}`}>
+        {/* <h1>Tag Card</h1> */}
+        <span>{name}</span>
+      </Link>
   );
 };
 

@@ -48,19 +48,19 @@ router.post("/", ensureLoggedIn, async function (req, res, next) {
  */
 
 router.get("/", async function (req, res, next) {
-  const q = req.query;
+  // const q = req.query;
   // arrive as strings from querystring, but we want as ints
 
-  if(!q) return
+  // if(!q) return
 
   try {
-    const validator = jsonschema.validate(q, tagSearchSchema);
-    if (!validator.valid) {
-      const errs = validator.errors.map(e => e.stack);
-      throw new BadRequestError(errs);
-    }
+    // const validator = jsonschema.validate(q, tagSearchSchema);
+    // if (!validator.valid) {
+    //   const errs = validator.errors.map(e => e.stack);
+    //   throw new BadRequestError(errs);
+    // }
 
-    const tags = await Tag.findAll(q);
+    const tags = await Tag.findAll();
     console.debug("GET / { tags: [ { name }, ...] }", tags)
 
     return res.json({ tags });

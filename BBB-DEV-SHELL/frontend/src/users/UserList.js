@@ -6,7 +6,7 @@ import SearchForm from "../common/SearchForm";
 import UserCard from "./UserCard";
 
 const UserList = () => {
-    console.degug("Users List")
+    console.debug("Users List")
     const [users, setUsers] = useState(null)
 
     useEffect(
