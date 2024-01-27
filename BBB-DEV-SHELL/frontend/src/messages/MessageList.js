@@ -4,7 +4,7 @@ import SearchForm from '../common/SearchForm'
 import JoblyApi from '../api/api'
 
 function MessageList(){
-    console.debug("message list")
+    console.debug("MessageList")
     const [messages, setMessages] = useState(null)
 
     useEffect(
@@ -30,14 +30,18 @@ if (!messages) return <p>Loading...</p>
                 ? (
                     <div>
                         {messages.map(m => (
+                            
                             <MessageCard 
                             // messages={m.messages}
-                                key={m.id}
-                                id={m.id}
+                            key={m.id}
+                            id={m.id}
+                                // name={m.from_user}
+                                // value={m.from_user}
                                 from_user={m.from_user}
                                 to_user={m.to_user}
                                 body={m.body}
-                            />))
+                            />
+                           ))
                         }
                     </div>
                 ) : (<p>No results</p>)

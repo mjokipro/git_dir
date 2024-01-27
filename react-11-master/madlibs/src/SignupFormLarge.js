@@ -4,7 +4,7 @@ import useToggleState from './hooks/useToggleState'
 import Story from './Story';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
-const SignupForm = () => {
+const SignupFormLarge = () => {
     const [formData, handleChange, resetForm] = useFields({
         adjective: '',
         verb: '',
@@ -67,4 +67,4 @@ const SignupForm = () => {
     )
 }
 
-export default SignupForm;
+export default SignupFormLarge;

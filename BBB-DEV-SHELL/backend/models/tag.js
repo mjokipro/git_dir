@@ -49,7 +49,7 @@ class Tag {
    * Returns [{tags }, ...]
    * */
 
-  static async findAll() {
+  static async findAll({name} ) {
     let results = await db.query(`
       SELECT id, name
       FROM tags`)
@@ -57,8 +57,8 @@ class Tag {
       if (!results) throw new BadRequestError("no results for tags")
       
       return results.rows
-    // let whereExpressions = [];
-    // let queryValues = [];
+    let whereExpressions = [];
+    let queryValues = [];
 
     // const { name } = searchFilters;
 
@@ -79,21 +79,43 @@ class Tag {
     //   whereExpressions.push(`num_employees <= $${queryValues.length}`);
     // }
 
-    // if (name) {
-    //   queryValues.push(`%${name}%`);
-    //   whereExpressions.push(`name ILIKE $${queryValues.length}`);
-    // }
+    if (name !== undefined) {
+      queryValues.push(`%${name}%`);
+      whereExpressions.push(`name ILIKE $${queryValues.length}`);
+    }
 
-    // if (whereExpressions.length > 0) {
-    //   query += " WHERE " + whereExpressions.join(" AND ");
-    // }
+    if (whereExpressions.length > 0) {
+      query += " WHERE " + whereExpressions.join(" AND ");
+    }
 
     // Finalize query and return results
 
-  //   query += " ORDER BY name";
-  //   const tagsRes = await db.query(query, queryValues);
-  //   console.degug("find all tags", tagsRes.rows)
-  //   return tagsRes.rows;
+    query += " ORDER BY name";
+    const tagsRes = await db.query(query, queryValues);
+    console.degug("find all tags", tagsRes.rows)
+    return tagsRes.rows;
+  }
+
+
+  static async getTagsPost(id){
+    const tagsRes = await db.query(
+      `SELECT t.id, t.name 
+      FROM tags AS t 
+      JOIN posts_tags AS pt ON t.id = pt.tag_id
+      JOIN posts AS p ON p.id = pt.post_id
+      WHERE pt.post_id = $1     
+      `, [id]
+    )
+
+    if (!tagsRes) throw new BadRequestError("No tags")
+
+    const tags = tagsRes.rows
+
+      console.debug("Tags=", tags)
+      console.log("Tags=", tags)
+
+    return tags
+
   }
 
   /** Given a tag id, return data about tag.
@@ -104,33 +126,39 @@ class Tag {
    * Throws NotFoundError if not found.
    **/
 
-  static async get(id) {
+  static async getTagsForPost(id) {
     const postRes = await db.query(
-      `SELECT id, title, content
+      `SELECT id
       FROM posts
       WHERE id = $1
-      ORDER BY id`,
+      `,
    [id],
       );
 
     const post = postRes.rows[0];
+    
     console.debug("Tag - get(id)", id, "post", post)
     
-    if (!post) throw new NotFoundError(`No post: ${title}`);
+    if (!post) throw new NotFoundError(`No post: `);
     
     const tagsRes = await db.query(
-      `SELECT * FROM tags
+      `SELECT t.id, t.name
+      FROM tags AS t
+      JOIN posts_tags AS pt ON t.id = pt.tag_id
+      JOIN posts AS p ON p.id = pt.post_id
+      WHERE p.id = $1
       `,
-      [],
+      [post.id],
       );
-
-    console.debug("Tag - tagsRes", tagsRes)
+      
+      console.debug("Tag - tagsRes", tagsRes)
+      
+      const tags = tagsRes.rows;
+      if (!tags) throw new NotFoundError(`No tags: `);
     
-    post.tags = tagsRes.rows;
-    
-    console.debug("Return this Post:  ", post)
+    console.debug("Return this Post:  ", post, "Tags=", tags)
 
-    return post;
+    return post.tags;
   }
 
   /** Update company data with `data`.

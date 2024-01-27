@@ -41,6 +41,30 @@ router.post("/", ensureLoggedIn, async function (req, res, next) {
   }
 });
 
+// router.get("/posts/:id", async function (req, res, next) {
+//   const q = req.query;
+//   if (!q) return
+//   try {
+//     const tags = await Tag.getTagsForPost(q);
+//     console.debug("GET / tags/post/:id", tags)
+//     return res.json({ tags });
+//   } catch (err) {
+//     return next(err);
+//   }
+// });
+
+router.get("/posts/:id", async function (req, res, next) {
+  try {
+    const post = await Post.get(req.params.id);
+    // const postId = post.id
+    const tags = await Tag.getTagsForPost(req.params.id);
+    return res.json({  post, tags });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+
 /** GET /  =>
  *   { tags: [ { name }, ...] }
  *
@@ -48,7 +72,7 @@ router.post("/", ensureLoggedIn, async function (req, res, next) {
  */
 
 router.get("/", async function (req, res, next) {
-  // const q = req.query;
+  const q = req.query;
   // arrive as strings from querystring, but we want as ints
 
   // if(!q) return
@@ -60,7 +84,7 @@ router.get("/", async function (req, res, next) {
     //   throw new BadRequestError(errs);
     // }
 
-    const tags = await Tag.findAll();
+    const tags = await Tag.findAll(q);
     console.debug("GET / { tags: [ { name }, ...] }", tags)
 
     return res.json({ tags });

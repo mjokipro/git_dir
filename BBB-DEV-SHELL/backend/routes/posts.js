@@ -6,7 +6,7 @@ const jsonschema = require("jsonschema");
 
 const express = require("express");
 const { BadRequestError } = require("../expressError");
-const { Tag } = require("../models/tag");
+const  Tag  = require("../models/tag");
 // const { ensureCorrectUserOrAdmin } = require("../middleware/auth")
 const Post = require("../models/post");
 const postNewSchema = require("../schemas/postNew.json");
@@ -80,8 +80,9 @@ router.get("/", async function (req, res, next) {
 router.get("/:id", async function (req, res, next) {
   try {
     const post = await Post.get(req.params.id);
-    const tags = await Tag.get(req.params.id);
-    return res.json({ post });
+    // const postId = post.id
+    const tags = await Tag.getTagsForPost(req.params.id);
+    return res.json({  post, tags });
   } catch (err) {
     return next(err);
   }

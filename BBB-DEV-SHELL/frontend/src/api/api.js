@@ -45,8 +45,8 @@ class JoblyApi {
   }
 
   // Individual API routes
-  static async getAllUsers(data) {
-    let res = await this.request(`users`, {data});
+  static async getAllUsers(id) {
+    let res = await this.request(`users`, {id});
     return res.users;
   }
 
@@ -60,8 +60,8 @@ class JoblyApi {
     return res.user;
   }
   
-  static async getAllMessages(title) {
-    let res = await this.request(`messages`, {title});
+  static async getAllMessages(id) {
+    let res = await this.request(`messages`, {id});
     return res.messages;
   }
   
@@ -78,8 +78,8 @@ class JoblyApi {
   /** Get details on a company by handle. */
   
 
-  static async getAllPosts() {
-    let res = await this.request(`posts`, {});
+  static async getAllPosts(user_id) {
+    let res = await this.request(`posts`, {user_id});
     return res.posts;
   }
 
@@ -88,8 +88,13 @@ class JoblyApi {
     return res.post;
   }
 
-  static async getAllTags() {
-    let res = await this.request(`tags`, {});
+  static async getAllTags(name) {
+    let res = await this.request(`tags`, {name});
+    return res.tags;
+  }
+
+  static async getTagsPost(id) {
+    let res = await this.request(`tags/posts/${id}`);
     return res.tags;
   }
 

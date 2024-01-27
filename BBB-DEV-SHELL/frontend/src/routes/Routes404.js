@@ -9,7 +9,7 @@ import PrivateRoute from '../routes-nav/PrivateRoute'
 import UserList from "../users/UserList";
 import UserDetail from "../users/UserDetail"
 import MessageList from "../messages/MessageList"
-// import MessageDetail from "../messages/MessageDetail";
+import MessageDetail from "../messages/MessageDetail";
 import PostList from "../posts/PostList"
 import PostDetail from "../posts/PostDetail"
 import TagList from "../tags/TagList"
@@ -32,22 +32,26 @@ function Routes({login, signup}) {
       <Route exact path="/login"><LoginForm login={login}/></Route>
       <Route exact path="/signup"><SignupForm signup={signup}/></Route>
       
-      {/* <PrivateRoute exact path="/messages/:id/tags/:id"><MessageDetail /></PrivateRoute> */}
-      {/* <PrivateRoute exact path="/messages"><MessageList /></PrivateRoute> */}
-      <PrivateRoute exact path="/tags/:id"><TagDetail /></PrivateRoute>
-      <PrivateRoute exact path="/tags"><TagList /></PrivateRoute>
-
-      {/* <PrivateRoute exact path="/messages/:id"><MessageDetail /></PrivateRoute> */}
+      <PrivateRoute exact path="/users/:username/"><UserDetail /></PrivateRoute>
+      <PrivateRoute exact path="/users"><UserList /></PrivateRoute>
+      
+      <PrivateRoute exact path="/messages/:id"><MessageDetail /></PrivateRoute>
       <PrivateRoute exact path="/messages"><MessageList /></PrivateRoute>
-      {/* <PrivateRoute exact path="/:username/posts/:id"><PostDetail /></PrivateRoute> */}
-      {/* <PrivateRoute exact path="/:username/posts"><PostList /></PrivateRoute> */}
+      
       <PrivateRoute exact path="/posts/:id"><PostDetail /></PrivateRoute>
       <PrivateRoute exact path="/posts"><PostList /></PrivateRoute>
+      
+      <PrivateRoute exact path="/tags/:id"><TagDetail /></PrivateRoute>
+      <PrivateRoute exact path="/tags"><TagList /></PrivateRoute>
+      
+      <PrivateRoute exact path="/profile"><ProfileForm /></PrivateRoute>
+
+      {/* <PrivateRoute exact path="/messages/:id/tags/:id"><MessageDetail /></PrivateRoute> */}
+      {/* <PrivateRoute exact path="/messages"><MessageList /></PrivateRoute> */}
+      {/* <PrivateRoute exact path="/:username/posts/:id"><PostDetail /></PrivateRoute> */}
+      {/* <PrivateRoute exact path="/:username/posts"><PostList /></PrivateRoute> */}
       {/* <PrivateRoute exact path="/users/:username/messages/:id"><UserDetail /></PrivateRoute> */}
       {/* <PrivateRoute exact path="/users/:username/messages"><MessageList /></PrivateRoute> */}
-      <PrivateRoute exact path="/users/:username"><UserDetail /></PrivateRoute>
-      <PrivateRoute exact path="/users"><UserList /></PrivateRoute>
-      <PrivateRoute exact path="/profile"><ProfileForm /></PrivateRoute>
       
       <Redirect to="/" />
     </Switch>

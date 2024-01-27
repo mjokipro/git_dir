@@ -4,20 +4,19 @@ import React, {useState, useEffect}  from "react";
 import JoblyApi from "../api/api";
 import SearchForm from "../common/SearchForm";
 import UserCard from "./UserCard";
+import {Link} from "react-router-dom"
 
 const UserList = () => {
     console.debug("Users List")
     const [users, setUsers] = useState(null)
 
-    useEffect(
-        function getUsersInit(){
-            search()
-        }, []
-    )
+    useEffect(() => {
+        console.debug("userlist", users)
+        search()
+  }, []);
 
-    async function search(username) {
-        let users = await JoblyApi.getAllUsers(username)
-        console.debug("Users=",  users)
+    async function search(id){
+        let users = await JoblyApi.getAllUsers(id)
         setUsers(users)
     }
 
@@ -32,17 +31,24 @@ const UserList = () => {
             { users.length
                 ? (
                     <div>
+                        
+                        {/* <UserCard users={users}/> */}
+
+                        {/* // <Link to={`/users/${id}`}> */}
                         {users.map(u => (
                             <UserCard
                                 // users={users}
-                                key={u.username}
-                                name={u.username}
+                                key={u.id}
+                                id={u.id}
+                                // value={id}
+                                // name={username}
                                 username={u.username}
                                 firstName={u.firstName}
                                 lastName={u.lastName}
-                                email={u.email}
-                        />))}
-                     
+                                email={u.email} 
+                                />
+                                ))}  
+                    
                     </div>
                 ) : (<p>No results</p>)
             }

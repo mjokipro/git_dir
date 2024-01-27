@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import TagCard from "./TagCard"
 import SearchForm from '../common/SearchForm'
-import useFetch from '../hooks/useFetch'
 import JoblyApi from '../api/api'
 
 const TagList = ({search}) => {
-  const [tags, setTags] = useState(null);
+  const [tags, setTags] = useState([]);
 
 
   useEffect(() => {
@@ -13,8 +12,8 @@ const TagList = ({search}) => {
       search()
   }, []);
 
-  async function search(){
-    let tags = await JoblyApi.getAllTags()
+  async function search(name){
+    let tags = await JoblyApi.getAllTags(name)
     setTags(tags)
   }
 
@@ -22,20 +21,14 @@ const TagList = ({search}) => {
 
   return (
     <div>
-        <h1>Message Card List</h1>
+        <h1>Tag List</h1>
         <SearchForm searchFor={search} />
         
-        <ul>
-        {tags.map(t => (
-          <li>
-          <TagCard 
-            key={t.id}
-            id={t.id}
-            name={t.name}
-            value={t.name} />
-          </li>
-          ))}
-        </ul>
+        {tags.length
+          ? <TagCard tags={tags} />
+          : <p>No Tag Results</p>
+          }
+          
     </div>
   );
 };

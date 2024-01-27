@@ -20,7 +20,7 @@ CREATE TABLE users (
 CREATE TABLE messages (
     id SERIAL PRIMARY KEY,
     from_user INTEGER REFERENCES users,
-    to_user text,
+    to_user INTEGER REFERENCES users,
     body text NOT NULL
     -- sent_at timestamp with time zone NOT NULL,
     -- read_at timestamp with time zone

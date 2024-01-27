@@ -93,21 +93,22 @@ class Post {
           `SELECT id,
                   title,
                   content
+                  
            FROM posts
            WHERE id = $1`, [id]);
 
     const post = posts.rows[0];
 
-    // if (!post) throw new NotFoundError(`No post: ${id}`);
+    if (!post) throw new NotFoundError(`No post: ${id}`);
 
-    // const tags = await db.query(`SELECT p.id,
-    // p.title,
-    // p.content
-    // FROM posts p 
-    // LEFT JOIN posts_tags AS pt ON p.id = pt.post_id
-    // LEFT JOIN tags AS t ON t.id = pt.tag_id`)
-    // delete post.id;
-    // post.tags = tags.rows[0];
+    const tags = await db.query(`
+    SELECT t.id,
+    t.name
+    FROM tags t 
+    JOIN posts_tags AS pt ON t.id = pt.tag_id
+    JOIN posts AS p ON p.id = pt.post_id`)
+    delete post.id;
+    post.tags = tags.rows;
 
     return post;
   }

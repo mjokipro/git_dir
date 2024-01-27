@@ -27,13 +27,14 @@ if (!posts) return <p>Loading...</p>
         {posts.length
             ? (<div>
                 {posts.map(p => (
+                    
                     <PostCard
                         key={p.id}
                         id={p.id}
                         title={p.title}
-                        // name={p.id}
+                        name={p.id}
                         content={p.content}
-                        userId={p.userId}
+                        userId={p.user_id}
                     />
                 ))}
             </div>)

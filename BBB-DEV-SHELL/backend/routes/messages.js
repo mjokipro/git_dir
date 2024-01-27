@@ -20,14 +20,14 @@ const ExpressError = require("../expressError");
 
 router.get("/:id", ensureLoggedIn, async function (req, res, next) {
   try {
-    let username = req.user.username;
+    // let username = req.user.username;
     let msg = await Message.get(req.params.id);
 
-    if (msg.to_user.username !== username && msg.from_user.username !== username) {
-      throw new ExpressError("Cannot read this message", 401);
-    }
+    // if (msg.to_user.username !== username && msg.from_user.username !== username) {
+    //   throw new ExpressError("Cannot read this message", 401);
+    // }
 
-    return res.json({message: msg});
+    return res.json({ msg});
   }
 
   catch (err) {
@@ -35,23 +35,45 @@ router.get("/:id", ensureLoggedIn, async function (req, res, next) {
   }
 });
 
-router.get("/", ensureLoggedIn, async function (req, res, next) {
+router.get("/", async function (req, res, next) {
+  const q = req.query;
+  // arrive as strings from querystring, but we want as int/bool
+  if (!q) return
+
   try {
-    let messages = await Message.getAll({
-      // fromUser: req.user.id,
-      toUser: req.body.toUser,
-      body: req.body.body
-    });
+    // const validator = jsonschema.validate(q, postSearchSchema);
+    // if (!validator.valid) {
+    //   const errs = validator.errors.map(e => e.stack);
+    //   throw new BadRequestError(errs);
+    // }
 
-    // const messages = await Message.getAll()
-
-    return res.json({messages: messages});
-  }
-
-  catch (err) {
+    const messages = await Message.getAll(q);
+    return res.json({ messages });
+  } catch (err) {
     return next(err);
   }
 });
+
+// router.get("/", ensureLoggedIn, async function (req, res, next) {
+//   try {
+
+
+
+//     let messages = await Message.getAll({
+//       from_user: req.user.username,
+//       to_user: req.body.to_user,
+//       body: req.body.body
+//     });
+
+//     const messages = await Message.getAll()
+
+//     return res.json({messages: messages});
+//   }
+
+//   catch (err) {
+//     return next(err);
+//   }
+// });
 
 /** post message.
  *

@@ -8,16 +8,16 @@ const ExpressError = require("../expressError");
 
 class Message {
 
-  static async getAll({from_user, to_user, body}){
-    const resultS = await db.query(`
-      SELECT 
+  static async getAll({id, from_user, to_user, body}){
+    const results = await db.query(`
+      SELECT id,
         from_user,
         to_user,
         body
       FROM messages
       `)
 
-    return resultS.rows
+    return results.rows
   }
 
   /** register new message -- returns
@@ -25,6 +25,7 @@ class Message {
    */
 
   static async create({from_user, to_user, body}) {
+    console.debug("Create message: From=", from_user, "To=", to_user, "Body=", body)
     const result = await db.query(
         `INSERT INTO messages (
               from_user,
@@ -65,47 +66,37 @@ class Message {
   static async get(id) {
     const result = await db.query(
         `SELECT m.id,
-                m.from_username,
-                f.first_name AS from_first_name,
-                f.last_name AS from_last_name,
-                f.phone AS from_phone,
-                m.to_username,
-                t.first_name AS to_first_name,
-                t.last_name AS to_last_name,
-                t.phone AS to_phone,
-                m.body,
-                m.sent_at,
-                m.read_at
+                m.from_user,
+                m.to_user,
+                m.body
           FROM messages AS m
-            JOIN users AS f ON m.from_username = f.username
-            JOIN users AS t ON m.to_username = t.username
-          WHERE m.id = $1`,
+            JOIN users AS f ON m.from_user = f.id
+            JOIN users AS t ON m.to_user = t.username
+          WHERE f.id = $1`,
         [id]);
 
     let m = result.rows[0];
 
+    
     if (!m) {
       throw new ExpressError(`No such message: ${id}`, 404);
     }
+    console.debug("Message=", m)
+    console.log("Message=", m)
 
-    return {
-      id: m.id,
-      from_user: {
-        username: m.from_username,
-        first_name: m.from_first_name,
-        last_name: m.from_last_name,
-        phone: m.from_phone,
-      },
-      to_user: {
-        username: m.to_username,
-        first_name: m.to_first_name,
-        last_name: m.to_last_name,
-        phone: m.to_phone,
-      },
-      body: m.body,
-      sent_at: m.sent_at,
-      read_at: m.read_at,
-    };
+    return m
+    //  {
+
+
+    //   id: m.id,
+    //   from_user: {
+    //     username: m.from_user,
+    //   },
+    //   to_user: {
+    //     username: m.to_user,    
+    //   },
+    //   body: m.body
+    // };
   }
 }
 
