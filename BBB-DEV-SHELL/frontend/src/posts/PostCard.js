@@ -29,8 +29,7 @@ async function search(id){
   return (
    
     <Link to={`/posts/${id}`}>
-        <div>
-         <h1>Post Card</h1>
+        <div >
         <p>{title}</p>
         <p>{content}</p>
         <p>{userId}</p>

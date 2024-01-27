@@ -21,13 +21,13 @@ async function search(title){
 if (!posts) return <p>Loading...</p>
 
   return (
-    <div>
+    <div >
         <SearchForm searchFor={search} />
     {/* <h1>Post List</h1> */}
         {posts.length
-            ? (<div>
+            ? (<div >
                 {posts.map(p => (
-                    
+                    <div>
                     <PostCard
                         key={p.id}
                         id={p.id}
@@ -36,6 +36,7 @@ if (!posts) return <p>Loading...</p>
                         content={p.content}
                         userId={p.user_id}
                     />
+                    </div>
                 ))}
             </div>)
             : (<p>No results...</p>)

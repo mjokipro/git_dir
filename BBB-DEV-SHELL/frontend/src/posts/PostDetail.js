@@ -22,7 +22,7 @@ const PostDetail = () => {
 if (!post) return <p>Loading...</p>
 
   return (
-    <div>
+    <div className="form-gr" >
     <h1>Post</h1>
     
     <h4>{post.title}</h4>
