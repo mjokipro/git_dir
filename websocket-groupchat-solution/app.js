@@ -10,7 +10,7 @@ app.use(express.static('static/'));
 /** Handle websocket chat */
 
 // allow for app.ws routes for websocket routes
-const wsExpress = require('express-ws')(app);
+const expressWs = require('express-ws')(app);
 
 const ChatUser = require('./ChatUser');
 

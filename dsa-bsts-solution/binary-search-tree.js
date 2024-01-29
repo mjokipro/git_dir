@@ -23,6 +23,7 @@ class BinarySearchTree {
 
     // Otherwise, find the correct spot for the new node.
     var current = this.root;
+
     while (true) {
       if (val < current.val) {
         if (current.left === null) {

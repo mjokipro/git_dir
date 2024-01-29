@@ -278,3 +278,54 @@ describe("findSecondHighest", function() {
     expect(binarySearchTree2.findSecondHighest()).toEqual(undefined);
   });
 });
+
+describe("dfsInOrderIterative", function() {
+  it("returns an array of values found with DFS In Order", function() {
+    let binarySearchTree = new BinarySearchTree();
+    binarySearchTree
+      .insert(15)
+      .insert(20)
+      .insert(10)
+      .insert(12)
+      .insert(1)
+      .insert(5)
+      .insert(6)
+      .insert(7)
+      .insert(50)
+      .insert(17)
+      .insert(18)
+      .insert(16)
+    expect(binarySearchTree.dfsInOrderIterative()).toEqual([1, 5, 6, 7, 10, 12, 15, 16, 17, 18, 20, 50]);
+  });
+
+  it("handles an empty tree", function() {
+    let binarySearchTree = new BinarySearchTree();
+    expect(binarySearchTree.dfsInOrderIterative()).toEqual([]);
+  });
+
+  it("works with a single root node", function() {
+    let binarySearchTree = new BinarySearchTree();
+    binarySearchTree.insert(7);
+    expect(binarySearchTree.dfsInOrderIterative()).toEqual([7]);
+  });
+
+  it("works with a unbalanced tree", function() {
+    let binarySearchTree = new BinarySearchTree();
+    binarySearchTree
+      .insert(7)
+      .insert(8)
+      .insert(9)
+      .insert(10)
+      .insert(11);
+    expect(binarySearchTree.dfsInOrderIterative()).toEqual([7, 8, 9, 10, 11]);
+
+    binarySearchTree = new BinarySearchTree();
+    binarySearchTree
+      .insert(11)
+      .insert(10)
+      .insert(9)
+      .insert(8)
+      .insert(7);
+    expect(binarySearchTree.dfsInOrderIterative()).toEqual([7, 8, 9, 10, 11]);
+  });
+});
