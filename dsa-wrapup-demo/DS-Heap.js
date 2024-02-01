@@ -1,3 +1,6 @@
+/// PRIORITY QUE - built on... ///
+/// MIN HEAP - we want parent to be smallest ///
+
 class PriorityQueue {
   constructor() {
     this.values = [];
@@ -6,6 +9,7 @@ class PriorityQueue {
     let newNode = new Node(val, priority);
     this.values.push(newNode);
 
+    /// bubble new val to to top ///
     this.bubbleUp();
   }
   printQueue() {
@@ -19,6 +23,7 @@ class PriorityQueue {
       let parentIdx = Math.floor((idx - 1) / 2);
       let parent = this.values[parentIdx];
       if (element.priority >= parent.priority) break;
+      /// swap vals if greater priority than parent ///
       this.values[parentIdx] = element;
       this.values[idx] = parent;
       idx = parentIdx;
