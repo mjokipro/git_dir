@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import JoblyApi from "../api/api";
 // import TagCard from "../tags/TagCard";
 import TagDetail from "../tags/TagDetail";
+import NewMessageForm from "./NewMessageForm"
 
 
 const PostDetail = () => {
@@ -19,6 +20,8 @@ const PostDetail = () => {
       getPost()
 }, [id]);
 
+
+
 if (!post) return <p>Loading...</p>
 
   return (
@@ -27,6 +30,7 @@ if (!post) return <p>Loading...</p>
     
     <h4>{post.title}</h4>
     <p>{post.content}</p>
+      <NewMessageForm />
       <TagDetail tags={post.tags} id={post.id}/>
     </div>
   );

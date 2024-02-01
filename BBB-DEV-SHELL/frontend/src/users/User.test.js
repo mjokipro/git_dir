@@ -1,13 +1,16 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import Tag from './Tag'
+import User from './User'
 import { MemoryRouter } from "react-router";
 
 it("matches snapshot with logo", function () {
   const { asFragment } = render(
       <MemoryRouter>
-        <Tag
-            name="test"
+        <User
+            username="test"
+            firstName="test"
+            lastName="test"
+            email="test@test.com"
         />
       </MemoryRouter>,
   );

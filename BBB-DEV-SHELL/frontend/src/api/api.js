@@ -78,8 +78,13 @@ class JoblyApi {
   /** Get details on a company by handle. */
   
 
-  static async getAllPosts(user_id) {
-    let res = await this.request(`posts`, {user_id});
+  static async getAllPosts(title = {}) {
+    let res = await this.request(`posts`, {title});
+    return res.posts;
+  }
+
+  static async getPostsPosts(title) {
+    let res = await this.request(`posts`, {title});
     return res.posts;
   }
 
@@ -87,6 +92,12 @@ class JoblyApi {
     let res = await this.request(`posts/${id}`);
     return res.post;
   }
+  
+  static async addPost(title, content) {
+    let res = await this.request(`posts`, {title, content});
+    return res.post;
+  }
+
 
   static async getAllTags(name) {
     let res = await this.request(`tags`, {name});

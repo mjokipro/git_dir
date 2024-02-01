@@ -18,14 +18,12 @@ exports[`matches snapshot 1`] = `
           <div
             class="form-group"
           >
-            <label>
+            <h4>
               Username
-            </label>
-            <p
-              class="form-control-plaintext"
-            >
+            </h4>
+            <h5>
               testuser
-            </p>
+            </h5>
           </div>
           <div
             class="form-group"
@@ -82,9 +80,6 @@ exports[`matches snapshot 1`] = `
             Save Changes
           </button>
         </form>
-        <p>
-          My Job Applications
-        </p>
       </div>
     </div>
   </div>

@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import MessageCard from './MessageCard'
 import SearchForm from '../common/SearchForm'
 import JoblyApi from '../api/api'
-import NewMessageForm from '../forms/NewMessageForm'
+import NewMessageForm from './NewMessageForm'
 import { Link } from 'react-router-dom'
 
 function MessageList(){
@@ -47,7 +47,7 @@ if (!messages) return <p>Loading...</p>
     return (
         <div className='modal-dialog modal-lg'>
             <div>
-            <SearchForm searchFor={search}/>
+            {/* <SearchForm searchFor={search}/> */}
             </div>
             <div>
             <NewMessageForm 

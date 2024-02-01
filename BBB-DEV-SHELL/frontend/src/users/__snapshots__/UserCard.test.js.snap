@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot with logo 1`] = `
+<DocumentFragment>
+  <a
+    href="/users/test"
+  >
+    <div
+      class="CompanyCard card"
+    >
+      <div
+        class="card-body"
+      >
+        <h4>
+          test
+        </h4>
+        <p>
+          <small>
+            test
+          </small>
+        </p>
+        <p>
+          <small>
+            test
+          </small>
+        </p>
+        <p>
+          <span>
+            test@test.com
+          </span>
+        </p>
+      </div>
+    </div>
+  </a>
+</DocumentFragment>
+`;

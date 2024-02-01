@@ -15,20 +15,33 @@ class Post {
    * Returns { id, title, salary, equity, companyHandle }
    **/
 
-  static async create(data) {
+  static async create({title, content}) {
     const result = await db.query(
           `INSERT INTO posts (title,
                              content)
            VALUES ($1, $2)
            RETURNING id, title, content`,
         [
-          data.title,
-          data.content
+          title,
+          content
         ]);
     let post = result.rows[0];
     console.debug(post)
 
     return post;
+  }
+
+  static async findAllAll() {
+    let postsRes = db.query(`SELECT p.id,
+    p.title,
+    p.content,
+    t.name
+FROM posts p 
+LEFT JOIN posts_tags AS pt ON p.id = pt.post_id
+LEFT JOIN tags AS t ON t.id = pt.tag_id`)
+    
+    console.debug(postsRes.rows)
+    return postsRes.rows;
   }
 
   /** Find all jobs (optional filter on searchFilters).
@@ -41,22 +54,33 @@ class Post {
    * Returns [{ id, title, salary, equity, companyHandle, companyName }, ...]
    * */
 
-  static async findAll({ title } = {}) {
-    let query = `SELECT p.id
+                //         SELECT p.id,
+                //         p.title,
+                //         p.content,
+                //         t.name
+                //  FROM posts p 
+                //    LEFT JOIN posts_tags AS pt ON p.id = pt.post_id
+                //    LEFT JOIN tags AS t ON t.id = pt.tag_id
+
+  static async findAll({title} = {}) {
+    let query = (`SELECT p.id,
                         p.title,
-                        p.content
+                        p.content,
+                        t.name
                  FROM posts p 
                    LEFT JOIN posts_tags AS pt ON p.id = pt.post_id
-                   LEFT JOIN tags AS t ON t.id = pt.tag_id`;
+                   LEFT JOIN tags AS t ON t.id = pt.tag_id
+                   
+                  `);
     let whereExpressions = [];
     let queryValues = [];
 
     // For each possible search term, add to whereExpressions and
     // queryValues so we can generate the right SQL
 
-    // if (minSalary !== undefined) {
-    //   queryValues.push(minSalary);
-    //   whereExpressions.push(`salary >= $${queryValues.length}`);
+    // if (minLength !== undefined) {
+    //   queryValues.push(minLength);
+    //   whereExpressions.push(`title >= $${queryValues.length}`);
     // }
 
     // if (hasEquity === true) {
@@ -76,8 +100,9 @@ class Post {
 
     query += " ORDER BY title";
     const postsRes = await db.query(query, queryValues);
-    console.debug(postsRes.rows)
-    return postsRes.rows;
+    const posts = postsRes.rows
+    console.debug(posts)
+    return posts;
   }
 
   /** Given a job id, return data about job.

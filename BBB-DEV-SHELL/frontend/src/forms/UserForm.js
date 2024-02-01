@@ -23,7 +23,7 @@ const UserForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className='modal-dialog modal-lg' onSubmit={handleSubmit}>
       <label htmlFor="username">Username</label>
       <input
         id="username"

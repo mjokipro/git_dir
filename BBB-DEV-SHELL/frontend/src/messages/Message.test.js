@@ -1,13 +1,15 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import Tag from './Tag'
+import Message from './Message'
 import { MemoryRouter } from "react-router";
 
 it("matches snapshot with logo", function () {
   const { asFragment } = render(
       <MemoryRouter>
-        <Tag
-            name="test"
+        <Message
+            to_user="test"
+            from_user="test"
+            body="test"
         />
       </MemoryRouter>,
   );

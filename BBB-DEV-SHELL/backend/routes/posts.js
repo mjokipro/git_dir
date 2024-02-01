@@ -25,13 +25,13 @@ const router = express.Router({ mergeParams: true });
  * Authorization required: admin
  */
 
-router.post("/", ensureCorrectUserOrAdmin, async function (req, res, next) {
+router.post("/",  async function (req, res, next) {
   try {
-    const validator = jsonschema.validate(req.body, postNewSchema);
-    if (!validator.valid) {
-      const errs = validator.errors.map(e => e.stack);
-      throw new BadRequestError(errs);
-    }
+    // const validator = jsonschema.validate(req.body, postNewSchema);
+    // if (!validator.valid) {
+    //   const errs = validator.errors.map(e => e.stack);
+    //   throw new BadRequestError(errs);
+    // }
 
     const post = await Post.create(req.body);
     return res.status(201).json({ post });
@@ -53,7 +53,7 @@ router.post("/", ensureCorrectUserOrAdmin, async function (req, res, next) {
 router.get("/", async function (req, res, next) {
   const q = req.query;
   // arrive as strings from querystring, but we want as int/bool
-  // if (!q.title) return
+  if (!q.title) return
 
   try {
     const validator = jsonschema.validate(q, postSearchSchema);
