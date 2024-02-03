@@ -53,7 +53,7 @@ router.post("/", ensureLoggedIn, async function (req, res, next) {
 
 router.get("/", ensureLoggedIn, async function (req, res, next) {
   try {
-    const users = await User.findAll();
+    const users = await User.findAll(req.params.username);
     return res.json({ users });
   } catch (err) {
     return next(err);
@@ -118,41 +118,6 @@ router.delete("/:username", ensureLoggedIn, async function (req, res, next) {
     return next(err);
   }
 });
-
-
-/** POST /[username]/jobs/[id]  { state } => { application }
- *
- * Returns {"applied": jobId}
- *
- * Authorization required: admin or same-user-as-:username
- * */
-
-// router.post("/:username/jobs/:id", ensureCorrectUserOrAdmin, async function (req, res, next) {
-//   try {
-//     const jobId = +req.params.id;
-//     await User.applyToJob(req.params.username, jobId);
-//     return res.json({ applied: jobId });
-//   } catch (err) {
-//     return next(err);
-//   }
-// });
-
-/** get list of users.
- *
- * => {users: [{username, first_name, last_name, phone}, ...]}
- *
- **/
-
-// router.get("/", ensureLoggedIn, async function (req, res, next) {
-//   try {
-//     let users = await User.all();
-//     return res.json({users});
-//   }
-
-//   catch (err) {
-//     return next(err);
-//   }
-// });
 
 /** get messages to user
  *

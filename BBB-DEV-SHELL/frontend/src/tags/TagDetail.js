@@ -1,24 +1,17 @@
 import React, { useState, useEffect } from "react";
-// import Tag from "./Tag"
-// import NewMessageForm from '../forms/NewMessageForm'
 import {Link} from 'react-router-dom'
 import JoblyApi from "../api/api";
-// import { useParams } from "react-router-dom/cjs/react-router-dom.min";
-// import { post } from "../../../backend/routes/posts";
 import './TagDetail.css'
 
-
-const TagDetail = ({ id, name, userId}) => {
+const TagDetail = ({  id, name, userId}) => {
   console.debug("Tag Detail", id, name, userId)
   const [tags, setTags] = useState();
-  // const {id} = useParams()
   
   useEffect(function getStuff() {
     async function getPost(){
       const tags = await JoblyApi.getAllTags(name)
       setTags(tags)
     }
-    
     getPost()
   }, []);
   
@@ -26,16 +19,25 @@ const TagDetail = ({ id, name, userId}) => {
 if (!tags) return <p>Loading...</p>
 
   return (
-    <select>
+    <div className="container">
+    <ul>
       {tags.map(t => (
-        <option>
-      {/* <Link to={`/tags/${t.id}`}> */}
-        {t.name}
-      {/* </Link> */}
-      </option>
-      
+      <Link 
+          key={t.id}
+          to={`/tags/${t.id}`}> 
+        <li
+          key={t.id}
+          value={t.name}
+        >
+          {t.name}
+        </li>
+      </Link> 
       ))}
-    </select>
+    <Link to={`/posts`}>
+        <button className="btn btn-secondary mb-2 sm">Back</button>
+    </Link>
+    </ul>
+    </div>
   );
 };
 

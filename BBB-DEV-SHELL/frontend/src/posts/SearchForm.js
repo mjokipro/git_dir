@@ -14,7 +14,7 @@ const SearchForm = ({searchFor}) => {
     }
 
     return (
-        <div>
+        <div className='container'>
             <form className="form-group" onSubmit={handleSubmit}>
                 <input 
                     className="form-control"

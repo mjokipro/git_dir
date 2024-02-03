@@ -9,7 +9,7 @@ function Navigation({logout}) {
     
     function loggedInNav(){
         return (
-            <div className='navbar-nav ml-auto'>
+            <div className='navbar-nav '>
             <ul className='nav nav-pills'>
                 <li className='nav-item mr-4'>
                     <NavLink className="nav-link" to="/users">
@@ -19,6 +19,11 @@ function Navigation({logout}) {
                 <li className='nav-item mr-4'>
                     <NavLink className="nav-link" to="/messages">
                     Messages
+                    </NavLink>
+                </li>
+                <li className='nav-item mr-4'>
+                    <NavLink className="nav-link" to="/scriptures">
+                    Scripture
                     </NavLink>
                 </li>
                 <li className='nav-item mr-4'>
@@ -43,7 +48,7 @@ function Navigation({logout}) {
 
     function loggedOutNav(){
         return (
-        <div className='navbar-nav ml-auto'>
+        <div className='navbar-nav'>
             <ul className='nav list-group'>        
                 <li className='nav-item mr-4'>
                 <NavLink className="nav-link" to="/login">

@@ -100,10 +100,10 @@ class Tag {
   static async getTagsPost(id){
     const tagsRes = await db.query(
       `SELECT t.id, t.name 
-      FROM tags AS t 
-      JOIN posts_tags AS pt ON t.id = pt.tag_id
-      JOIN posts AS p ON p.id = pt.post_id
-      WHERE pt.post_id = $1     
+          FROM tags AS t 
+        JOIN posts_tags AS pt ON t.id = pt.tag_id
+        JOIN posts AS p ON p.id = pt.post_id
+       WHERE pt.post_id = $1     
       `, [id]
     )
 
@@ -142,10 +142,11 @@ class Tag {
     if (!post) throw new NotFoundError(`No post: `);
     
     const tagsRes = await db.query(
-      `SELECT t.id, t.name
-      FROM tags AS t
-      JOIN posts_tags AS pt ON t.id = pt.tag_id
-      JOIN posts AS p ON p.id = pt.post_id
+      `SELECT t.id, t.name, 
+             p.id, p.title, p.content
+          FROM tags AS t
+        JOIN posts_tags AS pt ON t.id = pt.tag_id
+        JOIN posts AS p ON p.id = pt.post_id
       WHERE p.id = $1
       `,
       [post.id],
@@ -211,6 +212,5 @@ class Tag {
     if (!tag) throw new NotFoundError(`No tag: ${tag.id}`);
   }
 }
-
 
 module.exports = Tag;

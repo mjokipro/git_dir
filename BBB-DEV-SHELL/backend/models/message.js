@@ -20,11 +20,24 @@ class Message {
     return results.rows
   }
 
+  static async getId({id}){
+    const results = await db.query(`
+      SELECT id,
+        from_user,
+        to_user,
+        body
+      FROM messages
+      WHERE id = $1
+      `, [id])
+
+    return results.rows
+  }
+
   /** register new message -- returns
    *    {id, from_username, to_username, body, sent_at}
    */
 
-  static async create({from_user, to_user, body}) {
+  static async create({from_user, to_user, body }) {
     console.debug("Create message: From=", from_user, "To=", to_user, "Body=", body)
     const result = await db.query(
         `INSERT INTO messages (
@@ -61,19 +74,37 @@ class Message {
    *
    * both to_user and from_user = {username, first_name, last_name, phone}
    *
-   */
-
-  static async get(id) {
-    const result = await db.query(
-        `SELECT m.id,
-                m.from_user,
-                m.to_user,
-                m.body
-          FROM messages AS m
-            JOIN users AS f ON m.from_user = f.id
-            JOIN users AS t ON m.to_user = t.username
-          WHERE f.id = $1`,
+  // f.last_name AS from_last_name,
+  // t.last_name AS to_last_name,
+  // t.email AS to_email,
+  // f.email AS from_email,
+  */
+ 
+ static async get(id) {
+   const result = await db.query(
+       `SELECT m.id,
+              m.from_user,
+              m.to_user,
+              f.first_name AS from_first_name,
+              t.first_name AS to_first_name,
+              m.body
+        FROM messages AS m
+          JOIN users AS f ON m.from_user = f.id
+          JOIN users AS t ON m.to_user = t.username
+        WHERE m.id = $1`,
         [id]);
+
+        // `SELECT 
+        
+        // m.id,
+        //         m.from_user,
+        //         m.to_user,
+        //         m.body
+        //   FROM messages AS m
+        //     JOIN users AS f ON m.from_user = f.id
+        //     JOIN users AS t ON m.to_user = t.username
+        //   WHERE f.id = $1`,
+        // [id]);
 
     let m = result.rows[0];
 

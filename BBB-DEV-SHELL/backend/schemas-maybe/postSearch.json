@@ -7,6 +7,15 @@
       "type": "string",
       "minLength": 1,
       "maxLength": 30
+    },    
+    "content": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100
+    },    "user_id": {
+      "type": "integer",
+      "minLength": 1,
+      "maxLength": 30
     }
   },
   "additionalProperties": false,

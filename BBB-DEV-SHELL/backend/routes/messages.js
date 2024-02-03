@@ -1,6 +1,6 @@
 const Router = require("express").Router;
 const router = new Router();
-
+const newMessageSchema = require("../schemas-maybe/messageNew.json")
 const Message = require("../models/message");
 const {ensureLoggedIn} = require("../middleware/auth");
 const ExpressError = require("../expressError");
@@ -18,16 +18,16 @@ const ExpressError = require("../expressError");
  *
  **/
 
-router.get("/:id", ensureLoggedIn, async function (req, res, next) {
+router.get("/:id",  async function (req, res, next) {
   try {
     // let username = req.user.username;
-    let msg = await Message.get(req.params.id);
+    let message = await Message.get(req.params.id);
 
     // if (msg.to_user.username !== username && msg.from_user.username !== username) {
     //   throw new ExpressError("Cannot read this message", 401);
     // }
 
-    return res.json({ msg});
+    return res.json({ message});
   }
 
   catch (err) {
@@ -84,15 +84,18 @@ router.get("/", async function (req, res, next) {
  *
  **/
 
-router.post("/", ensureLoggedIn, async function (req, res, next) {
+router.post("/",  async function (req, res, next) {
   try {
-    let msg = await Message.create({
-      from_username: req.user.username,
-      to_username: req.body.to_username,
-      body: req.body.body
-    });
+    // const validator = jsonschema.validate(req.body, newMessageSchema);
+    // if (!validator.valid) {
+    //   const errs = validator.errors.map(e => e.stack);
+    //   throw new BadRequestError(errs);
+    // }
 
-    return res.json({message: msg});
+    if (!req.body) return
+    const message = await Message.create(req.body);
+
+    return res.json({message: message});
   }
 
   catch (err) {

@@ -80,7 +80,6 @@ router.get("/", async function (req, res, next) {
 router.get("/:id", async function (req, res, next) {
   try {
     const post = await Post.get(req.params.id);
-    // const postId = post.id
     const tags = await Tag.getTagsForPost(req.params.id);
     return res.json({  post, tags });
   } catch (err) {

@@ -23,7 +23,7 @@ const UserForm = () => {
   }
 
   return (
-    <form className='modal-dialog modal-lg' onSubmit={handleSubmit}>
+    <form className='form-control' onSubmit={handleSubmit}>
       <label htmlFor="username">Username</label>
       <input
         id="username"
@@ -32,6 +32,7 @@ const UserForm = () => {
         placeholder="username"
         value={formData.username}
         onChange={handleChange}
+        className="form-group"
       />
 
       <label htmlFor="email">Email</label>
@@ -42,6 +43,7 @@ const UserForm = () => {
         id="email"
         value={formData.email}
         onChange={handleChange}
+        className="form-group"
       />
 
       <label htmlFor="password">Password</label>
@@ -52,6 +54,7 @@ const UserForm = () => {
         id="password"
         value={formData.password}
         onChange={handleChange}
+        className="form-group"
       />
 
       <button>Add me to list!</button>

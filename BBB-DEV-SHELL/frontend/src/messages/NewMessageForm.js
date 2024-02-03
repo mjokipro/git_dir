@@ -1,13 +1,19 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom"
 
-const UserForm = ({create, update, remove}) => {
-  console.debug("create", create, update, remove)
-  const initialState = {
+const NewUserForm = ({addP}) => {
+  const {history} = useHistory()
+
+  const INITIAL_STATE = {
     to_user: "",
     from_user: "",
-    body: ""
+    to_first_name: "",
+    from_first_name: "",
+    body: "",
   }
-  const [formData, setFormData] = useState(initialState)
+  const [formData, setFormData] = useState(INITIAL_STATE)
+  console.debug("create", addP)
+  
   const handleChange = e => {
     const { name, value } = e.target;
     setFormData(data => ({
@@ -16,54 +22,54 @@ const UserForm = ({create, update, remove}) => {
     }))
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const { id, to_user, from_user, body } = formData;
-    alert(`Created user, ${to_user} w/ body ${body} & from ${from_user} + id ${id}`)
-    setFormData(initialState)
+   async function handleSubmit(e){
+
+   let result = await addP(formData)
+   if(result) {
+     history.push("/messages")
+   } else {
+     setFormData(INITIAL_STATE)
+   }
   }
   
 
   return (
+    <div className="business">
     <form className="form-group" onSubmit={handleSubmit}>
       <label htmlFor={formData.to_user}>To user:</label>
       <input
-        id={formData.id}
+        key={formData.id}
         type="text"
         name={formData.to_user}
         placeholder="Enter text here..."
-        value={formData.to_user}
         onChange={handleChange}
-        className="form-control"
+        className="container"
       />
 
       <label htmlFor={formData.from_user}>From user:</label>
       <input
+        key={formData.id}
         type="text"
         placeholder="Enter integer here..."
         name={formData.from_user}
-        id={formData.id}
-        value={formData.from_user}
         onChange={handleChange}
-        className="form-control"
+        className="container"
       />
 
       <label htmlFor={formData.body}>Body:</label>
       <input
+        key={formData.id}
         type="text"
         placeholder="Enter text here..."
         name={formData.body}
-        id={formData.id}
-        value={formData.body}
         onChange={handleChange}
-        className="form-control"
+        className="container"
       />
-
-      <button className="btn btn-primary mt-2" onClick={handleSubmit} type='submit'>Send Message</button>
-      <button className="btn btn-secondary ml-2 mt-2" onClick={handleSubmit} type='submit'>Update Message</button>
-      <button className="btn btn-danger ml-2 mt-2" onClick={handleSubmit} type='submit'>Delete Message</button>
+      
+      <button type="submit" className="btn btn-primary small mt-2"  >Send Message</button>
     </form>
+    </div>
   )
 }
 
-export default UserForm;
+export default NewUserForm;

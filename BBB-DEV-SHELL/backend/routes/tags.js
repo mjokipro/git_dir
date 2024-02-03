@@ -8,10 +8,8 @@ const express = require("express");
 const { BadRequestError } = require("../expressError");
 const { ensureAdmin, ensureCorrectUserOrAdmin, ensureLoggedIn } = require("../middleware/auth");
 const Tag = require("../models/tag");
-
 const tagNewSchema = require("../schemas/tagNew.json");
 const tagUpdateSchema = require("../schemas-maybe/tagUpdate.json");
-const tagSearchSchema = require("../schemas-maybe/tagSearch.json");
 
 const router = new express.Router();
 
@@ -40,30 +38,6 @@ router.post("/", ensureLoggedIn, async function (req, res, next) {
     return next(err);
   }
 });
-
-// router.get("/posts/:id", async function (req, res, next) {
-//   const q = req.query;
-//   if (!q) return
-//   try {
-//     const tags = await Tag.getTagsForPost(q);
-//     console.debug("GET / tags/post/:id", tags)
-//     return res.json({ tags });
-//   } catch (err) {
-//     return next(err);
-//   }
-// });
-
-router.get("/posts/:id", async function (req, res, next) {
-  try {
-    const post = await Post.get(req.params.id);
-    // const postId = post.id
-    const tags = await Tag.getTagsForPost(req.params.id);
-    return res.json({  post, tags });
-  } catch (err) {
-    return next(err);
-  }
-});
-
 
 /** GET /  =>
  *   { tags: [ { name }, ...] }

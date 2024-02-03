@@ -54,14 +54,6 @@ LEFT JOIN tags AS t ON t.id = pt.tag_id`)
    * Returns [{ id, title, salary, equity, companyHandle, companyName }, ...]
    * */
 
-                //         SELECT p.id,
-                //         p.title,
-                //         p.content,
-                //         t.name
-                //  FROM posts p 
-                //    LEFT JOIN posts_tags AS pt ON p.id = pt.post_id
-                //    LEFT JOIN tags AS t ON t.id = pt.tag_id
-
   static async findAll({title} = {}) {
     let query = (`SELECT p.id,
                         p.title,
@@ -77,15 +69,6 @@ LEFT JOIN tags AS t ON t.id = pt.tag_id`)
 
     // For each possible search term, add to whereExpressions and
     // queryValues so we can generate the right SQL
-
-    // if (minLength !== undefined) {
-    //   queryValues.push(minLength);
-    //   whereExpressions.push(`title >= $${queryValues.length}`);
-    // }
-
-    // if (hasEquity === true) {
-    //   whereExpressions.push(`equity > 0`);
-    // }
 
     if (title !== undefined) {
       queryValues.push(`%${title}%`);
@@ -168,34 +151,6 @@ LEFT JOIN tags AS t ON t.id = pt.tag_id`)
 
     return post;
   }
-
-  // static async get(postId) {
-  //   const companyRes = await db.query(
-  //         `SELECT handle,
-  //                 name,
-  //                 description,
-  //                 num_employees AS "numEmployees",
-  //                 logo_url AS "logoUrl"
-  //          FROM companies
-  //          WHERE handle = $1`,
-  //       [handle]);
-
-  //   const company = companyRes.rows[0];
-
-  //   if (!company) throw new NotFoundError(`No company: ${handle}`);
-
-  //   const postsRes = await db.query(
-  //         `SELECT id, title, content
-  //          FROM posts
-  //          WHERE id = $1
-  //          ORDER BY id`,
-  //       [id],
-  //   );
-
-  //   company.jobs = jobsRes.rows;
-
-  //   return company;
-  // }
 
   /** Delete given job from database; returns undefined.
    *

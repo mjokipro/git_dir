@@ -2,39 +2,29 @@ import React, { useEffect, useState } from "react";
 import {Link} from "react-router-dom"
 import JoblyApi from "../api/api";
 
-
 const PostCard = ({ id, title, content, userId}) => {
 console.debug("Post Card", title, content, userId)
 
-const [tags, setTags] = useState()
+const [post, setPost] = useState(null)
 
-useEffect(function getTags(){
-  console.debug("Get tags for post", tags)
-  search()
-}, []);
+useEffect(function postPost(){
+  addP()
+}, [post]);
 
-async function search(id){
-  let tags = await JoblyApi.getTagsPost(id)
-  setTags(tags)
+async function addP(data){
+  let post = await JoblyApi.addPost(data)
+  console.log(post)
+  setPost(post)
 }
 
-
-// useEffect(){
-//   async function getTags(){
-//     setTags(await JoblyApi.getTagsPost(id))
-//     getTags()
-//   }, []
-// }
-
   return (
-   
-    <Link to={`/posts/${id}`}>
-        <div >
-        <p>{title}</p>
-        <p>{content}</p>
-        <p>{userId}</p>
-        </div>
+    <div >
+        <Link to={`/posts/${id}`}>
+        <p className="lead">{title}</p>
         </Link>
+        <p className="lead">{content}</p>
+        <p className="lead">{userId}</p>
+    </div>
   );
 };
 

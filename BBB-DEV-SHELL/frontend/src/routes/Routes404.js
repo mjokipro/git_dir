@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-
 import Homepage from "../homepage/Homepage";
 import SignupForm from '../auth/SignupForm'
 import ProfileForm from "../profiles/ProfileForm";
@@ -14,7 +13,8 @@ import PostList from "../posts/PostList"
 import PostDetail from "../posts/PostDetail"
 import TagList from "../tags/TagList"
 import TagDetail from "../tags/TagDetail"
-// import NotFound from "./NotFound";
+import ScriptureList from "../scriptures-api/ScriptureList";
+import ScriptureDetail from "../scriptures-api/ScriptureDetail";
 
 function Routes({login, signup}) {
 
@@ -26,13 +26,15 @@ function Routes({login, signup}) {
 
   return (
     <Switch>
-
       
       <Route exact path="/"><Homepage /></Route>
       <Route exact path="/login"><LoginForm login={login}/></Route>
       <Route exact path="/signup"><SignupForm signup={signup}/></Route>
       
-      <PrivateRoute exact path="/users/:username/"><UserDetail /></PrivateRoute>
+      <PrivateRoute exact path="/scriptures/:verse/"><ScriptureDetail  /></PrivateRoute>
+      <PrivateRoute exact path="/scriptures"><ScriptureList /></PrivateRoute>
+
+      <PrivateRoute exact path="/users/:username/"><UserDetail  /></PrivateRoute>
       <PrivateRoute exact path="/users"><UserList /></PrivateRoute>
       
       <PrivateRoute exact path="/messages/:id"><MessageDetail /></PrivateRoute>
@@ -46,13 +48,6 @@ function Routes({login, signup}) {
       
       <PrivateRoute exact path="/profile"><ProfileForm /></PrivateRoute>
 
-      {/* <PrivateRoute exact path="/messages/:id/tags/:id"><MessageDetail /></PrivateRoute> */}
-      {/* <PrivateRoute exact path="/messages"><MessageList /></PrivateRoute> */}
-      {/* <PrivateRoute exact path="/:username/posts/:id"><PostDetail /></PrivateRoute> */}
-      {/* <PrivateRoute exact path="/:username/posts"><PostList /></PrivateRoute> */}
-      {/* <PrivateRoute exact path="/users/:username/messages/:id"><UserDetail /></PrivateRoute> */}
-      {/* <PrivateRoute exact path="/users/:username/messages"><MessageList /></PrivateRoute> */}
-      
       <Redirect to="/" />
     </Switch>
   );

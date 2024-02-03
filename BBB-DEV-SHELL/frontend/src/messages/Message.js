@@ -1,16 +1,18 @@
 import React from "react";
-import {Link} from 'react-router-dom'
 
 const Message = ({id, to_user, from_user, body}) => {
 
     return (
-        
-            <Link to={`/messages/${id}`}>
+        <div className="form-group" >
+         
+            <h3>To User:</h3>
             <p>{to_user}</p>
+            <h3>From User:</h3>
             <p>{from_user}</p>
+            <h3>Body:</h3>
             <p>{body}</p>
-            </Link>
-        
+          
+        </div>
     )
 }
 

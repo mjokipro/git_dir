@@ -14,7 +14,13 @@ with open('generator/users.csv') as users:
 with open('generator/messages.csv') as messages:
     db.session.bulk_insert_mappings(Message, DictReader(messages))
 
-with open('generator/follows.csv') as follows:
-    db.session.bulk_insert_mappings(Follows, DictReader(follows))
+with open('generator/tags.csv') as tags:
+    db.session.bulk_insert_mappings(tags, DictReader(tags))
+    
+with open('generator/posts.csv') as posts:
+    db.session.bulk_insert_mappings(posts, DictReader(posts))
+    
+with open('generator/posts_tags.csv') as posts_tags:
+    db.session.bulk_insert_mappings(posts_tags, DictReader(posts_tags))
 
 db.session.commit()

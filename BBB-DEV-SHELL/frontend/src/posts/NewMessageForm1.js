@@ -1,13 +1,18 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom"
 
-const UserForm = ({addPost}) => {
-  console.debug("create", addPost)
-  const initialState = {
-    to_user: "",
-    from_user: "",
-    body: ""
+const NewMessageForm = ({addP}) => {
+
+const {history} = useHistory()
+
+  console.debug("create", addP)
+  const INITIAL_STATE = {
+    title: "",
+    content: "",
+    user_id: ""
   }
-  const [formData, setFormData] = useState(initialState)
+  const [formData, setFormData] = useState(INITIAL_STATE)
+  
   const handleChange = e => {
     const { name, value } = e.target;
     setFormData(data => ({
@@ -16,44 +21,43 @@ const UserForm = ({addPost}) => {
     }))
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const {  title, content } = formData;
-    addPost(title, content)
-    // alert(`Created user, ${to_user} w/ body ${body} & from ${from_user} + id ${id}`)
-    setFormData(initialState)
+  async function handleSubmit(e){
+    let result = await addP( formData)
+    if(result){
+      history.push("/posts")
+    } else {
+      setFormData(INITIAL_STATE)
+    }
   }
-  
+
 
   return (
+    <div className="container">
     <form className="form-group" onSubmit={handleSubmit}>
       <label htmlFor={formData.title}>Title:</label>
       <input
-        id={formData.id}
+      key={formData.id}
         type="text"
         name={formData.title}
         placeholder="Enter text here..."
-        value={formData.title}
         onChange={handleChange}
         className="form-control"
       />
 
       <label htmlFor={formData.content}>Content:</label>
       <input
-        id={formData.id}
+      key={formData.id}
         type="text"
         name={formData.content}
         placeholder="Enter text here..."
-        value={formData.content}
         onChange={handleChange}
         className="form-control"
       />
 
-      <button className="btn btn-primary mt-2" onClick={handleSubmit} type='submit'>Add Post</button>
-      {/* <button className="btn btn-secondary ml-2 mt-2" onClick={handleSubmit} type='submit'>Update Post</button>
-      <button className="btn btn-danger ml-2 mt-2" onClick={handleSubmit} type='submit'>Delete Post</button> */}
+      <button className="btn btn-primary mt-2" type='submit'>Add Post</button>
     </form>
+    </div>
   )
 }
 
-export default UserForm;
+export default NewMessageForm;

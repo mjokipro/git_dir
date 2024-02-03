@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
+const BIBLE_BASE_URL="Romans 12:1-2,5-7,9,13:1-9,10"
 
 /** API Class.
  *
@@ -44,6 +45,11 @@ class JoblyApi {
     return res.token;
   }
 
+  static async getAllScriptures() {
+    let res = await this.request(`${BIBLE_BASE_URL}`, {});
+    return res.users;
+  }
+
   // Individual API routes
   static async getAllUsers(id) {
     let res = await this.request(`users`, {id});
@@ -67,6 +73,11 @@ class JoblyApi {
   
   static async getMessage(id) {
     let res = await this.request(`messages/${id}`);
+    return res.message;
+  }
+
+  static async postMessage(data) {
+    let res = await this.request(`messages`, data, "post");
     return res.message;
   }
   
@@ -93,8 +104,8 @@ class JoblyApi {
     return res.post;
   }
   
-  static async addPost(title, content) {
-    let res = await this.request(`posts`, {title, content});
+  static async addPost(data) {
+    let res = await this.request(`posts`, data, "post");
     return res.post;
   }
 

@@ -3,11 +3,8 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 
-// const routes = require("./routes/auth");
 const ExpressError = require("./expressError");
 const { authenticateJWT } = require("./middleware/auth");
-// const { NotFoundError } = require("./expressError");
-// const usersRoutes = require("./routes/users");
 const authRoutes = require("./routes/auth");
 const usersRoutes = require("./routes/users");
 const messagesRoutes = require("./routes/messages");
@@ -25,8 +22,6 @@ app.use("/users", usersRoutes);
 app.use("/messages", messagesRoutes);
 app.use("/tags", tagsRoutes);
 app.use("/posts", postsRoutes);
-
-// app.use("/", routes);
 
 /** 404 catch --- passes to next handler. */
 
