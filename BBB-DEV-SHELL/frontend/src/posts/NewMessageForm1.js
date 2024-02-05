@@ -1,63 +1,55 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom"
+import JoblyApi from "../api/api";
 
-const NewMessageForm = ({addP}) => {
 
-const {history} = useHistory()
+const NewMessageForm = () => {
 
-  console.debug("create", addP)
-  const INITIAL_STATE = {
-    title: "",
-    content: "",
-    user_id: ""
-  }
-  const [formData, setFormData] = useState(INITIAL_STATE)
-  
-  const handleChange = e => {
-    const { name, value } = e.target;
-    setFormData(data => ({
-      ...data,
-      [name]: value
-    }))
-  }
+    const [formData, setFormData] = useState({
+      title: "",
+      content: ""
+    })
 
-  async function handleSubmit(e){
-    let result = await addP( formData)
-    if(result){
-      history.push("/posts")
-    } else {
-      setFormData(INITIAL_STATE)
+    const handleChange =(e) => {
+      const {name, value} = e.target
+      setFormData((data) =>({
+        ...data,
+        [name]: value,
+      }))
     }
-  }
 
+    const handleSubmit = async (e) => {
+      e.preventDefault()
+      // let {to_user, from_user, body} = formData
+      let post = await JoblyApi.addPost({...formData})
+      console.log(post)
+      setFormData(post)
+    }
 
   return (
-    <div className="container">
     <form className="form-group" onSubmit={handleSubmit}>
-      <label htmlFor={formData.title}>Title:</label>
-      <input
-      key={formData.id}
+      <label htmlFor="title">Title:</label>
+      <input 
         type="text"
-        name={formData.title}
-        placeholder="Enter text here..."
+        id="title"
+        name="title"
+        value={formData.title}
         onChange={handleChange}
         className="form-control"
-      />
+        />
 
-      <label htmlFor={formData.content}>Content:</label>
-      <input
-      key={formData.id}
+      <label htmlFor="content">Content:</label>
+      <input 
         type="text"
-        name={formData.content}
-        placeholder="Enter text here..."
+        id="content"
+        name="content"
+        value={formData.content}
         onChange={handleChange}
         className="form-control"
-      />
+        />
 
-      <button className="btn btn-primary mt-2" type='submit'>Add Post</button>
+      <button className="btn btn-secondary mt-3" type="submit">Submit</button>
     </form>
-    </div>
   )
 }
 
-export default NewMessageForm;
+export default NewMessageForm

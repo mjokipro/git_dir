@@ -1,75 +1,68 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom"
+import JoblyApi from "../api/api";
 
-const NewUserForm = ({addP}) => {
-  const {history} = useHistory()
 
-  const INITIAL_STATE = {
-    to_user: "",
-    from_user: "",
-    to_first_name: "",
-    from_first_name: "",
-    body: "",
-  }
-  const [formData, setFormData] = useState(INITIAL_STATE)
-  console.debug("create", addP)
-  
-  const handleChange = e => {
-    const { name, value } = e.target;
-    setFormData(data => ({
-      ...data,
-      [name]: value
-    }))
-  }
+const NewMessageForm = () => {
 
-   async function handleSubmit(e){
+    const [formData, setFormData] = useState({
+      to_user: "",
+      from_user: "",
+      to_first_name:"",
+      from_first_name: "",
+      body: ""
+    })
 
-   let result = await addP(formData)
-   if(result) {
-     history.push("/messages")
-   } else {
-     setFormData(INITIAL_STATE)
-   }
-  }
-  
+    const handleChange =(e) => {
+      const {name, value} = e.target
+      setFormData((data) =>({
+        ...data,
+        [name]: value,
+      }))
+    }
+
+    const handleSubmit = async (e) => {
+      e.preventDefault()
+      // let {to_user, from_user, body} = formData
+      let message = await JoblyApi.postMessage({...formData})
+      console.log(message)
+      setFormData(message)
+    }
 
   return (
-    <div className="business">
-    <form className="form-group" onSubmit={handleSubmit}>
-      <label htmlFor={formData.to_user}>To user:</label>
-      <input
-        key={formData.id}
+    <form onSubmit={handleSubmit}>
+      <label htmlFor="to_user">To User:</label>
+      <input 
         type="text"
-        name={formData.to_user}
-        placeholder="Enter text here..."
+        id="to_user"
+        name="to_user"
+        value={formData.to_user}
         onChange={handleChange}
-        className="container"
-      />
+        className="form-control"
+        />
 
-      <label htmlFor={formData.from_user}>From user:</label>
-      <input
-        key={formData.id}
+      <label htmlFor="from_user">From User:</label>
+      <input 
         type="text"
-        placeholder="Enter integer here..."
-        name={formData.from_user}
+        id="from_user"
+        name="from_user"
+        value={formData.from_user}
         onChange={handleChange}
-        className="container"
-      />
+        className="form-control"
+        />
 
-      <label htmlFor={formData.body}>Body:</label>
-      <input
-        key={formData.id}
+      <label htmlFor="body">Body</label>
+      <input 
         type="text"
-        placeholder="Enter text here..."
-        name={formData.body}
+        id="body"
+        name="body"
+        value={formData.body}
         onChange={handleChange}
-        className="container"
-      />
-      
-      <button type="submit" className="btn btn-primary small mt-2"  >Send Message</button>
+        className="form-control"
+        />
+
+      <button className="btn btn-secondary mt-3" type="submit">Submit</button>
     </form>
-    </div>
   )
 }
 
-export default NewUserForm;
+export default NewMessageForm

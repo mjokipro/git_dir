@@ -1,69 +1,59 @@
 import React, { useState } from "react";
 
-const UserForm = ({create, update, remove}) => {
-  console.debug("create", create, update, remove)
-  const initialState = {
-    to_user: "",
-    from_user: "",
-    body: ""
-  }
-  const [formData, setFormData] = useState(initialState)
-  const handleChange = e => {
-    const { name, value } = e.target;
-    setFormData(data => ({
-      ...data,
-      [name]: value
-    }))
-  }
+const NewMessageForm = () => {
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const { id, to_user, from_user, body } = formData;
-    alert(`Created user, ${to_user} w/ body ${body} & from ${from_user} + id ${id}`)
-    setFormData(initialState)
-  }
-  
+    const [formData, setFormData] = useState({
+      to_user: "",
+      from_user: "",
+      to_first_name:"",
+      from_first_name: "",
+      body: ""
+    })
+
+    const handleChange =(e) => {
+      const {name, value} = e.target
+      setFormData((data) =>({
+        ...data,
+        [name]: value,
+      }))
+    }
+
+    const handleSubmit = (e) => {
+      e.preventDefault()
+    }
 
   return (
-    <form className="form-group" onSubmit={handleSubmit}>
-      <label htmlFor={formData.to_user}>To user:</label>
-      <input
-        id={formData.id}
+    <form onSubmit={handleSubmit}>
+      <label htmlFor="to_user">To User:</label>
+      <input 
         type="text"
-        name={formData.to_user}
-        placeholder="Enter text here..."
+        id="to_user"
+        name="to_user"
         value={formData.to_user}
         onChange={handleChange}
-        className="form-control"
-      />
+        />
 
-      <label htmlFor={formData.from_user}>From user:</label>
-      <input
+      <label htmlFor="from_user">From User:</label>
+      <input 
         type="text"
-        placeholder="Enter integer here..."
-        name={formData.from_user}
-        id={formData.id}
+        id="from_user"
+        name="from_user"
         value={formData.from_user}
         onChange={handleChange}
-        className="form-control"
-      />
+        />
 
-      <label htmlFor={formData.body}>Body:</label>
-      <input
+      <label htmlFor="body">Body</label>
+      <input 
         type="text"
-        placeholder="Enter text here..."
-        name={formData.body}
-        id={formData.id}
+        id="body"
+        name="body"
         value={formData.body}
         onChange={handleChange}
-        className="form-control"
-      />
+        />
 
-      <button className="btn btn-primary mt-2" onClick={handleSubmit} type='submit'>Send Message</button>
-      <button className="btn btn-secondary ml-2 mt-2" onClick={handleSubmit} type='submit'>Update Message</button>
-      <button className="btn btn-danger ml-2 mt-2" onClick={handleSubmit} type='submit'>Delete Message</button>
+      <button type="submit">Submit</button>
     </form>
   )
 }
 
-export default UserForm;
+export default NewMessageForm

@@ -51,8 +51,8 @@ class JoblyApi {
   }
 
   // Individual API routes
-  static async getAllUsers(id) {
-    let res = await this.request(`users`, {id});
+  static async getAllUsers(username) {
+    let res = await this.request(`users`, {username});
     return res.users;
   }
 
@@ -80,14 +80,28 @@ class JoblyApi {
     let res = await this.request(`messages`, data, "post");
     return res.message;
   }
-  
-  // static async applyToJob(username, id) {
-  //   let res = await this.request(`users/${username}/jobs/${id}`, {}, "post");
-  //   console.log(res)
-  // }
-  
-  /** Get details on a company by handle. */
-  
+
+  /////////
+  static async editPost(id, data) {
+    let res = await this.request(`posts/${id}`, data, "patch");
+    return res.post;
+  }
+
+  static async removePost(id) {
+    let res = await this.request(`posts/${id}`, {}, "delete");
+    return res.post;
+  }
+  ///////////
+
+  static async updateMessage(data) {
+    let res = await this.request(`messages`, data, "post");
+    return res.message;
+  }
+
+  static async removeMessage(id) {
+    let res = await this.request(`messages/${id}/remove`, {}, "post");
+    return res.message;
+  }
 
   static async getAllPosts(title = {}) {
     let res = await this.request(`posts`, {title});
@@ -108,7 +122,6 @@ class JoblyApi {
     let res = await this.request(`posts`, data, "post");
     return res.post;
   }
-
 
   static async getAllTags(name) {
     let res = await this.request(`tags`, {name});

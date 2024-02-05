@@ -53,7 +53,8 @@ router.post("/", ensureLoggedIn, async function (req, res, next) {
 
 router.get("/", ensureLoggedIn, async function (req, res, next) {
   try {
-    const users = await User.findAll(req.params.username);
+    
+    const users = await User.findAll(req.params.id);
     return res.json({ users });
   } catch (err) {
     return next(err);

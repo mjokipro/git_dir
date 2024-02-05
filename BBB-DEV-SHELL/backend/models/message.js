@@ -129,7 +129,22 @@ class Message {
     //   body: m.body
     // };
   }
+
+  static async remove(id) {
+    const result = await db.query(
+          `DELETE
+           FROM messages
+           WHERE id = $1
+           RETURNING id`, [id]);
+    const message = result.rows[0];
+
+    if (!message) throw new NotFoundError(`No message: ${id}`);
+
+  
+  }
+  
 }
+
 
 
 module.exports = Message;

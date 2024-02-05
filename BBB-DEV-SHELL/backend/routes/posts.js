@@ -100,11 +100,11 @@ router.get("/:id", async function (req, res, next) {
 
 router.patch("/:id", async function (req, res, next) {
   try {
-    const validator = jsonschema.validate(req.body, postUpdateSchema);
-    if (!validator.valid) {
-      const errs = validator.errors.map(e => e.stack);
-      throw new BadRequestError(errs);
-    }
+    // const validator = jsonschema.validate(req.body, postUpdateSchema);
+    // if (!validator.valid) {
+    //   const errs = validator.errors.map(e => e.stack);
+    //   throw new BadRequestError(errs);
+    // }
 
     const post = await Post.update(req.params.id, req.body);
     return res.json({ post });

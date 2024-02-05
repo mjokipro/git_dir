@@ -24,14 +24,14 @@ async function addP(data){
   setPost(post)
 }
     
-console.debug("posts=", post)
+// console.debug("posts=", post)
 if (!posts) return <p>Loading...</p>
 
   return (
     <div className="container">
         <h3>Enter term or partial term to begin!</h3>        
         <SearchForm searchFor={search} />
-        <NewMessageForm addP={addP} />
+        <NewMessageForm  />
         {posts.length
             ? (<div >
                 {posts.map(p => (

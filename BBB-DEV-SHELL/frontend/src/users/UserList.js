@@ -1,11 +1,12 @@
 import React, {useState, useEffect}  from "react";
 import JoblyApi from "../api/api";
-import SearchForm from "../common/SearchForm";
+import SearchForm from "./SearchForm";
 import UserCard from "./UserCard";
 
 const UserList = () => {
     console.debug("Users List")
     const [users, setUsers] = useState(null)
+    // const [user, setUser] = useState(null)
 
     useEffect(() => {
         console.debug("userlist", users)

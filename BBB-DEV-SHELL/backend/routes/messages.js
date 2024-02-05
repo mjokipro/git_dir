@@ -112,6 +112,24 @@ router.post("/",  async function (req, res, next) {
  *
  **/
 
+router.post("/:id/remove", ensureLoggedIn, async function (req, res, next) {
+  try {
+    // let msg = await Message.remove(req.params.id);
+
+    // if (msg.to_user.username !== username) {
+    //   throw new ExpressError("Cannot set this message to read", 401);
+    // }
+    let message = await Message.remove(req.params.id);
+
+    return res.json({message});
+  }
+
+  catch (err) {
+    return next(err);
+  }
+});
+
+
 router.post("/:id/read", ensureLoggedIn, async function (req, res, next) {
   try {
     let username = req.user.username;

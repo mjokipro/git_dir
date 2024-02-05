@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react'
-import {useParams, Link} from 'react-router-dom'
+import {useParams, Link, useHistory} from 'react-router-dom'
 import JoblyApi from '../api/api'
+
 
 const MessageDetail = () => {
     const {id} = useParams()
+    const history = useHistory()
     const [message, setMessage] = useState(null)
     console.debug("message detail", message)
 
@@ -15,6 +17,12 @@ const MessageDetail = () => {
     async function getM(){
         const message = await JoblyApi.getMessage(id)
         setMessage(message)
+    }
+    
+    async function removeM(){
+        const message = await JoblyApi.removeMessage(id)
+        setMessage(message)
+        history.push("/messages")
     }
 
     if (!message) return <p>Loading...</p>
@@ -36,10 +44,14 @@ const MessageDetail = () => {
             <h4>Body:</h4>
            <p className='lead'> {message.body}</p>
 
+            <div>
            <Link to={`/messages`}>
-                <button className=' btn btn=small mb-2 btn-secondary'>Back</button>
+                <button className=' btn btn-small mb-2 btn-secondary'>Back</button>
            </Link>
-       
+           
+           {/* <button onClick={() => editM()} className='btn ml-2 mb-2 btn-primary'>Delete</button> */}
+           <button onClick={() => removeM()} className='btn ml-2 mb-2 btn-danger'>Delete</button>
+           </div>
         </div>
     )
 }

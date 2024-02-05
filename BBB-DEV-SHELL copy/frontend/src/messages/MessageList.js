@@ -3,7 +3,6 @@ import MessageCard from './MessageCard'
 import SearchForm from '../common/SearchForm'
 import JoblyApi from '../api/api'
 import NewMessageForm from '../forms/NewMessageForm'
-import { Link } from 'react-router-dom'
 
 function MessageList(){
     console.debug("MessageList")
@@ -45,7 +44,7 @@ function MessageList(){
 if (!messages) return <p>Loading...</p>
 
     return (
-        <div className='modal-dialog modal-lg'>
+        <div >
             <div>
             <SearchForm searchFor={search}/>
             </div>

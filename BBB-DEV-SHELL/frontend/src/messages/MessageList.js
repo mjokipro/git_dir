@@ -27,7 +27,7 @@ if (!messages) return <p>Loading...</p>
 
     return (
         <div className='container'>
-            <NewMessageForm addP={addP} />
+            <NewMessageForm />
             {messages.length 
                 ? (
                     <div className='lead'>

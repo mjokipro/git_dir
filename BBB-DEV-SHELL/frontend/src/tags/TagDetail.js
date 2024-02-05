@@ -33,9 +33,9 @@ if (!tags) return <p>Loading...</p>
         </li>
       </Link> 
       ))}
-    <Link to={`/posts`}>
+    {/* <Link to={`/posts`}>
         <button className="btn btn-secondary mb-2 sm">Back</button>
-    </Link>
+    </Link> */}
     </ul>
     </div>
   );
