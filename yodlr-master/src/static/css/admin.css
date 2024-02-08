@@ -1,0 +1,8 @@
+.Admin-UserListValue {
+    list-style-type: none
+}
+
+.Admin-MsgError {
+    color: #800000;
+    font-weight: bold;
+}

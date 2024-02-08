@@ -16,8 +16,6 @@ import Alert from "../common/Alert";
 function SignupForm({ signup }) {
   const history = useHistory();
   const [formData, setFormData] = useState({
-    username: "",
-    password: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -40,7 +38,7 @@ function SignupForm({ signup }) {
     evt.preventDefault();
     let result = await signup(formData);
     if (result.success) {
-      history.push("/companies");
+      history.push("/users");
     } else {
       setFormErrors(result.errors);
     }
@@ -59,26 +57,6 @@ function SignupForm({ signup }) {
           <div className="card">
             <div className="card-body">
               <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                  <label>Username</label>
-                  <input
-                      name="username"
-                      className="form-control"
-                      value={formData.username}
-                      onChange={handleChange}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Password</label>
-                  <input
-                      type="password"
-                      name="password"
-                      className="form-control"
-                      value={formData.password}
-                      onChange={handleChange}
-                  />
-                </div>
-
                 <div className="form-group">
                   <label>First name</label>
                   <input

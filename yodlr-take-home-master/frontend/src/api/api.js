@@ -12,19 +12,19 @@ const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 
 class UsersApi {
   // the token for interactive with the API will be stored here.
-  static token;
+  static id;
 
   static async request(endpoint, data = {}, method = "get") {
     console.debug("API Call:", endpoint, data, method);
 
     const url = `${BASE_URL}/${endpoint}`;
-    const headers = { };
+    // const headers = { };
     const params = (method === "get")
         ? data
         : {};
 
     try {
-      return (await axios({ url, method, data, params, headers })).data;
+      return (await axios({ url, method, data, params})).data;
     } catch (err) {
       console.error("API Error:", err.response);
       let message = err.response.data.error.message;
@@ -36,8 +36,8 @@ class UsersApi {
 
   /** Get the current user. */
 
-  static async getCurrentUser(username) {
-    let res = await this.request(`users/${username}`);
+  static async getCurrentUser(id) {
+    let res = await this.request(`users/${id}`);
     return res.user;
   }
 
