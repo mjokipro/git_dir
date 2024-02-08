@@ -4,24 +4,22 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var logger = require('./lib/logger');
 var cors = require('cors');
 
 var users = require('./routes/users');
-const authRoutes = require("./routes/auth");
+// const authRoutes = require("./routes/auth");
 
 var app = express();
-var log = logger(app);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(authenticateJWT);
+// app.use(authenticateJWT);
 
 app.use('/users', users);
-app.use("/auth", authRoutes);
+// app.use("/auth", authRoutes);
 
 
 
@@ -45,11 +43,13 @@ app.use(function(err, req, res, next) {
   });
 });
 
-app.set('port', process.env.PORT || 3000);
+// app.set('port', process.env.PORT || 3000);
 
-var server = app.listen(app.get('port'), function() {
-  log.info(
-    'Express server listening on http://localhost:%d',
-    server.address().port
-  );
-});
+// var server = app.listen(app.get('port'), function() {
+//   log.info(
+//     'Express server listening on http://localhost:%d',
+//     server.address().port
+//   );
+// });
+
+module.exports = app;

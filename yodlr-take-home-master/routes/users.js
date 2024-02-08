@@ -7,12 +7,12 @@ var log = logger();
 var users = require('../init_data.json').data;
 var curId = _.size(users);
 
-/* GET users listing. */
+/* GET users listing. { users: [..., {user}] }*/
 router.get('/', function(req, res) {
   res.json(_.toArray(users));
 });
 
-/* Create a new user */
+/* POST Create a new user.  */
 router.post('/', function(req, res) {
   var user = req.body;
   user.id = curId++;
