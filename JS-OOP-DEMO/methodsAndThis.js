@@ -1,6 +1,7 @@
 function getHypotenuse(a, b) {
 	return Math.sqrt(a ** 2 + b ** 2);
 }
+
 function getArea(a, b) {
 	return a * b / 2;
 }
@@ -15,8 +16,8 @@ function getArea(a, b) {
 // getHypotenuse(9, 12);
 
 const rightTriangle = {
-	a             : 9,
-	b             : 12,
+	a: 9,
+	b: 12,
 	getArea() {
 		return this.a * this.b / 2;
 	},

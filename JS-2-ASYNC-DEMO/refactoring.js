@@ -12,7 +12,7 @@ $.getJSON(`${baseURL}/1/`, p1 => {
 });
 
 // promise pattern
-let baseURL = "https://pokeapi.co/api/v2/pokemon";
+// let baseURL = "https://pokeapi.co/api/v2/pokemon";
 
 $.getJSON(`${baseURL}/1/`)
   .then(p1 => {
