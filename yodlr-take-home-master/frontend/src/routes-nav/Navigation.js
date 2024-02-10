@@ -18,11 +18,14 @@ function Navigation({ logout }) {
   function loggedInNav() {
     return (
         <ul className="navbar-nav ml-auto">
-          <li className="nav-item mr-4">
-            <NavLink className="nav-link" to="/users">
-              Users
-            </NavLink>
-          </li>
+          { currentUser.isAdmin
+            &&
+            <li className="nav-item mr-4">
+              <NavLink className="nav-link" to="/users">
+                Users
+              </NavLink>
+            </li>
+          }
           <li className="nav-item mr-4">
             <NavLink className="nav-link" to="/profile">
               Profile
@@ -57,7 +60,7 @@ function Navigation({ logout }) {
   return (
       <nav className="Navigation navbar navbar-expand-md">
         <Link className="navbar-brand" to="/">
-          Jobly
+          Users
         </Link>
         {currentUser ? loggedInNav() : loggedOutNav()}
       </nav>

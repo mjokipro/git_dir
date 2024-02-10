@@ -5,6 +5,8 @@ import LoginForm from "../auth/LoginForm";
 import ProfileForm from "../profiles/ProfileForm";
 import SignupForm from "../auth/SignupForm";
 import PrivateRoute from "./PrivateRoute";
+import UsersList from '../users/UsersList'
+import UserDetail from '../users/UserDetail'
 
 /** Site-wide routes.
  *
@@ -36,6 +38,14 @@ function Routes({ login, signup }) {
           <Route exact path="/signup">
             <SignupForm signup={signup} />
           </Route>
+
+          <PrivateRoute path="/users">
+            <UsersList />
+          </PrivateRoute>
+
+          <PrivateRoute path="/users/:username">
+            <UserDetail />
+          </PrivateRoute>
 
           <PrivateRoute path="/profile">
             <ProfileForm />

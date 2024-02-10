@@ -12,19 +12,21 @@ const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 
 class UsersApi {
   // the token for interactive with the API will be stored here.
-  static id;
+  static token;
 
   static async request(endpoint, data = {}, method = "get") {
     console.debug("API Call:", endpoint, data, method);
 
+    //there are multiple ways to pass an authorization token, this is how you pass it in the header.
+    //this has been provided to show you another way to pass the token. you are only expected to read this code for this project.
     const url = `${BASE_URL}/${endpoint}`;
-    // const headers = { };
+    const headers = { Authorization: `Bearer ${UsersApi.token}` };
     const params = (method === "get")
         ? data
         : {};
 
     try {
-      return (await axios({ url, method, data, params})).data;
+      return (await axios({ url, method, data, params, headers })).data;
     } catch (err) {
       console.error("API Error:", err.response);
       let message = err.response.data.error.message;
@@ -50,9 +52,14 @@ class UsersApi {
 
   /** Get details on a company by handle. */
 
-  static async getCompany(handle) {
-    let res = await this.request(`companies/${handle}`);
-    return res.company;
+  static async getUser(username) {
+    let res = await this.request(`users/${username}`);
+    return res.user;
+  }
+
+  static async getUserId(id) {
+    let res = await this.request(`users/${id}`);
+    return res.user;
   }
 
   /** Get list of jobs (filtered by title if not undefined) */
