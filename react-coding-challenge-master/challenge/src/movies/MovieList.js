@@ -2,25 +2,19 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import {entries} from "../sample.json"
 import MovieCard from './MovieCard'
-// import { v4 as uuidv4 } from 'uuid';
-import ImageCard from '../ImageCard';
-import styled from 'styled-components';
 
-
-// const Img = styled.img`
-// src=
-// `
-
-const MovieList = () => {
+const MovieList = ({type}) => {
 
     const [movies, setMovies] = useState([])
     console.debug("Movies=", movies)
     console.debug("Entries=", entries)
+    console.debug("Type=", type)
 
     useEffect(
         () => {
-        setMovies(entries)
-        }, []
+            const movies = entries.filter(v => v.programType !== type)
+            setMovies(movies)
+        }, [type]
     )
 
     return (
@@ -28,10 +22,10 @@ const MovieList = () => {
 
 {movies.length
             ? (
-                < >
+                <div >
                   {movies.map(m => (
+                 
                       <MovieCard
-                        //   key={c.handle}
                           title={m.title}
                           description={m.description}
                           programType={m.programType}
@@ -39,15 +33,14 @@ const MovieList = () => {
                           width={m.images.width}
                           height={m.images.height}
                       />
+                     
                   ))}
-                </>
+                </div>
             ) : (
                 <p className="lead">Sorry, no results were found!</p>
             )}
             <MovieCard 
-            
             />
-
         </>
     )
 }

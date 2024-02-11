@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Alert from "../common/Alert";
+import styled from "styled-components"
+
 
 /** Login form.
  *
@@ -8,10 +10,21 @@ import Alert from "../common/Alert";
  * On submission:
  * - calls login function prop
  * - redirects to /companies route
- *
- * Routes -> LoginForm -> Alert
- * Routed as /login
- */
+*
+* Routes -> LoginForm -> Alert
+* Routed as /login
+*/
+
+const Button2 = styled.button`
+  font-size: .1em;
+  margin: .5em;
+  padding: 0.25em .75em;
+  
+  border-radius: 13px;
+  color: pink;
+  border: 2px solid lightblue;
+  background-color: black;
+`
 
 function LoginForm({ login }) {
   const history = useHistory();
@@ -85,12 +98,12 @@ function LoginForm({ login }) {
                     ? <Alert type="danger" messages={formErrors} />
                     : null}
 
-                <button
+                <Button2
                     className="btn btn-primary float-right"
                     onSubmit={handleSubmit}
                 >
                   Submit
-                </button>
+                </Button2>
               </form>
             </div>
           </div>

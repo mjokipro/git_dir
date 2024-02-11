@@ -1,72 +1,37 @@
-import React from "react";
-// import axios from "axios";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
-// import entries from './sample.json'
-import RouteList from "./RouteList";
-import NavBar from "./NavBar";
+import useLocalStorage from "./hooks/useLocalStorage";
+import Navigation from "./routes-nav/Navigation";
+import Routes from "./routes-nav/Routes";
+import LoadingSpinner from "./common/LoadingSpinner";
+import UserContext from "./auth/UserContext";
+import jwt from "jsonwebtoken";
+import RedboxApi from "./api/api";
 import styled from 'styled-components'
-// import Header from './Header'
-// import img from './assets/social/instagram-blue.svg'
-// import 'foundation-sites/dist/css/foundation.min.css';
 import { Button } from 'react-foundation';
-// import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css"
-
-
-
-/**
- * App
- *
- * state:
-  * dogs: [{name...}]
-  * isLoading: bool
- *
- * props: none
- *
- * App -> RouteList
- *
- */
 
 const Header = styled.nav`
     color: lightblue;
     background-color: black;
-    font-size: 50px;
+    font-size: 40px;
+    display: flex;
+justify-content: left;
+align-items: left;
+
 `
-// const Button2 = styled.button`
-//   font-size: 1em;
-//   margin: 1em;
-//   padding: 0.25em 1em;
-//   border-radius: 3px;
-//   color: pink;
-//   border: 2px solid blue;
-//   background-color: black;
-
-// `
-
 Button.defaultProps = {
   theme: {
     main: "#BF4F74"
   }
 }
 
-// const theme = {
-//   main: "mediumseagreen"
-// };
-
-// const FeatureWrapper = styled.div`
-// background-color: lightblue;
-// padding: 10px;
-// display: flex;
-// justify-content: left;
-// align-items: left;
-// `;
-
 const Footer = styled.footer`
 color: lightblue;
 background-color: black;
 padding: 10px;
 display: flex;
-justify-content: left;
+justify-content: center;
 align-items: left;
 height: 5em;
 `
@@ -75,26 +40,119 @@ background-color: lightgrey;
 // width: auto;
 height: 75vw;
 display: flew
-
 `
+// Key name for storing token in localStorage for "remember me" re-login
+export const TOKEN_STORAGE_ID = "redbox-token";
 
+/** Redbox application.
+ *
+ * - infoLoaded: has user data been pulled from API?
+ *   (this manages spinner for "loading...")
+*
+* - currentUser: user obj from API. This becomes the canonical way to tell
+*   if someone is logged in. This is passed around via context throughout app.
+*
+* - token: for logged in users, this is their authentication JWT.
+*   Is required to be set for most API calls. This is initially read from
+*   localStorage and synced to there via the useLocalStorage hook.
+*
+* App -> Routes
+*/
 function App() {
- 
-  // console.debug("entries", entries)
+
+  const [infoLoaded, setInfoLoaded] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
+
+  console.debug(
+      "App",
+      "infoLoaded=", infoLoaded,
+      "currentUser=", currentUser,
+      "token=", token,
+  );
+
+  // Load user info from API. Until a user is logged in and they have a token,
+  // this should not run. It only needs to re-run when a user logs out, so
+  // the value of the token is a dependency for this effect.
+
+  useEffect(function loadUserInfo() {
+    console.debug("App useEffect loadUserInfo", "token=", token);
+
+    async function getCurrentUser() {
+      if (token) {
+        try {
+          let { username } = jwt.decode(token);
+          // put the token on the Api class so it can use it to call the API.
+          RedboxApi.token = token;
+          let currentUser = await RedboxApi.getCurrentUser(username);
+          setCurrentUser(currentUser);
+        } catch (err) {
+          console.error("App loadUserInfo: problem loading", err);
+          setCurrentUser(null);
+        }
+      }
+      setInfoLoaded(true);
+    }
+
+    // set infoLoaded to false while async getCurrentUser runs; once the
+    // data is fetched (or even if an error happens!), this will be set back
+    // to false to control the spinner.
+    setInfoLoaded(false);
+    getCurrentUser();
+  }, [token]);
+
+  /** Handles site-wide logout. */
+  function logout() {
+    setCurrentUser(null);
+    setToken(null);
+  }
+
+/** Handles site-wide signup.
+   *
+   * Automatically logs them in (set token) upon signup.
+   *
+   * Make sure you await this function and check its return value!
+   */
+async function signup(signupData) {
+  try {
+    let token = await RedboxApi.signup(signupData);
+    setToken(token);
+    return { success: true };
+  } catch (errors) {
+    console.error("signup failed", errors);
+    return { success: false, errors };
+  }
+}
+
+/** Handles site-wide login.
+ *
+ * Make sure you await this function and check its return value!
+ */
+async function login(loginData) {
+  try {
+    let token = await RedboxApi.login(loginData);
+    setToken(token);
+    return { success: true };
+  } catch (errors) {
+    console.error("login failed", errors);
+    return { success: false, errors };
+  }
+}
+
+if (!infoLoaded) return <LoadingSpinner />;
 
   return (
     <div>
       <BrowserRouter>
-        <NavBar  />
-        {/* <Button2>Clsdfick</Button2> */}
-        <Header >Popular Titles</Header>
-        {/* <FeatureWrapper>Popular Titles</FeatureWrapper> */}
-        <Main>
-
-          <RouteList  />
-
-        </Main>
-        <Footer><div>Hello</div></Footer>
+        <UserContext.Provider
+          value={{ currentUser, setCurrentUser }}>  
+          <Navigation logout={logout} />
+            <Header>Popular Selections</Header>
+              <Main>
+                <Routes login={login} signup={signup} />
+              </Main> 
+            <Footer><span>Contact | About | Careers | Customer Service</span></Footer>
+        </UserContext.Provider>
       </BrowserRouter>
     </div>
   );
