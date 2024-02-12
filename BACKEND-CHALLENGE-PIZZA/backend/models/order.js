@@ -1,7 +1,6 @@
 "use strict";
 
 const db = require("../db");
-const bcrypt = require("bcrypt");
 const { sqlForPartialUpdate } = require("../helpers/sql");
 const {
   NotFoundError,
@@ -9,7 +8,7 @@ const {
   UnauthorizedError,
 } = require("../expressError");
 
-  /** Find all users.
+  /** Find all pizzas.
    *
    * Returns [{ username, first_name, last_name, email, is_admin }, ...]
    **/
@@ -18,13 +17,11 @@ class Order {
 
   static async findAll() {
     const result = await db.query(
-          `SELECT username,
-                  first_name AS "firstName",
-                  last_name AS "lastName",
-                  email,
-                  is_admin AS "isAdmin"
-           FROM users
-           ORDER BY username`,
+          `SELECT user_id,
+                  total_items,
+                  total_price
+           FROM orders
+           ORDER BY user_id`,
     );
 
     return result.rows;
