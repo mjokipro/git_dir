@@ -124,12 +124,13 @@ function SignupForm({ signup }) {
                     : null
                 }
 
-                <Button2
+                <button
+                  className="btn-primary"
                     type="submit"
                     onSubmit={handleSubmit}
                 >
                   Submit
-                </Button2>
+                </button>
               </form>
             </div>
           </div>

@@ -98,12 +98,12 @@ function LoginForm({ login }) {
                     ? <Alert type="danger" messages={formErrors} />
                     : null}
 
-                <Button2
+                <button
                     className="btn btn-primary float-right"
                     onSubmit={handleSubmit}
                 >
                   Submit
-                </Button2>
+                </button>
               </form>
             </div>
           </div>
