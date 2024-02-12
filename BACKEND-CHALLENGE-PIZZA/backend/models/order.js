@@ -8,12 +8,37 @@ const {
   UnauthorizedError,
 } = require("../expressError");
 
+class Order {
+  
+ /** Create an order (from data), update db, return new order data.
+   *
+   * data should be { user_id, total_items, total_price }
+   *
+   * Returns { id, user_id, total_items, total_price }
+   **/
+
+ static async create(data) {
+  const result = await db.query(
+        `INSERT INTO orders (user_id,
+                           total_items,
+                           total_price)
+         VALUES ($1, $2, $3)
+         RETURNING id, user_id, total_items, total_price`,
+      [
+        data.user_id,
+        data.total_items,
+        data.total_price
+      ]);
+  
+      let order = result.rows[0];
+
+  return order;
+}
+  
   /** Find all orders.
    *
    * Returns [{ user_id, total_items, total_price }, ...]
    **/
-
-class Order {
 
   static async findAll() {
     const result = await db.query(
@@ -27,45 +52,128 @@ class Order {
     return result.rows;
   }
 
-// static async findAll({ minSalary, hasEquity, title } = {}) {
-//     let query = `SELECT j.id,
-//                         j.title,
-//                         j.salary,
-//                         j.equity,
-//                         j.company_handle AS "companyHandle",
-//                         c.name AS "companyName"
-//                  FROM jobs j 
-//                    LEFT JOIN companies AS c ON c.handle = j.company_handle`;
-//     let whereExpressions = [];
-//     let queryValues = [];
+   /** Given an order id, return data about order.
+   *
+   * Returns { id, user_id, total_items, total_price }
+   *   where pizzas are [{ type, description, price }, ...]
+   *
+   * Throws NotFoundError if not found.
+   **/
 
-//     // For each possible search term, add to whereExpressions and
-//     // queryValues so we can generate the right SQL
+   static async get(id) {
+    const orderRes = await db.query(
+          `SELECT id,
+                  user_id,
+                  total_items,
+                  total_price
+           FROM orders
+           WHERE id = $1`, [id]);
 
-//     if (minSalary !== undefined) {
-//       queryValues.push(minSalary);
-//       whereExpressions.push(`salary >= $${queryValues.length}`);
-//     }
+    const order = orderRes.rows[0];
 
-//     if (hasEquity === true) {
-//       whereExpressions.push(`equity > 0`);
-//     }
+    if (!order) throw new NotFoundError(`No order: ${id}`);
 
-//     if (title !== undefined) {
-//       queryValues.push(`%${title}%`);
-//       whereExpressions.push(`title ILIKE $${queryValues.length}`);
-//     }
+    const pizzasRes = await db.query(
+          `SELECT p.type,
+                  p.description,
+                  p.price,
+                  op.qty 
+          FROM pizzas p
+          JOIN orders_pizzas op ON op.type = p.type
+          JOIN orders o ON op.order_id = o.id
+          WHERE o.id = $1`, [order.id]);
 
-//     if (whereExpressions.length > 0) {
-//       query += " WHERE " + whereExpressions.join(" AND ");
-//     }
+    // delete order.id;
+    order.pizzas = pizzasRes.rows;
 
-//     // Finalize query and return results
+    return order;
+  }
 
-//     query += " ORDER BY title";
-//     const jobsRes = await db.query(query, queryValues);
-//     return jobsRes.rows;
-//   }
+ /** Create a pizzaItem (from data), update db, return new order data.
+   *
+   * data should be { type, order_id, qty }
+   *
+   * Returns { type, order_id, qty }
+   **/
+
+  static async addPizzaItem(data) {
+
+    const orderItem = await db.query(
+      `INSERT INTO orders_pizzas (type,
+                         order_id,
+                         qty)
+       VALUES ($1, $2, $3)
+       RETURNING type, order_id, qty`,
+    [
+      data.type,
+      data.order_id,
+      data.qty
+    ]);
+
+    let pizzaItem = orderItem.rows[0]
+
+    return pizzaItem
+  }
+
+    /** Update pizzaItem data with `data`.
+   *
+   * Data can include: { qty }
+   *
+   * Returns { qty, type, order_id }
+   *
+   * Throws NotFoundError if not found.
+   */
+
+  static async updatePizzaItem(order_id, type, data){
+    const orderItem = await db.query(
+      `
+      UPDATE orders_pizzas 
+      SET qty = $1
+      WHERE type = $2 AND order_id = $3
+      RETURNING qty, type, order_id
+      `, [data.qty, type, order_id]
+    )
+
+    let pizzaItem = orderItem.rows[0]
+
+    return pizzaItem
+  }
+
+  /** Delete given pizzaItem from database; returns undefined.
+   *
+   * Throws NotFoundError if pizzaItem not found.
+   **/
+
+  static async removePizzaItem(order_id, type){
+    const pizzasRes = await db.query(
+      `DELETE 
+          FROM orders_pizzas 
+          WHERE order_id = $1 AND type = $2
+          RETURNING order_id
+      `, [order_id, type]);
+
+    const pizzaItem = pizzasRes.rows[0]
+
+    if (!pizzaItem) throw new NotFoundError(`No job: ${user_id}`);
+    }
+  
+
+  /** Delete given order from database; returns undefined.
+   *
+   * Throws NotFoundError if order not found.
+   **/
+
+  static async remove(id) {
+    const result = await db.query(
+          `DELETE
+           FROM orders
+           WHERE id = $1
+           RETURNING id`, [id]);
+    const order = result.rows[0];
+
+    if (!order) throw new NotFoundError(`No order: ${id}`);
+  }
+
 }
 
 

@@ -40,11 +40,6 @@ router.post("/", ensureAdmin, async function (req, res, next) {
 /** GET /  =>
  *   { pizzas: [ { type, description, price }, ...] }
  *
- * Can filter on provided search filters:
- * - minEmployees
- * - maxEmployees
- * - nameLike (will find case-insensitive, partial matches)
- *
  * Authorization required: none
  */
 router.get("/", async function (req, res, next) {
