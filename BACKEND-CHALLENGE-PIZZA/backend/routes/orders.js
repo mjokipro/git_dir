@@ -66,6 +66,15 @@ router.get("/:id", async function (req, res, next) {
       return next(err);
     }
   });
+  
+  router.get("/:user_id/orders", async function (req, res, next) {
+      try {
+        const orders = await Order.getAllOrders(req.params.user_id);
+        return res.json({ orders });
+      } catch (err) {
+        return next(err);
+      }
+    });
 
   /** POST / { order } => { order }
  *

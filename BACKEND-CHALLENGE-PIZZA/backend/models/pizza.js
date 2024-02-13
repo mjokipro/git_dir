@@ -44,23 +44,38 @@ class Pizza {
 
   return pizza;
 
-    /** Find all pizzas.
-   *
-   * Returns [{ username, first_name, last_name, email, is_admin }, ...]
-   **/
-
+  
 }
 
-  static async findAll() {
-    const result = await db.query(
-          `SELECT type,
-                  description,
-                  price
-           FROM pizzas
-           ORDER BY type`,
-    );
+/** Find all pizzas.
+*
+* Returns [{ type, description, price }, ...]
+**/
+  static async findAll({ type, description, price } = {}) {
 
-    return result.rows;
+    let query = `SELECT type,
+                      description,
+                      price
+                  FROM pizzas`;
+    let whereExpressions = [];
+    let queryValues = [];
+
+    if (type) {
+      queryValues.push(`%${type}%`);
+      whereExpressions.push(`type ILIKE $${queryValues.length}`);
+    }
+
+    if (whereExpressions.length > 0) {
+      query += " WHERE " + whereExpressions.join(" AND ");
+    }
+
+    // Finalize query and return results
+
+    query += " ORDER BY type";
+    
+    const pizzasRes = await db.query(query, queryValues);
+    
+    return pizzasRes.rows;
   }
 
   /** Given a pizza type, return data about pizza.

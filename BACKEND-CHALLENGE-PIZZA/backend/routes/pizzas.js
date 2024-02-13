@@ -44,8 +44,9 @@ router.post("/", ensureAdmin, async function (req, res, next) {
  */
 router.get("/", async function (req, res, next) {
     try {
-      const pizzas = await Pizza.findAll();
-      return res.json({ pizzas });
+      // const pizza = await Pizza.get(req.params.type);
+      const food = await Pizza.findAll(req.params.type, req.params);
+      return res.json({ food });
     } catch (err) {
       return next(err);
     }

@@ -89,6 +89,43 @@ class Order {
     return order;
   }
 
+     /** Given an order id, return data about order.
+   *
+   * Returns { id, user_id, total_items, total_price }
+   *   where pizzas are [{ type, description, price }, ...]
+   *
+   * Throws NotFoundError if not found.
+   **/
+
+     static async getAllOrders(user_id) {
+      const orderRes = await db.query(
+            `SELECT id,
+                    user_id,
+                    total_items,
+                    total_price
+             FROM orders
+             WHERE user_id = $1`, [user_id]);
+  
+      const order = orderRes.rows[0];
+  
+      if (!order) throw new NotFoundError(`No order: ${id}`);
+  
+      const pizzasRes = await db.query(
+            `SELECT p.type,
+                    p.description,
+                    p.price,
+                    op.qty 
+            FROM pizzas p
+            JOIN orders_pizzas op ON op.type = p.type
+            JOIN orders o ON op.order_id = o.id
+            WHERE o.id = $1`, [order.id]);
+  
+      // delete order.id;
+      order.pizzas = pizzasRes.rows;
+  
+      return order;
+    }
+
  /** Create a pizzaItem (from data), update db, return new order data.
    *
    * data should be { type, order_id, qty }

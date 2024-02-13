@@ -1,93 +1,138 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
-import "./App.css";
-import Home from "./Home";
-import SnackOrBoozeApi from "./Api";
-import NavBar from "./NavBar";
-import { Route, Switch } from "react-router-dom";
-import Menu from "./FoodMenu";
-import Food from "./FoodItem";
-import Component404 from './404Component';
-import CreateNewItem from './CreateNewItem';
+import useLocalStorage from "./hooks/useLocalStorage";
+import Navigation from "./routes-nav/Navigation";
+import Routes from "./routes-nav/Routes";
+import LoadingSpinner from "./common/LoadingSpinner";
+import PizzaApi from "./api/api";
+import UserContext from "./auth/UserContext";
+import jwt from "jsonwebtoken";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+
+// Key name for storing token in localStorage for "remember me" re-login
+export const TOKEN_STORAGE_ID = "pizza-token";
+
+/** Jobly application.
+ *
+ * - infoLoaded: has user data been pulled from API?
+ *   (this manages spinner for "loading...")
+ *
+ * - currentUser: user obj from API. This becomes the canonical way to tell
+ *   if someone is logged in. This is passed around via context throughout app.
+ *
+ * - token: for logged in users, this is their authentication JWT.
+ *   Is required to be set for most API calls. This is initially read from
+ *   localStorage and synced to there via the useLocalStorage hook.
+ *
+ * App -> Routes
+ */
+
 
 function App() {
-  /*
-  *  The main change was turning the snacks useState() into a generalized
-  *  useState() component. The component is then called upon during a useEffect()
-  *  call.  In there we query the API and get a list, containing two items.
-  *  The items inside are the Snacks Objects, and Drinks Object.
-  *  These are then passed down depending on which category a user picks.
-  *  If snacks are picked, they see snacks, if drinks, they see drinks.
-  *  404 Routes are rerouted to a 404 component.
-  */
+  const [infoLoaded, setInfoLoaded] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [food, setFood] = useState()
+  const [orders, setOrders] = useState([])
+  const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
 
+  console.debug(
+      "App",
+      "infoLoaded=", infoLoaded,
+      "currentUser=", currentUser,
+      "token=", token,
+      "food=", food
+  );
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [food, setFood] = useState();
+  // Load user info from API. Until a user is logged in and they have a token,
+  // this should not run. It only needs to re-run when a user logs out, so
+  // the value of the token is a dependency for this effect.
 
-  useEffect(() => {
-    async function getFoodItems() {
-      let foodItems = await SnackOrBoozeApi.getFoodItems();
+  useEffect(function loadUserInfo() {
+    console.debug("App useEffect loadUserInfo", "token=", token);
 
-      setFood(foodItems);
-      setIsLoading(false);
+    async function getCurrentUser() {
+      if (token) {
+        try {
+          let { username } = jwt.decode(token);
+          // put the token on the Api class so it can use it to call the API.
+          PizzaApi.token = token;
+          // get current user
+          let currentUser = await PizzaApi.getCurrentUser(username);
+          // get current user's orders
+          let orders = await PizzaApi.getOrders(username)
+          // get all food
+          let food = await PizzaApi.getAllFood()
+          console.debug("orders=", orders)
+          console.debug("food=", food)
+          setCurrentUser(currentUser);
+          setOrders(orders)
+          setFood(food)
+        } catch (err) {
+          console.error("App loadUserInfo: problem loading", err);
+          setCurrentUser(null);
+        }
+      }
+      setInfoLoaded(true);
     }
-    getFoodItems();
-  }, []);
 
-  if (isLoading) {
-    return <p>Loading &hellip;</p>;
+    // set infoLoaded to false while async getCurrentUser runs; once the
+    // data is fetched (or even if an error happens!), this will be set back
+    // to false to control the spinner.
+    setInfoLoaded(false);
+    getCurrentUser();
+  }, [token]);
+
+  /** Handles site-wide logout. */
+  function logout() {
+    setCurrentUser(null);
+    setToken(null);
   }
 
-  const addNewFood = async (data) => {
-    let type = '';
-    console.log(data);
-    for(let key in data){
-      key === 'type' ? type=data[key] : type=null;
+  /** Handles site-wide signup.
+   *
+   * Automatically logs them in (set token) upon signup.
+   *
+   * Make sure you await this function and check its return value!
+   */
+  async function signup(signupData) {
+    try {
+      let token = await PizzaApi.signup(signupData);
+      setToken(token);
+      return { success: true };
+    } catch (errors) {
+      console.error("signup failed", errors);
+      return { success: false, errors };
     }
-
-    delete data.type;
-
-    await SnackOrBoozeApi.addFoodItem(data, type);
   }
+
+  /** Handles site-wide login.
+   *
+   * Make sure you await this function and check its return value!
+   */
+  async function login(loginData) {
+    try {
+      let token = await PizzaApi.login(loginData);
+      setToken(token);
+      return { success: true };
+    } catch (errors) {
+      console.error("login failed", errors);
+      return { success: false, errors };
+    }
+  }
+
+  if (!infoLoaded) return <LoadingSpinner />;
 
   return (
-    <div className="App">
       <BrowserRouter>
-        <NavBar />
-        <main>
-          <Switch>
-            <Route exact path="/">
-              <Home foods={food} />
-            </Route>
-
-            <Route exact path='/addFood'>
-              <CreateNewItem addNewFood={addNewFood}/>
-            </Route>
-            {/* Menu for Snacks below */}
-            <Route exact path="/snacks">
-              <Menu foods={food[0]} type={'snacks'} title="Snacks" />
-            </Route>
-
-            <Route path="/snacks/:id">
-              <Food items={food[0]} cantFind="/snacks" />
-            </Route>
-
-            {/* Menu for Drinks below */}
-            <Route exact path="/drinks">
-              <Menu foods={food[1]} type={'drinks'} title="Drinks" />
-            </Route>
-
-            <Route path="/drinks/:id">
-              <Food items={food[1]} cantFind="/drinks" />
-            </Route>
-
-            {/* 404 Component below */}
-            <Route component={Component404} />
-          </Switch>
-        </main>
+        <UserContext.Provider
+            value={{ currentUser, setCurrentUser, orders, setOrders, food, setFood }}>
+          <div className="App">
+            <Navigation logout={logout} />
+            <Routes login={login} signup={signup} />
+          </div>
+        </UserContext.Provider>
       </BrowserRouter>
-    </div>
   );
 }
 
