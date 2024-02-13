@@ -74,6 +74,16 @@ class PizzaApi {
     return res.item
   }
 
+  static async removeFood(order_id, type) {
+    let res = await this.request(`orders/${order_id}/${type}`, {order_id, type}, "delete");
+    return res.item
+  }
+
+  static async addFood(username, order_id, type, price, qty) {
+    let res = await this.request(`orders/${order_id}/add`, {username, order_id, type, price, qty}, "post");
+    return res.item
+  }
+
   /** Get token for login from username, password. */
 
   static async login(data) {

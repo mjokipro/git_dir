@@ -35,13 +35,15 @@ function App() {
   const [food, setFood] = useState()
   const [orders, setOrders] = useState([])
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
+  const [item, setItem] = useState(null)
 
   console.debug(
       "App",
       "infoLoaded=", infoLoaded,
       "currentUser=", currentUser,
       "token=", token,
-      "food=", food
+      "food=", food,
+      "item", item,
   );
 
   // Load user info from API. Until a user is logged in and they have a token,
@@ -121,15 +123,40 @@ function App() {
     }
   }
 
+  
+  async function removePizzaItem(id, type){
+    try {
+        let item = await PizzaApi.removeFood(id, type)
+        console.debug("removed", item)
+        setItem(item)
+        return {success: true}
+    } catch(errors) {
+        console.error("delete failed", errors)
+        return {success: false, errors}
+    }
+  }
+
+  async function addPizzaItem( username, id, type, price, qty = 1){
+    try {
+        let item = await PizzaApi.addFood(username, id, type, price, qty)
+        console.debug("added", item)
+        setItem(item)
+        return {success: true}
+    } catch(errors) {
+        console.error("add failed", errors)
+        return {success: false, errors}
+    }
+  }
+
   if (!infoLoaded) return <LoadingSpinner />;
 
   return (
       <BrowserRouter>
         <UserContext.Provider
-            value={{ currentUser, setCurrentUser, orders, setOrders, food, setFood }}>
+            value={{ currentUser, setCurrentUser, orders, setOrders, food, setFood, addPizzaItem}}>
           <div className="App">
             <Navigation logout={logout} />
-            <Routes login={login} signup={signup} />
+            <Routes removePizzaItem={removePizzaItem} login={login} signup={signup} />
           </div>
         </UserContext.Provider>
       </BrowserRouter>

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import Pizza from '../pizzas/Pizza';
+import Pizza from '../pizzas/PizzaRemove';
 import { useParams} from 'react-router-dom'
 import PizzaApi from '../api/api';
 

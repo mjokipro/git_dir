@@ -21,7 +21,7 @@ import PizzaDetail from '../pizzas/PizzaDetail'
  * Visiting a non-existant route redirects to the homepage.
  */
 
-function Routes({ login, signup }) {
+function Routes({ login, signup, removePizzaItem }) {
 
       const { food, setFood, orders, setOrders } = useContext(UserContext)
 
@@ -48,7 +48,7 @@ function Routes({ login, signup }) {
           </Route>
 
           <Route exact path="/pizzas">
-            <PizzaList foods={food} meth={setFood} type="food" />
+            <PizzaList foods={food} orders={orders} meth={setFood} type="food" />
           </Route>
 
           <Route exact path="/pizzas/:type">
@@ -56,11 +56,11 @@ function Routes({ login, signup }) {
           </Route>
 
           <PrivateRoute exact path="/orders">
-            <FoodList foods={orders} meth={setOrders} type="orders" />
+            <FoodList removePizzaItem={removePizzaItem} foods={orders} meth={setOrders} type="orders" />
           </PrivateRoute>
 
           <PrivateRoute exact path="/orders/:user_id/orders">
-            <FoodList foods={orders}  meth={setOrders} type="orders" />
+            <FoodList removePizzaItem={removePizzaItem} foods={orders}  meth={setOrders} type="orders" />
           </PrivateRoute>
 
           <PrivateRoute path="/orders/:id">

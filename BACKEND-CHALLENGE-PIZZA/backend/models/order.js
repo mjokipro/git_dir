@@ -135,17 +135,34 @@ class Order {
 
   static async addPizzaItem(data) {
 
+    // const orderQty = await db.query(
+    //   `UPDATE orders
+    //       VALUES total_items = total_items + $1
+    //       WHERE id = $2 AND user_id = $3
+    //   `, [data.qty, data.id, data.username]
+    // )
+
+    
+    
     const orderItem = await db.query(
       `INSERT INTO orders_pizzas (type,
-                         order_id,
-                         qty)
-       VALUES ($1, $2, $3)
-       RETURNING type, order_id, qty`,
-    [
-      data.type,
-      data.order_id,
-      data.qty
-    ]);
+        order_id,
+        qty)
+        VALUES ($1, $2, $3)
+        RETURNING type, order_id, qty`,
+        
+        [
+          data.type,
+          data.order_id,
+          data.qty
+        ]);
+
+        const orderPrice = await db.query(
+          `UPDATE orders
+              SET total_price = total_items * $1
+              WHERE id = $2 AND user_id = $3
+          `, [data.price, data.id, data.username]
+        )
 
     let pizzaItem = orderItem.rows[0]
 

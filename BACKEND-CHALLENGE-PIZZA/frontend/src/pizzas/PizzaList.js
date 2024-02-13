@@ -1,13 +1,13 @@
-import React, {useContext, useState} from 'react'
+import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
-import UserContext from '../auth/UserContext';
+// import UserContext from '../auth/UserContext';
 // import FoodCard from './FoodCard';
-import Pizza from './Pizza';
+import PizzaAdd from './PizzaAdd';
 
 
-const PizzaList = ({foods, meth}) => {
+const PizzaList = ({foods, orders, meth}) => {
 
-    console.debug("foods", foods)
+    console.debug("orders pizzalist", orders)
  
     const [items, setItems] = useState(foods)
 
@@ -32,8 +32,9 @@ const PizzaList = ({foods, meth}) => {
 
             {
             foods.map(foodItem => (
-               <Pizza 
+               <PizzaAdd
                key={foodItem.type}
+               id={orders.id}
                type={foodItem.type}
                description={foodItem.description}
                price={foodItem.price}
