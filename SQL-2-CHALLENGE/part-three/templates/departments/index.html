@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+  {% if depts|length == 0 %}
+    <h3>Sorry, no Departmentalities found</h3>
+  {% endif %}
+  <div class="container">
+    <h1 class="display-1">Phone Numbers</h1>
+    <table class="table table-striped ">
+      <thead class="thead-dark">
+          <th>Department</th>
+          <th>Department Code</th>     
+        <th>Phone</th>
+      </thead>
+      <tbody>
+        {% for dept in depts %}
+        <tr>
+            <td>{{dept.dept_name}} <a class="btn btn-sm btn-info" href="/departments/{{dept.dept_code}}">Edit</a></td>
+            <td>{{dept.dept_code}}</td>
+            {% if dept.phone %}
+            <td>{{dept.phone}}</td>
+            {% else %}
+            <td class="text-danger">NO PHONE</td>
+            {% endif %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <a href="/departments/new" class="btn btn-success">Add Department</a>
+  </div>
+</body>
+  
+ 
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+
+  
+
+
+            <form method="POST">
+              {{ form.hidden_tag() }}
+              {% for field in form if field.widget.input_type != 'hidden'%}
+
+                {{field.label}}
+                {{field}}
+                {% for err in field.errors %}
+                {{err}}
+                {% endfor %}
+    
+              {% endfor %}
+              <button  class="btn  btn-success btn-lg">Save</button>
+              
+              <!-- <a href="/departments/{dept_code}/delete" class="btn btn-danger btn-lg">
+                Delete
+              </a> -->
+
+            </form>
+
+          <a href="/employees" class="btn btn-secondary mt-4">Back</a>
+
+  
+ 
+{% endblock %}
