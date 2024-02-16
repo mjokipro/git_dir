@@ -8,11 +8,11 @@ const cors = require("cors");
 const { NotFoundError } = require("./expressError");
 
 const { authenticateJWT } = require("./middleware/auth");
+
 const authRoutes = require("./routes/auth");
 const usersRoutes = require("./routes/users");
-const pizzasRoutes = require("./routes/pizzas");
-const ordersRoutes = require("./routes/orders");
-
+const websitesRoutes = require("./routes/websites")
+const skillsRoutes = require("./routes/skills")
 
 const morgan = require("morgan");
 
@@ -26,8 +26,9 @@ app.use(authenticateJWT);
 
 app.use("/auth", authRoutes);
 app.use("/users", usersRoutes);
-app.use("/pizzas", pizzasRoutes);
-app.use("/orders", ordersRoutes);
+app.use("/websites", websitesRoutes);
+app.use("/skills", skillsRoutes);
+
 
 
 
