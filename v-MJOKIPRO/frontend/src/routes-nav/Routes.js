@@ -8,6 +8,7 @@ import ProfileForm from "../profiles/ProfileForm";
 import SignupForm from "../auth/SignupForm";
 import PrivateRoute from "./PrivateRoute";
 import WebsiteDetail from "../websites/WebsiteDetail";
+import AboutPage from '../user/AboutPage'
 
 /** Site-wide routes.
  *
@@ -40,6 +41,10 @@ function Routes({ login, signup }) {
             <SignupForm signup={signup} />
           </Route>
 
+          <PrivateRoute exact path="/about">
+            <AboutPage />
+          </PrivateRoute>
+
           <PrivateRoute exact path="/websites">
             <WebsiteList />
           </PrivateRoute>
@@ -48,9 +53,13 @@ function Routes({ login, signup }) {
             <SkillList />
           </PrivateRoute>
 
-          <PrivateRoute exact path="/websites/:id/skills/:name">
+          <PrivateRoute exact path="/websites/:id">
             <WebsiteDetail />
           </PrivateRoute>
+{/* 
+          <PrivateRoute exact path="/websites/:id/skills/:name">
+            <WebsiteDetail />
+          </PrivateRoute> */}
 
           <PrivateRoute path="/profile">
             <ProfileForm />

@@ -92,19 +92,16 @@ function App() {
   if (!infoLoaded) return <LoadingSpinner />;
 
   return (
-
- <BrowserRouter>
-   <UserContext.Provider
-        value={{ currentUser, setCurrentUser }}>
-      <div className="App">
-        <Navigation logout={logout} />
-        <Routes login={login} signup={signup} />
-
-      </div>
-    </UserContext.Provider>
-  </BrowserRouter>
-    
-  );
+    <BrowserRouter>
+      <UserContext.Provider
+            value={{ currentUser, setCurrentUser }}>
+          <div className="App">
+            <Navigation logout={logout} />
+            <Routes login={login} signup={signup} />
+          </div>
+        </UserContext.Provider>
+      </BrowserRouter>
+      );
 }
 
 export default App;

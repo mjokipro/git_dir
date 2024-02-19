@@ -23,11 +23,13 @@ const router = new express.Router();
  */
 
 router.get("/", async function (req, res, next) {
-
-
+  const q = req.params.title
+  console.debug("q=", q)
   try {
-    
-    const websites = await Website.findAll();
+    // if (q.id !== undefined) q.id = +q.id;
+    // if (q.user_id !== undefined) q.user_id = +q.user_id;
+    const websites = await Website.findAll(q);
+    console.debug("websites", websites)
     return res.json({ websites });
   } catch (err) {
     return next(err);

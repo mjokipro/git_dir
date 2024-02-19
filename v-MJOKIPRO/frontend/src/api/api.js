@@ -43,8 +43,8 @@ class JoblyApi {
 
   /** Get websites (filtered by web_url if not undefined) */
 
-  static async getWebsites(user_id) {
-    let res = await this.request("websites", {user_id});
+  static async getWebsites(title) {
+    let res = await this.request("websites", {title});
     return res.websites;
   }
 

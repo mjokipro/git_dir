@@ -10,18 +10,19 @@ import "./WebsiteCard.css";
  * CompanyList -> CompanyCard
  */
 
-function WebsiteCard({ id, user_id, description, web_url }) {
-  console.debug("Website Card=", web_url);
+function WebsiteCard({ id, user_id, title, description, web_url }) {
+  console.debug("Website Card=", web_url, "title=", title);
 
   return (
-         
-         
-    <div className="card-body">
-<a href={web_url}>{web_url}</a>
-            <p>{description}</p>
-          <p style={{color: 'white'}}>User ID:  <small>{user_id}</small></p>
-        </div>
- 
+         <div style={{borderBottom: 'rgba(30, 98, 108, 0.729)'}} className="text-center">
+          {/* <h2>{name}</h2> */}
+         <a className="font-weight-bold " style={{color: 'rgba(5, 20, 43, 0.700)', fontSize: '20px'}} href={web_url}>{title}</a>
+            <div className="card text-white mt-3 mb-5 text-left" style={{borderBottom: '4px solid rgba(30, 98, 108, 0.729)', backgroundImage: 'linear-gradient(to  left, rgba(5, 20, 43, 0.700), rgba(11, 22, 36, 0.900))'}}>
+              <Link className="mt-3 mr-3 mb-3 ml-3 text-primary-emphasis"  to={`/websites/${id}`}>
+              {description}
+              </Link>
+            </div>
+          </div>
  
   );
 }

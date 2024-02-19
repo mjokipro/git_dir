@@ -2,9 +2,10 @@ import React, { useState, useContext } from "react";
 import Alert from "../common/Alert";
 import JoblyApi from "../api/api";
 import UserContext from "../auth/UserContext";
+import Button from '@material-ui/core/Button';
 
 // eslint-disable-next-line
-import useTimedMessage from "../hooks/useTimedMessage";
+// import useTimedMessage from "../hooks/useTimedMessage";
 
 /** Profile editing form.
  *
@@ -91,9 +92,15 @@ function ProfileForm() {
   }
 
   return (
-      <div className="col-md-6 col-lg-4 offset-md-3 offset-lg-4">
-        <h3>Profile</h3>
-        <div className="card">
+      <div style={{paddingBottom: '15px', borderRadius: '6px', border: '4px solid rgba(30, 98, 108, 0.729)'}} className="col-md-6 col-lg-6 offset-md-3 offset-lg-3 ">
+        <div >
+        <div className="  mt-4" style={{borderRadius: '4px', borderBottom: '4px solid rgba(30, 98, 108, 0.729)', backgroundImage: 'linear-gradient(to  left, rgba(47, 45, 53, 0.777), rgba(22, 22, 36, 0.908))'}}>
+          <p className=" display-3" style={{paddingLeft: '15px', fontSize: '70px', color: 'rgba(31, 117, 131, 0.821)'}}>Edit Profile</p>
+          <p style={{marginLeft: '30px', fontSize: '20px', color: ' rgba(246, 69, 122, 0.792)'}}>{`Update Info Here `}</p>
+        </div>
+       <br />
+       <br />
+        <div className="text-white" style={{borderRadius: '4px', borderBottom: '4px solid rgba(30, 98, 108, 0.729)', backgroundImage: 'linear-gradient(to  left, rgba(47, 45, 53, 0.777), rgba(22, 22, 36, 0.908))'}}>
           <div className="card-body">
             <form>
               <div className="form-group">
@@ -141,21 +148,23 @@ function ProfileForm() {
               {formErrors.length
                   ? <Alert type="danger" messages={formErrors} />
                   : null}
-
+              
               {saveConfirmed
                   ?
                   <Alert type="success" messages={["Updated successfully."]} />
                   : null}
-
-              <button
-                  className="btn btn-primary btn-block mt-4"
+              
+              <Button
+              variant="contained"
+                 style={{backgroundColor: ' rgba(246, 69, 122, 0.792)'}}
                   onClick={handleSubmit}
               >
                 Save Changes
-              </button>
+              </Button>
             </form>
           </div>
         </div>
+      </div>
       </div>
   );
 }

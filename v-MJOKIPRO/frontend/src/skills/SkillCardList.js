@@ -15,8 +15,8 @@ function SkillCardList({ skills, add }) {
   console.debug("SkillCardList", "skills=", skills);
 
   return (
-      <div className="SkillCardList">
-        {skills.map(s => (
+    <div style={{ marginTop: '50px', paddingRight: '25px', paddingLeft: '25px', borderRadius: '6px'}}  className="mb-3 CompanyList-list">
+    {skills.map(s => (
             <SkillCard
                 key={s.id}
                 id={s.id}

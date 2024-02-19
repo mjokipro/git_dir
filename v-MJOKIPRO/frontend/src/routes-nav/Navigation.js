@@ -21,22 +21,27 @@ function Navigation({ logout }) {
     return (
         <ul className="navbar-nav  ml-auto">
           <li className="nav-item  mr-4">
-            <NavLink className="nav-link text-white" to="/websites">
+            <NavLink className="nav-link " to="/about">
+              About
+            </NavLink>
+          </li>
+          <li className="nav-item  mr-4">
+            <NavLink className="nav-link " to="/websites">
               Websites
             </NavLink>
           </li>
           <li className="nav-item mr-4">
-            <NavLink className="nav-link" to="/skills">
+            <NavLink className="nav-link " to="/skills">
               Skills
             </NavLink>
           </li>
           <li className="nav-item mr-4">
-            <NavLink className="nav-link" to="/profile">
+            <NavLink className="nav-link " to="/profile">
               Profile
             </NavLink>
           </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/" onClick={logout}>
+          <li className="nav-item ">
+            <Link className="nav-link " to="/" onClick={logout}>
               Log out {currentUser.first_name || currentUser.username}
             </Link>
           </li>
@@ -48,12 +53,12 @@ function Navigation({ logout }) {
     return (
         <ul className="navbar-nav ml-auto">
           <li className="nav-item mr-4">
-            <NavLink className="nav-link" to="/login">
+            <NavLink className="nav-link " to="/login">
               Login
             </NavLink>
           </li>
           <li className="nav-item mr-4">
-            <NavLink className="nav-link" to="/signup">
+            <NavLink className="nav-link " to="/signup">
               Sign Up
             </NavLink>
           </li>
@@ -63,7 +68,7 @@ function Navigation({ logout }) {
 
   return (
       <nav className="Navigation navbar navbar-expand-md">
-        <Link className="navbar-brand" to="/">
+        <Link className="nav-link navbar-brand" to="/">
           { `[ { mjokipro }, ... ]` }
         </Link>
         {currentUser ? loggedInNav() : loggedOutNav()}

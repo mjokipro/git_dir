@@ -14,53 +14,13 @@ import "./SkillCard.css";
 function SkillCard({ id, name }) {
   console.debug("Skill Card name =", name);
 
-  // const { hasAddedSkill, setHasAddedSkill } = useContext(UserContext);
-  // const [added, setAdded] = useState();
-
-  // React.useEffect(function updateAppliedStatus() {
-  //   console.debug("Skill Card useEffect update skill status", "id=", id);
-
-  //   setAdded(hasAddedSkill(id));
-  // }, [id, hasAddedSkill]);
-
-  /** Apply for a job */
-  async function handleApply(evt) {
-  //   if (hasAddedSkill(id)) return;
-  //   setHasAddedSkill(id);
-  //   setAdded(true);
-    }
-
   return (
-      <div className="JobCard card"> 
-        <div className="card-body">
-          <h6 className="card-title">{name}</h6>
-          <p>{id}</p>
-         
-          <button
-              className="btn btn-danger font-weight-bold text-uppercase float-right"
-              onClick={handleApply}
-              // disabled={added}
-          >
-            {/* {added ? "Added" : "Add"} */}
-          </button>
+      <div style={{borderRadius: '4px'}} className="JobCard card mt-4"> 
+        <div style={{borderBottom:  '4px solid rgba(30, 98, 108, 0.729)', borderRadius: '4px', backgroundImage: 'linear-gradient(to  left, rgba(5, 20, 43, 0.700), rgba(11, 22, 36, 0.900))'}} className="card-body">
+          <h6 className="card-title text-white">{name}</h6>
         </div>
       </div>
   );
 }
-
-/** Render integer salary like '$1,250,343' */
-
-// function formatSalary(salary) {
-//   const digitsRev = [];
-//   const salaryStr = salary.toString();
-
-//   for (let i = salaryStr.length - 1; i >= 0; i--) {
-//     digitsRev.push(salaryStr[i]);
-//     if (i > 0 && i % 3 === 0) digitsRev.push(",");
-//   }
-
-//   return digitsRev.reverse().join("");
-// }
-
 
 export default SkillCard;

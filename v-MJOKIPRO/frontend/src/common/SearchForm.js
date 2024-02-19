@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./SearchForm.css";
+import Button from '@material-ui/core/Button';
+
 
 /** Search widget.
  *
@@ -35,15 +37,19 @@ function SearchForm({ searchFor }) {
       <div className="SearchForm mb-4">
         <form className="form-inline" onSubmit={handleSubmit}>
           <input
-              className="form-control form-control-lg flex-grow-1"
+              className="form-control form-control flex-grow-1"
               name="searchTerm"
               placeholder="Enter search term.."
               value={searchTerm}
               onChange={handleChange}
           />
-          <button type="submit" className="btn btn-lg btn-primary">
-            Submit
-          </button>
+              <Button
+                variant="contained"
+                style={{marginLeft: '10px', backgroundColor: ' rgba(246, 69, 122, 0.792)'}}
+                onClick={handleSubmit}
+              >
+                Search
+              </Button>
         </form>
       </div>
   );

@@ -1,8 +1,7 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
 import "./Homepage.css";
 import UserContext from "../auth/UserContext";
-import ButtonTheme from '../ButtonTheme'
+import {Link} from 'react-router-dom'
 
 /** Homepage of site.
  *
@@ -29,14 +28,36 @@ function Homepage() {
               </h2>
               : (
                   <p>
-                  <ButtonTheme >
-                    
-                   </ButtonTheme>
-                    
-                    {/* <Link className="btn btn-primary font-weight-bold"
-                          to="/signup">
-                      Sign up
-                    </Link> */}
+                    <Link to="/login">
+                  <button 
+                  style={{   background: 'linear-gradient(45deg, #AEA1FF 5%, #dadcfa 95%)',
+                  borderRadius: 5,
+                  border: 0,
+                  color: 'white',
+                  height: 40,
+                  padding: '0 30px',
+                  boxShadow: '0 3px 5px 2px rgba(100, 105, 135, .3)',
+                  margin: '15px',}}
+                    type="submit"
+                >
+                  Login
+                </button>
+                </Link>
+                <Link to="/signup">
+                <button 
+                  style={{   background: 'linear-gradient(45deg, #AEA1FF 5%, #dadcfa 95%)',
+                  borderRadius: 5,
+                  border: 0,
+                  color: 'white',
+                  height: 40,
+                  padding: '0 30px',
+                  boxShadow: '0 3px 5px 2px rgba(100, 105, 135, .3)',
+                  margin: '15px',}}
+                    type="submit"
+                >
+                  Signup
+                </button>
+                </Link>
                   </p>
               )}
         </div>

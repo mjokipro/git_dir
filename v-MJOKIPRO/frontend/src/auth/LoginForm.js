@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Alert from "../common/Alert";
-import LoginButton from "./LoginButton";
 
 
 /** Login form.
@@ -54,13 +53,13 @@ function LoginForm({ login }) {
   return (
       <div className="LoginForm">
         <div className="container col-md-6 offset-md-3 col-lg-4 offset-lg-4">
-          <h3 style={{color: 'white'}}className="mb-3">Log In</h3>
+          <h3 style={{color: 'rgba(246, 69, 122, 0.792)'}} className="mb-3">Log In</h3>
 
-          <div className="card">
-            <div className="card-body">
+          <div className="card" style={{backgroundImage: 'linear-gradient(to  left, rgba(47, 45, 53, 0.777), rgba(11, 22, 36, 0.900))'}} >
+            <div  className="card-body">
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                  <label>Username</label>
+                  <label className="text-white">Username</label>
                   <input
                       name="username"
                       className="form-control"
@@ -71,7 +70,7 @@ function LoginForm({ login }) {
                   />
                 </div>
                 <div className="form-group">
-                  <label>Password</label>
+                  <label className="text-white">Password</label>
                   <input
                       type="password"
                       name="password"
@@ -88,7 +87,14 @@ function LoginForm({ login }) {
                     : null}
 
                 <button 
-                   
+                   style={{   background: 'linear-gradient(45deg, #AEA1FF 5%, #dadcfa 95%)',
+                   borderRadius: 5,
+                   border: 0,
+                   color: 'white',
+                   height: 40,
+                   padding: '0 30px',
+                   boxShadow: '0 3px 5px 2px rgba(100, 105, 135, .3)',
+                   margin: '15px',}}
                     onSubmit={handleSubmit}
                 >
                   Submit

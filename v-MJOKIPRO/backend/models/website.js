@@ -18,58 +18,57 @@ class Website {
    * Returns [{ handle, name, description, numEmployees, logoUrl }, ...]
    * */
 
-  static async findAll(searchFilters = {}) {
+  static async findAll({title} = {}) {
    
-    // let results = await db.query(`SELECT id,
-    //                     user_id,
-    //                     web_url,
-    //                     description
-    //              FROM websites`, [])
-
-    // return results.rows
-   
-    let query = `SELECT id,
+    let results = await db.query(`SELECT id,
                         user_id,
+                        title,
                         web_url,
                         description
-                 FROM websites`;
-    let whereExpressions = [];
-    let queryValues = [];
+                 FROM websites`, [])
 
-    const { id, user_id, web_url, description  } = searchFilters
+    return results.rows
+   
+    // let query = `SELECT id,
+    // user_id,
+    //                     title,
+    //                     web_url,
+    //                     description
+    //              FROM websites`;
+    // let whereExpressions = [];
+    // let queryValues = [];
+
+
+    // console.debug("query", query, "where expressions", whereExpressions, "queryVals", queryValues, "title", title)
 
     // For each possible search term, add to whereExpressions and queryValues so
     // we can generate the right SQL
 
-    if (id !== undefined) {
-      queryValues.push(id);
-      whereExpressions.push(`id = $${queryValues.length}`);
-    }
+    // if (id !== undefined) {
+    //   queryValues.push(id);
+    //   whereExpressions.push(`id = $${queryValues.length}`);
+    // }
 
-    if (user_id !== undefined) {
-      queryValues.push(user_id);
-      whereExpressions.push(`user_id = $${queryValues.length}`);
-    }
+    // if (user_id !== undefined) {
+    //   queryValues.push(user_id);
+    //   whereExpressions.push(`user_id = $${queryValues.length}`);
+    // }
 
-    if (web_url) {
-      queryValues.push(`%${web_url}%`);
-      whereExpressions.push(`web_url ILIKE $${queryValues.length}`);
-    }
+    // if (title) {
+    //   queryValues.push(`%${title}%`);
+    //   whereExpressions.push(`title ILIKE $${queryValues.length}`);
+    // }
 
-    if (description) {
-      queryValues.push(`%${description}%`);
-      whereExpressions.push(`description ILIKE $${queryValues.length}`);
-    }
+    // if (whereExpressions.length > 0) {
+    //   query += " WHERE " + whereExpressions.join(" AND ");
+    // }
 
-    if (whereExpressions.length > 0) {
-      query += " WHERE "
-    }
+    // query += " ORDER BY title";
 
     // Finalize query and return results
 
-    query += " ORDER BY web_url";
-    const websitesRes = await db.query(query, queryValues);
-    return websitesRes.rows;
+    // const websitesRes = await db.query(query, queryValues);
+    // return websitesRes.rows;
   }
 
     /** Create a company (from data), update db, return new company data.
@@ -81,7 +80,7 @@ class Website {
    * Throws BadRequestError if company already in database.
    * */
 
-    static async create({ id, user_id, web_url, description }) {
+    static async create({ id, user_id, title, web_url, description }) {
       const duplicateCheck = await db.query(
             `SELECT id
              FROM websites
@@ -93,12 +92,13 @@ class Website {
   
       const result = await db.query(
             `INSERT INTO websites
-             (user_id, web_url, description)
-             VALUES ($1, $2, $3)
-             RETURNING id, user_id, web_url, description`,
+             (user_id, title, web_url, description)
+             VALUES ($1, $2, $3, $4)
+             RETURNING id, user_id, title, web_url, description`,
           [
             id,
             user_id,
+            title,
             web_url,
             description
           ],
@@ -120,6 +120,7 @@ class Website {
     const websiteRes = await db.query(
           `SELECT id,
                   user_id,
+                  title,
                   web_url,
                   description
            FROM websites
@@ -160,6 +161,7 @@ class Website {
     const { setCols, values } = sqlForPartialUpdate(
         data,
         {
+          title: "title",
           web_url: "web_url",
           description: "description",
         });
@@ -169,8 +171,9 @@ class Website {
                       SET ${setCols} 
                       WHERE id = ${handleVarIdx} 
                       RETURNING id, 
-                                web_url, 
-                                description`;
+                      title,
+                      web_url, 
+                      description`;
     const result = await db.query(querySql, [...values, id]);
     const website = result.rows[0];
 

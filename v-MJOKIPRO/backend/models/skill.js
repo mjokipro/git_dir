@@ -85,6 +85,7 @@ class Skill {
     const websitesRes = await db.query(
           `SELECT w.id,
                   w.user_id,
+                  w.title,
                   w.web_url,
                   w.description
            FROM websites w
