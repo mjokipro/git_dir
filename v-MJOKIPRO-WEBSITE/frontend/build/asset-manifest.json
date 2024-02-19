@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/static/css/main.085ed92f.chunk.css",
+    "main.js": "/static/js/main.db0cd9e7.chunk.js",
+    "main.js.map": "/static/js/main.db0cd9e7.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.ca09d11f.js",
+    "runtime-main.js.map": "/static/js/runtime-main.ca09d11f.js.map",
+    "static/css/2.4e15b5ff.chunk.css": "/static/css/2.4e15b5ff.chunk.css",
+    "static/js/2.7bd0d880.chunk.js": "/static/js/2.7bd0d880.chunk.js",
+    "static/js/2.7bd0d880.chunk.js.map": "/static/js/2.7bd0d880.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.270a3babf5f63ef0a43f0746804161a8.js": "/precache-manifest.270a3babf5f63ef0a43f0746804161a8.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.4e15b5ff.chunk.css.map": "/static/css/2.4e15b5ff.chunk.css.map",
+    "static/css/main.085ed92f.chunk.css.map": "/static/css/main.085ed92f.chunk.css.map",
+    "static/js/2.7bd0d880.chunk.js.LICENSE.txt": "/static/js/2.7bd0d880.chunk.js.LICENSE.txt",
+    "static/media/Matthew-Joki-Resume.pdf": "/static/media/Matthew-Joki-Resume.5149c920.pdf",
+    "static/media/Matthew-Joki.jpg": "/static/media/Matthew-Joki.9cea747d.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ca09d11f.js",
+    "static/css/2.4e15b5ff.chunk.css",
+    "static/js/2.7bd0d880.chunk.js",
+    "static/css/main.085ed92f.chunk.css",
+    "static/js/main.db0cd9e7.chunk.js"
+  ]
+}
