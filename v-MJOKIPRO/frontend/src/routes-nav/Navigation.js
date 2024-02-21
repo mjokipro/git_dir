@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link, NavLink } from "react-router-dom";
-import UserContext from "../auth/UserContext";
 import "./Navigation.css";
 
 
@@ -13,12 +12,13 @@ import "./Navigation.css";
  */
 
 
-function Navigation({ logout }) {
-  const { currentUser } = useContext(UserContext);
-  console.debug("Navigation", "currentUser=", currentUser);
+function Navigation() {
 
-  function loggedInNav() {
-    return (
+  return (
+      <nav className="Navigation navbar navbar-expand-md">
+        <Link className="nav-link navbar-brand" to="/">
+          { `[ { mjokipro }, ... ]` }
+        </Link>
         <ul className="navbar-nav  ml-auto">
           <li className="nav-item  mr-4">
             <NavLink className="nav-link " to="/about">
@@ -35,43 +35,7 @@ function Navigation({ logout }) {
               Skills
             </NavLink>
           </li>
-          <li className="nav-item mr-4">
-            <NavLink className="nav-link " to="/profile">
-              Profile
-            </NavLink>
-          </li>
-          <li className="nav-item ">
-            <Link className="nav-link " to="/" onClick={logout}>
-              Log out {currentUser.first_name || currentUser.username}
-            </Link>
-          </li>
         </ul>
-    );
-  }
-
-  function loggedOutNav() {
-    return (
-        <ul className="navbar-nav ml-auto">
-          <li className="nav-item mr-4">
-            <NavLink className="nav-link " to="/login">
-              Login
-            </NavLink>
-          </li>
-          <li className="nav-item mr-4">
-            <NavLink className="nav-link " to="/signup">
-              Sign Up
-            </NavLink>
-          </li>
-        </ul>
-    );
-  }
-
-  return (
-      <nav className="Navigation navbar navbar-expand-md">
-        <Link className="nav-link navbar-brand" to="/">
-          { `[ { mjokipro }, ... ]` }
-        </Link>
-        {currentUser ? loggedInNav() : loggedOutNav()}
       </nav>
   );
 }

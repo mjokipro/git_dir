@@ -111,9 +111,7 @@ function SignupForm({ signup }) {
                     ? <Alert type="danger" messages={formErrors} />
                     : null
                 }
-
                 <button 
- 
                     type="submit"
                     onSubmit={handleSubmit}
                 >

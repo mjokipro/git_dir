@@ -3,10 +3,6 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Homepage from "../homepage/Homepage";
 import WebsiteList from "../websites/WebsiteList";
 import SkillList from "../skills/SkillList";
-import LoginForm from "../auth/LoginForm";
-import ProfileForm from "../profiles/ProfileForm";
-import SignupForm from "../auth/SignupForm";
-import PrivateRoute from "./PrivateRoute";
 import WebsiteDetail from "../websites/WebsiteDetail";
 import AboutPage from '../user/AboutPage'
 
@@ -18,11 +14,9 @@ import AboutPage from '../user/AboutPage'
  * Visiting a non-existant route redirects to the homepage.
  */
 
-function Routes({ login, signup }) {
+function Routes() {
   console.debug(
-      "Routes",
-      `login=${typeof login}`,
-      `register=${typeof register}`,
+      "Routes"
   );
 
   return (
@@ -33,37 +27,22 @@ function Routes({ login, signup }) {
             <Homepage />
           </Route>
 
-          <Route exact path="/login">
-            <LoginForm login={login} />
-          </Route>
 
-          <Route exact path="/signup">
-            <SignupForm signup={signup} />
-          </Route>
-
-          <PrivateRoute exact path="/about">
+          <Route exact path="/about">
             <AboutPage />
-          </PrivateRoute>
+          </Route>
 
-          <PrivateRoute exact path="/websites">
+          <Route exact path="/websites">
             <WebsiteList />
-          </PrivateRoute>
+          </Route>
 
-          <PrivateRoute exact path="/skills">
+          <Route exact path="/skills">
             <SkillList />
-          </PrivateRoute>
+          </Route>
 
-          <PrivateRoute exact path="/websites/:id">
+          <Route exact path="/websites/:id">
             <WebsiteDetail />
-          </PrivateRoute>
-{/* 
-          <PrivateRoute exact path="/websites/:id/skills/:name">
-            <WebsiteDetail />
-          </PrivateRoute> */}
-
-          <PrivateRoute path="/profile">
-            <ProfileForm />
-          </PrivateRoute>
+          </Route>
 
           <Redirect to="/" />
         </Switch>

@@ -9,7 +9,8 @@ CREATE DATABASE redbox_user;
 -- \connect redbox_user_test
 
 CREATE TABLE users (
-  username VARCHAR(25) PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(25) UNIQUE NOT NULL,
   password TEXT NOT NULL,
   first_name TEXT NOT NULL,
   last_name TEXT NOT NULL,
