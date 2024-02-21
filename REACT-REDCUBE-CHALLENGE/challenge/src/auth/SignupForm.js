@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Alert from "../common/Alert";
-import styled from "styled-components"
 
 /** Signup form.
  *
@@ -13,16 +12,6 @@ import styled from "styled-components"
  * Routes -> SignupForm -> Alert
  * Routed as /signup
  */
-const Button2 = styled.button`
-  font-size: .1em;
-  margin: .5em;
-  padding: 0.25em .75em;
-  
-  border-radius: 13px;
-  color: pink;
-  border: 2px solid lightblue;
-  background-color: black;
-`
 
 function SignupForm({ signup }) {
   const history = useHistory();
@@ -125,7 +114,7 @@ function SignupForm({ signup }) {
                 }
 
                 <button
-                  className="btn-primary"
+             
                     type="submit"
                     onSubmit={handleSubmit}
                 >

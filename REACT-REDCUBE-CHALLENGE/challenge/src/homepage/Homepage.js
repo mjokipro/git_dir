@@ -3,18 +3,7 @@ import { NavLink } from "react-router-dom";
 import "./Homepage.css";
 import UserContext from "../auth/UserContext";
 import "bootstrap/dist/css/bootstrap.min.css";
-import styled from "styled-components"
 
-const Button2 = styled.button`
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border-radius: 3px;
-  color: pink;
-  border: 2px solid lightblue;
-  background-color: black;
-  
-`
 /** Homepage of site.
  *
  * Shows welcome message or login/register buttons.
@@ -40,10 +29,10 @@ function Homepage() {
               : (
                   <p>
           <NavLink to="/login" >
-            <Button2>Login</Button2>
+            <button>Login</button>
           </NavLink>
           <NavLink to="/signup" >
-            <Button2>Signup</Button2>
+            <button>Signup</button>
           </NavLink>
                   </p>
               )}

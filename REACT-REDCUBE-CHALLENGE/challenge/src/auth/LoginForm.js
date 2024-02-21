@@ -99,7 +99,7 @@ function LoginForm({ login }) {
                     : null}
 
                 <button
-                    className="btn btn-primary float-right"
+                  
                     onSubmit={handleSubmit}
                 >
                   Submit

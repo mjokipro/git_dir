@@ -18,7 +18,6 @@ const Header = styled.nav`
     display: flex;
 justify-content: left;
 align-items: left;
-
 `
 Button.defaultProps = {
   theme: {
@@ -26,15 +25,7 @@ Button.defaultProps = {
   }
 }
 
-const Footer = styled.footer`
-color: lightblue;
-background-color: black;
-padding: 10px;
-display: flex;
-justify-content: center;
-align-items: left;
-height: 5em;
-`
+
 const Main = styled.main`
 background-color: lightgrey;
 // width: auto;
@@ -151,7 +142,6 @@ if (!infoLoaded) return <LoadingSpinner />;
               <Main>
                 <Routes login={login} signup={signup} />
               </Main> 
-            <Footer><span>Contact | About | Careers | Customer Service</span></Footer>
         </UserContext.Provider>
       </BrowserRouter>
     </div>
