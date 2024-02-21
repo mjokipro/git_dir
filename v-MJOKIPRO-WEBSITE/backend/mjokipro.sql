@@ -1,14 +1,14 @@
 -- psql < mjokipro.sql
 
--- DROP DATABASE IF EXISTS mjokipro;
--- CREATE DATABASE mjokipro;
+DROP DATABASE IF EXISTS mjokipro;
+CREATE DATABASE mjokipro;
 
--- \c mjokipro 
+\c mjokipro 
 
-DROP DATABASE IF EXISTS mjokipro_test;
-CREATE DATABASE mjokipro_test;
+-- DROP DATABASE IF EXISTS mjokipro_test;
+-- CREATE DATABASE mjokipro_test;
 
-\c mjokipro_test
+-- \c mjokipro_test
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
@@ -74,7 +74,7 @@ VALUES (1, 'Warbler { twitter clone }', 'https://warb.onrender.com/', '- Full-fe
 
 - Implementing a live Postgresql database, the Express.JS backend API is hosted on Render.com, and the React.JS frontend is hosted by Surge.- Full-featured RESTful LinkedIn clone, implementing full CRUD, 12-bit hashed-based user authentication, and designed using test-driven development in Node/Express.js, ReactJS, and SQL. - Demonstrates secure login/signup (12-bit hash), and use of local storage and environmental state to handle user login, and keep current user logged in, even if the browser window closes. - Full featured CRUD backend API using ExpressJS, featuring verification middleware and admin access privileges for adding/updating/removing company elements. - Implementing a live Postgresql database, the Express.JS backend API is hosted on Render.com, and the React.JS frontend is hosted by Surge.'),
 
-(1, 'Redcube { netflix clone }', 'https://mjokipro--redcube.surge.sh/login', '- Have a look at the newest selection of downloadable content now available on Redcube! This is essentially a Netflix clone that demonstrates real-world business applications. 
+(1, 'Redcube { netflix clone }', 'https://users-redcube.surge.sh', '- Have a look at the newest selection of downloadable content now available on Redcube! This is essentially a Netflix clone that demonstrates real-world business applications. 
 
 - Full-featured RESTful Redbox clone, implementing partial CRUD, 12-bit hashed-based user authentication, and designed using test-driven development in Node/Express.js, ReactJS, Postgresql.
 
@@ -84,7 +84,7 @@ VALUES (1, 'Warbler { twitter clone }', 'https://warb.onrender.com/', '- Full-fe
 
 - Implementing a live Postgresql database, the Express.JS backend API is hosted on Render.com, and the React.JS frontend is hosted by Surge.- Have a look at the newest selection of downloadable content now available on Redcube! This is essentially a Netflix clone that demonstrates real-world business applications. - Full-featured RESTful Redbox clone, implementing partial CRUD, 12-bit hashed-based user authentication, and designed using test-driven development in Node/Express.js, ReactJS, Postgresql. - Demonstrates secure login/signup (12-bit hash), and use of local storage and environmental state to handle user login, and keep current user logged in, even if the browser window closes. - Full featured CRUD backend API using ExpressJS, featuring verification middleware and admin access privileges for adding/updating/removing company elements. - Implementing a live Postgresql database, the Express.JS backend API is hosted on Render.com, and the React.JS frontend is hosted by Surge.'),
 
-(1, 'Edify.com { python style }', 'https://edify-python.onrender.com', '- The main drive behind this project was a yearning to serve the Lord Jesus Christ, and it attempts to show the skill that He has blessed me with.  It is only a model, and it was developed using Python and Jinja2 templating.  
+(1, 'Edify.com { python style }', 'https://edify-python.onrender.com/signup', '- The main drive behind this project was a yearning to serve the Lord Jesus Christ, and it attempts to show the skill that He has blessed me with.  It is only a model, and it was developed using Python and Jinja2 templating.  
 
 - Please be patient, as there are styling issues that are causing some of the views to look... a little weird, but REST assured, the functionality works as it should, and it displays the use of scripture lookup, secure login, messaging, user search, and user profile editing / deleting.
 
@@ -102,7 +102,8 @@ Other features include:
 
 
 INSERT INTO websites_skills (web_id, skill_id)
-VALUES (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), 
-(2, 1),
-(3, 1), 
-(4, 1);
+VALUES 
+(1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 7), (1, 8), (1, 9),
+(2, 1), (2, 2), (2, 3), (2, 4), (2, 5), (2, 6), (2, 9), (2, 10), (2, 11),
+(3, 1), (3, 2), (3, 3), (3, 4), (3, 5), (3, 6), (3, 9), (3, 10), (3, 11),
+(4, 1), (4, 2), (4, 3), (4, 4), (4, 5), (4, 7), (4, 8), (4, 9);

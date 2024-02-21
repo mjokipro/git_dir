@@ -13,7 +13,7 @@ const PORT = +process.env.PORT || 3001;
 function getDatabaseUri() {
   return (process.env.NODE_ENV === "mjokipro_test")
       ? "jobly_test"
-      : process.env.DATABASE_URL || 'postgres://kiklbrqp:J3SfxGxwiyQ7EN3Xcup7vGi6DvFko7E7@bubble.db.elephantsql.com/kiklbrqp'
+      : process.env.DATABASE_URL || 'postgres://pzezxrel:B3PPhcP6otwtTetx7RmR-onouMs5e-nq@kashin.db.elephantsql.com/pzezxrel'
 }
 
 // Speed up bcrypt during tests, since the algorithm safety isn't being tested
