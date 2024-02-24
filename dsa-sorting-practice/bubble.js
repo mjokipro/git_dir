@@ -1,69 +1,77 @@
-// function bubbleSort(arr) {
-//     for(let i = 0; i < arr.length; i++){
-//         for(let j = 0; j < arr.length; j++){
+//// MERGE SORT  ////
+//  2  4  5      0  1  3
+//  i  i  i >    j  j  j
+// [5, 9, 20]   [1, 3, 6]
 
-//         }
-//     }
-// }
+// state = [1, 3, 5, 6, 9, 20]
 
-////// BUBBLE SORT - swap largest elements to top ///////
-
-// function bubbleSort(arr) {
-//     for(let i = 0; i < arr.length; i++){
-//         for(let j = 0; j < arr.length; j++){
-//             console.log(arr)
-//             if(arr[j] > arr[j+1]){
-//                 let temp = arr[j]
-//                 arr[j] = arr[j+1]
-//                 arr[j+1]= temp
-//             }
-//         }
-//     }
-// }
-
-// bubbleSort([34, 5, 6, 2, 1, 99, 30])
-
-function bubbleSort2(arr) {
-    let count = 0
-    for(let i = 0; i < arr.length; i++){
-        for(let j = 0; j < arr.length-i; j++){
-            count++
-            console.log(arr)
-            if(arr[j] > arr[j+1]){
-                let temp = arr[j]
-                arr[j] = arr[j+1]
-                arr[j+1]= temp
-            }
-        }
-    }
-    console.log(count)
-    return arr
+function mergeSort(arr1, arr2){
+    const results = []
+    let i = 0
+    let
 }
-bubbleSort2([34, 5, 6, 2, 1, 99, 30])
+
+const mergedArr = mergeSort([5, 9, 20], [1, 3, 6])
 
 
+////  SORT ARRAY IN PLACE "no copy made"  ///
 
+// [34, 5, 6, 2, 1, 99, 30]
+// [7, 3, 4, 5, 6]
 
-function bubbleSort3(arr) {
+/// FASTER SORT - GOOD FOR PARTIALLY SORTED DATA ///
+
+// 0  0, 1, 2, 3
+// 1  0, 1, 2
+// 2  0, 1
+// 3  0
+
+function bubbleSort2(arr){ 
     let count = 0
+    // 34, 
     for(let i = 0; i < arr.length; i++){
         let swapped = false
         for(let j = 0; j < arr.length-i; j++){
             count++
-            console.log(arr)
+            // 34     >   5 
             if(arr[j] > arr[j+1]){
+            //      34      34
                 let temp = arr[j]
+            //      5       5
                 arr[j] = arr[j+1]
-                arr[j+1]= temp
+                // 34
+                arr[j+1] = temp
+                // flip switch when hit wall
                 swapped = true
             }
+            console.log("count", count)
+            console.log(arr)
         }
         if(!swapped) break
     }
-    console.log(count)
     return arr
 }
 
-bubbleSort3([34, 5, 6, 2,-2,50, 3, 4, 5, 6, 7, 9, 30])
+const arr1 = bubbleSort2([34, 5, 6, 2, 1, 99, 30])
 
-module.exports = bubbleSort;
+//////////////////////////////
+
+function bubbleSort(arr){
+    // 34, 
+    for(let i = 0; i < arr.length; i++){
+        for(let j = 0; j < arr.length; j++){
+            // 34     >   5 
+            if(arr[j] > arr[j+1]){
+            //      34      34
+                let temp = arr[j]
+            //      5       5
+                arr[j] = arr[j+1]
+                // 34
+                arr[j+1] = temp
+            }
+        }
+        console.log(arr)
+    }
+}
+
+const newArr = bubbleSort([34, 5, 6, 2, 1, 99, 30])

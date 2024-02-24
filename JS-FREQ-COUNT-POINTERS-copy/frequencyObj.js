@@ -10,3 +10,4 @@ function createFrequencyCounter(array) {
 
   return frequencies;
 }
+
