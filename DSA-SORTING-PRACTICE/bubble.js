@@ -3,15 +3,66 @@
 //  i  i  i >    j  j  j
 // [5, 9, 20]   [1, 3, 6]
 
-// state = [1, 3, 5, 6, 9, 20]
+const array = [1, 2, 3, 4, 5]
 
-function mergeSort(arr1, arr2){
-    const results = []
-    let i = 0
-    let
+
+
+
+
+function fCounter(arr){
+    const freq = {}
+
+    for(let key of arr){
+        freq[key] = (freq[key] + 1) || 1
+    }
+
+    return freq
 }
 
-const mergedArr = mergeSort([5, 9, 20], [1, 3, 6])
+//              arr1                arr2
+// i  j       i0, i1,         <  j0
+// 1  0      [64, 5, 1, 9, 20], [99, 21, 4, 3, 6]
+function mergeSort(arr1, arr2){
+
+    // if(!arr1.length === arr2.length) return false
+
+    // const obj1 = fCounter(arr1)
+    // const obj2 = fCounter(arr2)
+
+    // console.log("obj1=", obj1, "obj2=", obj2)
+
+    //   [64, ]
+    const results = []
+    let i = 0
+    let j = 0
+
+    //    0     5            0      5  
+    while(i < arr1.length && j < arr2.length){
+        //  64     <   99
+        if(arr1[i] < arr2[j]){
+            results.push(arr1[i])
+            i++
+        } else {
+            results.push(arr2[j])
+            j++
+        }
+        console.log("obj1=", arr1, "obj2=", arr2)
+    }
+      //  0  5
+    while(i < arr1.length){
+        results.push(arr1[i])
+        i++
+    }
+    while(j < arr2.length){
+        results.push(arr2[j])
+        j++
+    }
+
+    console.log("results=", results)
+    return results
+}
+
+const mergedArr = mergeSort([1, 9, 20], [2, 4, 6])
 
 
 ////  SORT ARRAY IN PLACE "no copy made"  ///

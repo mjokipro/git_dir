@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import JoblyApi from "../api/api";
 import SkillCardList from "../skills/SkillCardList";
 import LoadingSpinner from "../common/LoadingSpinner";
@@ -15,12 +15,14 @@ import LoadingSpinner from "../common/LoadingSpinner";
 
 function WebsiteDetail() {
   const { id } = useParams();
+  const history = useHistory()
   console.debug("Website Detail", "id=", id);
 
   const [website, setWebsite] = useState(null);
 
   useEffect(function getCompanyAndJobsForUser() {
     async function getCompany() {
+      history.push(`websites/${id}`)
       setWebsite(await JoblyApi.getWebsite(id));
     }
 

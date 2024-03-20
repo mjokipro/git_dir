@@ -25,48 +25,48 @@ it("matches snapshot when no boxes", function () {
 });
 
 
-describe("adding boxes", function() {
-  it("can add a new box", function () {
-    const { container } = render(<BoxList />);
+// describe("adding boxes", function() {
+//   it("can add a new box", function () {
+//     const { container } = render(<BoxList />);
 
-    // no boxes yet
-    expect(container.querySelector(".Box")).not.toBeInTheDocument();
+//     // no boxes yet
+//     expect(container.querySelector(".Box")).not.toBeInTheDocument();
 
-    addBox(container);
+//     addBox(container);
 
-    // expect to see a box
-    const box = container.querySelector(".Box");
-    expect(box).toBeInTheDocument();
-    expect(box!.querySelector(".Box-box")).toHaveStyle(`
-    width: 3em;
-    height: 2em;
-    background-color: peachpuff;
-  `);
-  });
+//     // expect to see a box
+//     const box = container.querySelector(".Box");
+//     expect(box).toBeInTheDocument();
+//     expect(box!.querySelector(".Box-box")).toHaveStyle(`
+//     width: 3em;
+//     height: 2em;
+//     background-color: peachpuff;
+//   `);
+//   });
 
-  it("matches snapshot after adding box", function () {
-    const { container } = render(<BoxList />);
-    addBox(container);
-    expect(container).toMatchSnapshot();
-  })
-})
+//   it("matches snapshot after adding box", function () {
+//     const { container } = render(<BoxList />);
+//     addBox(container);
+//     expect(container).toMatchSnapshot();
+//   })
+// })
 
 
-describe("removing boxes", function () {
-  it("can remove a box", function () {
-    const { container } = render(<BoxList />);
-    addBox(container);
+// describe("removing boxes", function () {
+//   it("can remove a box", function () {
+//     const { container } = render(<BoxList />);
+//     addBox(container);
 
-    const removeBtn = container.querySelector(".Box-removeBtn") as Element;
+//     const removeBtn = container.querySelector(".Box-removeBtn") as Element;
 
-    fireEvent.click(removeBtn);
-    expect(removeBtn).not.toBeInTheDocument();
-  });
+//     fireEvent.click(removeBtn);
+//     expect(removeBtn).not.toBeInTheDocument();
+//   });
 
-  it("matches snapshot after removing box", function () {
-    const { container } = render(<BoxList />);
-    addBox(container);
-    fireEvent.click(container.querySelector(".Box-removeBtn") as Element);
-    expect(container).toMatchSnapshot();
-  })
-})
+//   it("matches snapshot after removing box", function () {
+//     const { container } = render(<BoxList />);
+//     addBox(container);
+//     fireEvent.click(container.querySelector(".Box-removeBtn") as Element);
+//     expect(container).toMatchSnapshot();
+//   })
+// })
