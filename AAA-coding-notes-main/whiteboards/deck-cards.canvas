@@ -1,0 +1,16 @@
+{
+	"nodes":[
+		{"id":"3237bdb10bbe5b21","x":-640,"y":-127,"width":380,"height":527,"type":"text","text":"Deck\nProps: none\n\nState:\n\t{\n\t isLoaded: \n\t data: \n\t error: \n\t}\n\t\nEffect:\n\t- getting brand new deck on mount. \n\t\t- this updates state object\n\nFunctions:\n- get card async API call\n"},
+		{"id":"b34dcf43d4121b90","x":85,"y":-460,"width":219,"height":170,"type":"text","text":"Shuffle button"},
+		{"id":"a120c4836e3ce0c5","x":-605,"y":-500,"width":310,"height":250,"type":"text","text":"Draw card - API call\n\n- deck_id\n\n\nbutton push\n\nonClick"},
+		{"id":"72daf313b80a8728","x":-260,"y":-550,"width":277,"height":260,"type":"text","text":"Brand new deck\n\n- get deck_id back\n\n\n– loads on mount\n\nuseEffect initiate on mount to get deck of cards"},
+		{"id":"9e0e8430a4425d14","x":-1040,"y":70,"width":250,"height":60,"type":"text","text":"App "},
+		{"id":"6a30d20eac0997c8","x":-79,"y":-127,"width":419,"height":336,"type":"text","text":"Card\n\nProps: \n\t- card img\n\t- card code (for alt tag)\n\nState:\n\nrender: image"},
+		{"id":"6cb984193f7d15ad","x":-56,"y":360,"width":360,"height":320,"type":"text","text":"Button to get card\n\nProps: \n- parent callback\n\nState: none\n\nonClick: calls parent callback"}
+	],
+	"edges":[
+		{"id":"dfdd07de9291e2b9","fromNode":"3237bdb10bbe5b21","fromSide":"right","toNode":"6a30d20eac0997c8","toSide":"left"},
+		{"id":"e5351b250b47d7ac","fromNode":"9e0e8430a4425d14","fromSide":"right","toNode":"3237bdb10bbe5b21","toSide":"left"},
+		{"id":"9c1370624cdd1f92","fromNode":"3237bdb10bbe5b21","fromSide":"right","toNode":"6cb984193f7d15ad","toSide":"left"}
+	]
+}

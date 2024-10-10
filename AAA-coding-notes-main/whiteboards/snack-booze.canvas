@@ -1,0 +1,21 @@
+{
+	"nodes":[
+		{"type":"text","text":" App\n\nProps: none\n\nState: \n- isLoading  `true`\n- snacks `[]`\n\nEffects:\n- getSnacksOnMount()\n\nApp → (NavBar, Routes)\n\n**To-do**:\n-~~Add state `drinks`~~\n-~~Update effect to getItemsOnMount* → gets both snacks and drinks~~\n-~~Update RouteList to render 404 component once built~~\n-*-Add function to handle adding menu item*\n\n","id":"ba22affeec1ce44a","x":-1100,"y":-260,"width":660,"height":620,"color":"3"},
+		{"type":"text","text":"RouteList (to add)\n","id":"560ab9e06b60b38e","x":-380,"y":-260,"width":220,"height":420,"color":"5"},
+		{"type":"text","text":"NavBar\n\n- Link to home\n- Link to Snacks\n\n\n\nApp → NavBar\n\n\n**To-do**:\n-~~Add link for Drinks~~","id":"677527b370dad8e5","x":-730,"y":-820,"width":430,"height":400},
+		{"type":"text","text":"Home\n-renders html welcome msg\n\nProps:\n- snacks\n\nState: none\nEffects: none\n\nRouteList → Home\n\n\n**To-do**:\n- ~~Show number of food items “snacks”~~\n- ~~Show number of drink choices “drinks”~~","id":"9fca47b46fcbdd7a","x":160,"y":-1400,"width":560,"height":440},
+		{"type":"text","text":"Menu/FoodMenu  \n-renders card for food menu\n-renders list of snacks, each a link to that snack\n\nProps:\n- snacks `[]`\n- title `\"Snacks\"`\n\nState: none\nEffects: none\n\nRouteList → FoodMenu\n\n**Make Generic to use with both Food and Drinks**:\n-~~Change FoodMenu to Menu~~\n-~~Change snacks to items~~\n-~~Add prop for endpoint~~\n","id":"7e309e1a50217acd","x":140,"y":-920,"width":790,"height":620},
+		{"type":"text","text":"Snack/FoodItem\n-renders card of snack name, recipe, serve\n\nProps:\n- items `[]`\n- cantFind `\"/snacks\"` \n\t- used for Navigate to attr\n\nState: none\nEffects: none\n\nParams -  id\n\nRouteList → Snack\n\n**Make Generic to use with both Food and Drinks**:\n-~~Change FoodItem to MenuItem~~\n-~~Change snack to item in variable name~~","id":"a98061d3c7e25f78","x":130,"y":-240,"width":810,"height":555},
+		{"type":"text","text":"AddMenuItemForm\n-Form to select either drink/snack, with inputs for name, description,  recipe, serve\n\nProps:\n- addMenuItem fx\n\nState:\n- formData\n\nRouteList → PurchaseForm\n\nfunctions:\n- handleChange\n- handleSubmit\n\t- calls parent cb - addMenuItem","id":"9b5166cc0705fa23","x":130,"y":360,"width":630,"height":500,"color":"2"},
+		{"type":"text","text":"404 - p tag in routelist\n\n(to update into component)\n\n**To-do**:\n-~~Create component for 404 page~~\n-~~display friendly message that thing not found~~\n-~~include link to homepage~~","id":"3ace51bc60a9b7f9","x":120,"y":920,"width":480,"height":340}
+	],
+	"edges":[
+		{"id":"86679578c780c9bd","fromNode":"ba22affeec1ce44a","fromSide":"right","toNode":"560ab9e06b60b38e","toSide":"left"},
+		{"id":"30ca8f2d8119cfa9","fromNode":"560ab9e06b60b38e","fromSide":"right","toNode":"3ace51bc60a9b7f9","toSide":"left"},
+		{"id":"1c30b4cfe041f208","fromNode":"560ab9e06b60b38e","fromSide":"right","toNode":"a98061d3c7e25f78","toSide":"left"},
+		{"id":"30dfa286369be5b0","fromNode":"560ab9e06b60b38e","fromSide":"right","toNode":"7e309e1a50217acd","toSide":"left"},
+		{"id":"624a1f35433b712b","fromNode":"560ab9e06b60b38e","fromSide":"right","toNode":"9fca47b46fcbdd7a","toSide":"left"},
+		{"id":"3de871f63c69afcb","fromNode":"ba22affeec1ce44a","fromSide":"top","toNode":"677527b370dad8e5","toSide":"bottom"},
+		{"id":"e5133d6812bbb6dc","fromNode":"560ab9e06b60b38e","fromSide":"right","toNode":"9b5166cc0705fa23","toSide":"left"}
+	]
+}

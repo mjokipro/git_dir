@@ -1,0 +1,11 @@
+- Flask - sessions vs session cookies 
+	- [[rithm-cookies-sessions-flask#How Do Sessions Work?]] 
+
+- [Idempotency](rest-json-apis#Safety-&-idempotence)
+
+
+```query
+tag:interview
+
+```
+
