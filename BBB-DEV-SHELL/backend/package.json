@@ -1,7 +1,6 @@
 {
   "name": "jobly-solution",
   "version": "2.0.0",
-  "description": "",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -39,5 +38,6 @@
   "devDependencies": {
     "@faker-js/faker": "^8.4.0",
     "supertest": "^5.0.0"
-  }
+  },
+  "description": ""
 }
