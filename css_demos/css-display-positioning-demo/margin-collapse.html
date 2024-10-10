@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Margin Collapse</title>
+    <style>
+        p { margin: 1em 0 1em 0}
+        #b { border: solid 0.1px black; }
+    </style>
+</head>
+<body>
+
+<h1>Margin Collapsing</h1>
+<p>Paragraph</p>
+<p>Paragraph</p>
+<div>
+    <p>Paragraph inside div; margins will collapse!</p>
+    <p>Paragraph inside div; margins will collapse!</p>
+</div>
+
+<div id="b">
+    <p>Inside div with border; top margin won't collapse!</p>
+    <p>Inside div with border; bottom margin won't collapse!</p>
+</div>
+
+</body>
+</html>

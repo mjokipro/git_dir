@@ -1,0 +1,47 @@
+.container {
+  position: relative;
+}
+
+.container img {
+  width: 300px;
+  height: 300px;
+  margin: 20px;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.container span {
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  color: white;
+  font-size: 3em;
+}
+
+.top-text {
+  top: 40px;
+}
+
+.bottom-text {
+  bottom: 60px;
+}
+
+#meme_deleteBtn {
+  border: 0px;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 1em;
+  background-color: #757575;
+  color: white;
+  display: block;
+  margin: 0 auto;
+}
+
+#meme_deleteBtn:hover {
+  background-color: rgb(47, 46, 47);
+  cursor: pointer;
+}

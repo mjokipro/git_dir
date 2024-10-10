@@ -1,0 +1,22 @@
+<html>
+<body>
+
+<button id="a">A</button>
+<button id="b">B</button>
+<button id="c">C</button>
+
+<script>
+
+  function popUp(msg) {
+    alert("Secret message is " + msg);
+  }
+
+  const get = document.getElementById.bind(document);
+
+  get('a').addEventListener("click", popUp.bind(null, "Apple"));
+  get('b').addEventListener("click", popUp.bind(null, "Berry"));
+  get('c').addEventListener("click", popUp.bind(null, "Cherry"));
+
+</script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+.btn:hover {
+  cursor: pointer;
+}
+
+.meme {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  overflow: hidden;
+  text-align: center;
+}
+
+.meme > img {
+  width: 100%;
+  border-radius: 8px;
+  display: block;
+  align-self: center;
+}
+
+.meme > p {
+  text-transform: uppercase;
+  position: absolute;
+  z-index: 1;
+  font-family: Impact;
+  color: white;
+  font-size: 3rem;
+  text-shadow: -3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000,
+    3px 3px 0 #000;
+}
+
+.meme > p:last-child {
+  bottom: 0;
+  margin-bottom: 0;
+}
+
+.overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 8px;
+  z-index: 2;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.25s;
+}
+
+.overlay:hover {
+  opacity: 1;
+  cursor: pointer;
+  transition: opacity 0.25s;
+}
+
+.overlay > span {
+  z-index: 1;
+  color: #999;
+  font-size: 8rem;
+  opacity: 0.4;
+  pointer-events: none;
+}

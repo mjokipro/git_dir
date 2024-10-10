@@ -1,0 +1,8 @@
+msgpack==1.0.8
+packaging==24.1
+python-can==4.4.2
+smbus==1.1.post2
+smbus2==0.4.3
+spidev==3.6
+typing_extensions==4.12.2
+wrapt==1.16.0

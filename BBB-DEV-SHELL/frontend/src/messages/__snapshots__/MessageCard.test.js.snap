@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot with logo 1`] = `
+<DocumentFragment>
+  <div>
+    <a
+      href="/messages/undefined"
+    >
+      <p />
+      <p />
+      <p>
+        test
+      </p>
+    </a>
+  </div>
+</DocumentFragment>
+`;

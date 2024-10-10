@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Currency Converter</title>
+    <link rel="stylesheet" type="text/css" href="static/app.css">
+</head>
+<body>
+    <h1>Currency Converter</h1>
+    <form method="POST">
+        <label for="from_currency">From Currency:</label>
+        <select id="from_currency" name="from_currency" required>
+            {% for currency in currencies %}
+            <option value="{{ currency }}">{{ currency }}</option>
+            {% endfor %}
+        </select>
+        <br>
+
+        <label for="to_currency">To Currency:</label>
+        <select id="to_currency" name="to_currency" required>
+            {% for currency in currencies %}
+            <option value="{{ currency }}">{{ currency }}</option>
+            {% endfor %}
+        </select>
+        <br>
+
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" name="amount" required>
+        <br>
+
+        <input type="submit" value="Convert">
+    </form>
+
+    <div class="result-container">
+        {% if result %}
+        <h2>Result:</h2>
+        <div class="result">{{ result }}</div>
+        {% endif %}
+
+        {% if error %}
+        <h2>Error:</h2>
+        <p>{{ error }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>

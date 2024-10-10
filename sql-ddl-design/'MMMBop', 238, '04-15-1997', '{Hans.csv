@@ -1,0 +1,34 @@
+songs,,,,,,,,,
+id,title,duration_in_seconds,release_date,artist_1,artist_2,album_id,producer_1,producer_2,
+PK,TEXT,INT,DATE,FK,FK NULLABLE,FK,FK,FK NULLABLE,
+,,,,REF ARTISTS,REF ARTISTS,REF ALBUMS,REF PRODUCER,REF PRODUCER,
+1,'MMMBop',238, '04-15-1997',1,0,1,1,11,
+2,'Bohemian Rhapsody',355, '10-31-1975',2,0,2,2,0,
+3,'One Sweet Day',282, '11-14-1995',3,11,3,3,0,
+4,'Shallow',216, '09-27-2018',4,12,4,4,0,
+5,'How You Remind Me',223, '08-21-2001',5,0,5,5,0,
+6,'New York State of Mind',276, '10-20-2009',6,13,6,6,0,
+7,'Dark Horse',215, '12-17-2013',7,14,7,7,12,
+8,'Moves Like Jagger',201, '06-21-2011',8,15,8,8,13,
+9,'Complicated',244, '05-14-2002',9,0,9,9,0,
+10,'Say My Name',240, '11-07-1999',10,0,10,10,0,
+,,,,,,,,,
+,,,,,,,,,
+,,,,artists,,albums,,producers,
+,,,,id,artist,id,album,id,producer
+,,,,PK,,PK,,,
+,,,,1," '{""Hanson""}'",,,1," ""Dust Brothers"""
+,,,,2," '{""Queen""}'",1, 'Middle of Nowhere',2," '{""Roy Thomas Baker""}'"
+,,,,3," '{""Mariah Cary""}'",2, 'A Night at the Opera',3," '{""Walter Afanasieff""}'"
+,,,,4," '{""Lady Gaga""}'",3, 'Daydream',4," '{""Benjamin Rice""}'"
+,,,,5," '{""Nickelback""}'",4, 'A Star Is Born',5," '{""Rick Parashar""}'"
+,,,,6," '{""Jay Z""}'",5, 'Silver Side Up',6," '{""Al Shux""}'"
+,,,,7," '{""Katy Perry""}'",6, 'The Blueprint 3',7," ""Max Martin"""
+,,,,8," '{""Maroon 5""}'",7, 'Prism',8," ""Shellback"""
+,,,,9," '{""Avril Lavigne""}'",8, 'Hands All Over',9," '{""The Matrix""}'"
+,,,,10," '{""Destiny''s Child""}'",9, 'Let Go',10," '{""Darkchild""}'"
+,,,,11," ""Boyz II Men""",10, 'The Writing''s on the Wall',11," ""Stephen Lironi"""
+,,,,12," ""Bradley Cooper""",,,12," ""Cirkut"""
+,,,,13," ""Alicia Keys""",,,13," ""Benny Blanco"""
+,,,,14," ""Juicy J""",,,,
+,,,,15," ""Christina Aguilera""",,,,

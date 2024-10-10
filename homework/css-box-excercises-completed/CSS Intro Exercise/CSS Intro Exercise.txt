@@ -1,0 +1,23 @@
+Matthew Joki Jul 23
+7/11/2023
+CSS Intro Exercise
+1.	A CSS selector is essentially a property of an HTML element; it resides in a separate style sheet (usually), can be defined in the <head> element for all elements of that type in document, or be define as an inline element, usually within the body of an HTML document (can be embedded too).  They have styling properties and attributes that define the appearance, position, colors, scalability, animations, and others of the elements that make up the line, document, or website, and they are assigned as a {key: value} pair within each element type.  An example of a an inline CSS selector is:  <h1 font-family=”serif”>, or <h1 style=”font-family: ‘serif’”>Hello World</h1>, where h1 is the HTML element, and font-family is serif.  An example of a document level CSS selector in an HTML document is: 
+ …<head>
+	<style>
+		H1 {color: blue;} 
+	</style>
+</head>
+<body>
+	<h1>Hello World!</h1>
+</body>
+
+An example of a CSS selector that will be used for all docs in an entire website would be defined in an external style sheet, and referenced in the <head> element of an HTML document.  Then, any element of that type would inherit the properties and values from the external CSS stylesheet.
+
+2.	CSS declaration:  text-align: center.  CSS declaration block:  p {text-align: center;}.
+3.	CSS property (key): text-align.
+4.	CSS value: center.
+5.	The 3 ways to add CSS:  See number 1.
+6.	Rgba specifically specifies an extra alpha value in rgba(#ffffff, #ffffff, #ffffff, .4), where the first 3 numbers in hex define r, g, and b respectively, and a value between 0 and 1 representing a percentage.  Rgb actually now allows that extra placeholder without implicitly specifying the extra a, as in rgba.
+7.	Em describes the size of the letter “M” relative to its direct parent’s element as a percentage above or below 100% of the text size in parent.  Rem describes the size of the letter “M” relative to the size of the text in the root element of the HTML document.  This allows each element to be a percentage in size above or below 100% as relative to the root element.
+8.	See above (#7).
+9.	To include a google font in an HTML document, you would find the font you want to include on Google Fonts, copy the link for <link> element in HTML doc located at right of screen in box, create <link> element in <head> and define font later as style in doc.

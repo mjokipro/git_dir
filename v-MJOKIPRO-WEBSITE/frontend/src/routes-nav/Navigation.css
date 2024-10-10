@@ -1,0 +1,16 @@
+.Navigation {
+  background-image: linear-gradient(to  left, rgba(47, 45, 53, 0.777), rgba(22, 22, 36, 0.908));
+  border-bottom: 4px solid rgba(30, 98, 108, 0.729);
+
+}
+
+.nav-link {
+  color: rgba(31, 117, 131, 0.821);
+}
+
+.nav-link.active {
+  font-weight: bold;
+  color: rgba(246, 69, 122, 0.792);
+}
+
+

@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "Xz+stXrEitv37Y6molDkeyVQ4/QhbQh3o7V3SZAehQAKljKmWSgiOeIsI9UHJGL1hAc44ND+ZmyMFdk5lMbW2Q==",
+  "success": true,
+  "projectFilePath": "/home/msynthlover/CODE/git_dir/C-sharp/Files/NumbersDates/DateTimeClass/DateTimeClass.csproj",
+  "expectedPackageFiles": [
+    "/home/msynthlover/.nuget/packages/microsoft.netcore.app.ref/6.0.35/microsoft.netcore.app.ref.6.0.35.nupkg.sha512",
+    "/home/msynthlover/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.35/microsoft.aspnetcore.app.ref.6.0.35.nupkg.sha512",
+    "/home/msynthlover/.nuget/packages/microsoft.netcore.app.host.linux-x64/6.0.35/microsoft.netcore.app.host.linux-x64.6.0.35.nupkg.sha512"
+  ],
+  "logs": []
+}

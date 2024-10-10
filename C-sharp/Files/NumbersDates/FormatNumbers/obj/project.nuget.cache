@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "sAEsVSH6qCgP5f7OkrlUTkf+Jd/m5ZxqAPnfFYENE/4YJoK/N6OWtOGk4ElYTG56vr4hM5BodCSo10WrLZxi4Q==",
+  "success": true,
+  "projectFilePath": "/home/msynthlover/CODE/git_dir/C-sharp/Files/NumbersDates/FormatNumbers/FormatNumbers.csproj",
+  "expectedPackageFiles": [
+    "/home/msynthlover/.nuget/packages/microsoft.netcore.app.ref/6.0.35/microsoft.netcore.app.ref.6.0.35.nupkg.sha512",
+    "/home/msynthlover/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.35/microsoft.aspnetcore.app.ref.6.0.35.nupkg.sha512",
+    "/home/msynthlover/.nuget/packages/microsoft.netcore.app.host.linux-x64/6.0.35/microsoft.netcore.app.host.linux-x64.6.0.35.nupkg.sha512"
+  ],
+  "logs": []
+}

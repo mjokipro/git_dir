@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "cyjHbuLzBtwnj3EZppS2FM4HSVttBXdbselc1B9Pa0s690cCrT5CM49RA2jG3UTvd99W8QIj/b7f4yVYlk5+xw==",
+  "success": true,
+  "projectFilePath": "/home/msynthlover/CODE/git_dir/C-sharp/Files/NumbersDates/ParseNumbers/ParseNumbers.csproj",
+  "expectedPackageFiles": [
+    "/home/msynthlover/.nuget/packages/microsoft.netcore.app.ref/6.0.35/microsoft.netcore.app.ref.6.0.35.nupkg.sha512",
+    "/home/msynthlover/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.35/microsoft.aspnetcore.app.ref.6.0.35.nupkg.sha512",
+    "/home/msynthlover/.nuget/packages/microsoft.netcore.app.host.linux-x64/6.0.35/microsoft.netcore.app.host.linux-x64.6.0.35.nupkg.sha512"
+  ],
+  "logs": []
+}

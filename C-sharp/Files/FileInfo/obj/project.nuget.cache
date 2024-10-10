@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "XA1N4O8dgcWtDaB6oQeI1TivW0egVkGVcVIb6o15qTN5LHqiLoqAhH8VvAZnLNlFqB7gGVXmdY8km1iK1fxODQ==",
+  "success": true,
+  "projectFilePath": "/home/msynthlover/CODE/git_dir/C-sharp/Files/FileInfo/FileInfo.csproj",
+  "expectedPackageFiles": [
+    "/home/msynthlover/.nuget/packages/microsoft.netcore.app.ref/6.0.35/microsoft.netcore.app.ref.6.0.35.nupkg.sha512",
+    "/home/msynthlover/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.35/microsoft.aspnetcore.app.ref.6.0.35.nupkg.sha512",
+    "/home/msynthlover/.nuget/packages/microsoft.netcore.app.host.linux-x64/6.0.35/microsoft.netcore.app.host.linux-x64.6.0.35.nupkg.sha512"
+  ],
+  "logs": []
+}

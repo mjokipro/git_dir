@@ -1,0 +1,12 @@
+{
+  "name": "intro-demo",
+  "version": "1.0.0",
+  "main": "basics/myScript.js",
+  "scripts": {},
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
+}

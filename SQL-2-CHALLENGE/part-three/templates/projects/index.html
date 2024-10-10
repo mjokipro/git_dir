@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+  {% if projs | length == 0 %}
+    <h3>Sorry, No Projects Found</h3>
+  {% endif %}
+  <div class="container">
+    <h1 class="display-1">Projects</h1>
+    <table class="table table-striped ">
+      <thead class="thead-dark">
+     
+        <th>Project Code</th>
+        <th>Project Name</th>
+      </thead>
+      <tbody>
+        {% for proj in projs %}
+        <tr>
+            <td>{{proj.proj_code}}<a class="btn btn-sm btn-info" href="/projects/{{proj.proj_code}}">Edit</a></td>
+          
+            <td>{{proj.proj_name}}</td>
+         
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <a href="/projects/new" class="btn btn-success">Add Project</a>
+  </div>
+</body>
+  
+ 
+{% endblock %}

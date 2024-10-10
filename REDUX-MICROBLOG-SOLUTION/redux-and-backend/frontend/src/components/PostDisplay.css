@@ -1,0 +1,14 @@
+.PostDisplay {
+  position: relative;
+}
+
+.PostDisplay-right {
+  position: absolute;
+  right: 0;
+  top: 1em;
+  text-align: right;
+}
+
+.PostDisplay-right i {
+  margin-left: 1em;
+}

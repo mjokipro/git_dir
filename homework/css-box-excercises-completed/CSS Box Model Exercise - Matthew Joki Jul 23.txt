@@ -1,0 +1,17 @@
+1.  The box model is a tool that is used by web developers to have full control of margin, border, padding, and content of specific type of elements.  This allows the programmer to have precise information about an element's size, as compared to the surrounding content, to give a visual representation of element's sizing attributes.
+
+2.  The difference between margin and padding is that the margin is empty area that seperates itself from neighboring elements, and padding is empty area that determines how far or close the border is to the content box, which is where the actual content, like video boxes or text boxes, reside. 
+
+3.  Margin collapsing occurs when sibling block elements having the same values for top and bottom margins are combined into one margin which equals half of the combined values, for example if <p class="elem1" bottom: 50px> and directly following is <p class="elem2" top: 50px, both elements will have a combined margin of 50px between them.  In the case where one element's property is larger than the others, the element with the largest size will win, and both elements will share the largest margin of the two.
+
+4.  Box-sizing property makes it possible for example to use effects like :hover, so that when the pointer moves over the box, the content outside the box will not shift around the page, and also contains its own top and bottom margins; the downfall to this is that content inside the box will still shift a little, but there are ways around that, kinda, and in fact, the shifting effect may be desirable in certain situations.
+
+5.  The outline property is one of the ways around the problem presented in 4. regarding the shifting of content inside and outside box as result of effects like the :hover effect for the pointer on the screen.  Outline will superimpose a box outline around the border of the box, but it covers over content, so it must be scaled to only cover white space, unless covering content is desired.  Also, with outline, JavaScript can be applied to add functionality, and the outline itself can be set to different designs like dotted or dashed, color, and even offset.
+
+6.  To add a background image using CSS, use the background-image property.  Ex:  p { background-image: url("bla.jpg");}
+
+7.  Given a div with a width of 200px, margin of 20px, and padding of 20px, the browser will calculate that the width will be 280px.
+
+8.  Given a div with a height of 100px, border of 10px, and padding of 20px, the browser will calculate that the height will be 160px.
+
+9.  The command margin: auto centers the content to the middle of the page, and auto adjusts the width of the element to just fit around the content.

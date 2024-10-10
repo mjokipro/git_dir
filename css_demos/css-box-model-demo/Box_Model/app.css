@@ -1,0 +1,101 @@
+h1 {
+	background-color: lavender;
+	width: 40%;
+	font-size: 5rem;
+	border-bottom: 10px solid blue;
+	text-align: center;
+	margin: 1rem auto;
+}
+/* body {
+	margin: 0;
+} */
+
+h2 {
+	background-color: lightpink;
+	width: 50%;
+	margin: 0;
+}
+img {
+	/* width: 300px;
+  height: 300px; */
+	width: 40%;
+	max-width: 300px;
+	/* border-color: purple teal;
+	border-width: 10px;
+  border-style: dashed solid dotted none; */
+	border: 10px solid pink;
+	border-left-width: 5px;
+	border-radius: 100px;
+	margin: 0 30px;
+}
+
+button {
+	background-color: blue;
+	font-size: 2rem;
+	color: white;
+	border-radius: 10px;
+	padding: 0.2em 0.7em;
+}
+
+p {
+	width: 50%;
+	min-width: 500px;
+}
+
+a {
+	width: 400px;
+	background-color: lightblue;
+}
+
+#box {
+	width: 200px;
+	height: 200px;
+	background-color: magenta;
+	border-radius: 50%;
+	border: 6px solid cyan;
+}
+
+section {
+	width: 200px;
+	border: 1px solid black;
+	padding: 1em;
+}
+
+#container {
+	border: 1px solid black;
+	width: 500px;
+	margin: 0 auto;
+}
+
+#container .item {
+	height: 100px;
+	border: 1px solid orangered;
+	margin: 50px;
+	box-sizing: border-box;
+}
+
+#container .item:hover {
+	border: 10px solid olive;
+	outline: 10px solid lightblue;
+}
+
+#container .item:nth-of-type(2) {
+	margin-left: 2em;
+	margin-bottom: 100px;
+}
+
+p a {
+	color: olive;
+	font-size: 1.5em;
+	margin: 2em;
+	height: 100px;
+}
+
+p {
+	font-size: 2em;
+	background-image: url("https://images.unsplash.com/photo-1586915404236-fab59cdfc5c1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80");
+	background-size: cover;
+	/* background-color: pink; */
+	background-position: center;
+	background-repeat: no-repeat;
+}

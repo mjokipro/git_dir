@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/static/css/main.085ed92f.chunk.css",
+    "main.js": "/static/js/main.ee4faebd.chunk.js",
+    "main.js.map": "/static/js/main.ee4faebd.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.ca09d11f.js",
+    "runtime-main.js.map": "/static/js/runtime-main.ca09d11f.js.map",
+    "static/css/2.4e15b5ff.chunk.css": "/static/css/2.4e15b5ff.chunk.css",
+    "static/js/2.1519e3e1.chunk.js": "/static/js/2.1519e3e1.chunk.js",
+    "static/js/2.1519e3e1.chunk.js.map": "/static/js/2.1519e3e1.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.7632992738a6b46bf0b0f082f613d12c.js": "/precache-manifest.7632992738a6b46bf0b0f082f613d12c.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.4e15b5ff.chunk.css.map": "/static/css/2.4e15b5ff.chunk.css.map",
+    "static/css/main.085ed92f.chunk.css.map": "/static/css/main.085ed92f.chunk.css.map",
+    "static/js/2.1519e3e1.chunk.js.LICENSE.txt": "/static/js/2.1519e3e1.chunk.js.LICENSE.txt",
+    "static/media/Matthew-Joki-Resume.pdf": "/static/media/Matthew-Joki-Resume.5149c920.pdf",
+    "static/media/Matthew-Joki.fb20a51b.jpg": "/static/media/Matthew-Joki.fb20a51b.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ca09d11f.js",
+    "static/css/2.4e15b5ff.chunk.css",
+    "static/js/2.1519e3e1.chunk.js",
+    "static/css/main.085ed92f.chunk.css",
+    "static/js/main.ee4faebd.chunk.js"
+  ]
+}

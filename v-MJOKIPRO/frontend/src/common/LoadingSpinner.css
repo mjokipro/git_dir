@@ -1,0 +1,7 @@
+.LoadingSpinner {
+  margin: 200px auto 0 auto;
+  color: rgba(30, 98, 108, 0.729);
+  font-size: 24pt;
+  font-weight: bold;
+  text-align: center;
+}

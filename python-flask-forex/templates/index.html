@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h1>Foreign Currency Exchange</h1>
+
+<form action="/" method="post">
+    <input name="curr_from" placeholder="Enter currency code: ex EUR" />
+    <br />
+    <input name="curr_to" placeholder="Enter currency code: ex USD" />
+    
+    <br />
+    <input name="amount" placeholder="Amount:  (ex: 50)" />
+    <!-- <h3>Rate:</h3>
+     <input name="rate" placeholder="rate:  (ex: 50)" /> -->
+    <br />
+    <br />
+    <br />
+     <button>Submit</button>
+</form>
+
+
+{% endblock %}
+
+
