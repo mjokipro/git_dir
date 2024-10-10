@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Rithm Casino</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/bootstrap/dist/css/bootstrap.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>
+
+    <style>
+      .box {
+        margin: 1em 0;
+        padding: 1em;
+        border: solid 1px black;
+      }
+
+      h2 {
+        margin-top: 2em;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="jumotron">
+        <h1>Rithm Casino</h1>
+      </div>
+
+      <!--  EXAMPLE 1: SIMPLE GET REQUEST  -->
+
+      <h2>Simple GET Request</h2>
+
+      <button class="btn btn-primary"
+              id="card-btn"> Get Card </button>
+
+      <div id="card" class="box"></div>
+
+      <script src="/static/card.js"></script>
+
+      <!-- EXAMPLE 2: SIMPLE POST REQUEST -->
+
+      <h2>Simple POST Request</h2>
+
+      <input id="amount" placeholder="Amount" />
+      <button class="btn btn-warning"
+              id="borrow-btn"> Borrow </button>
+
+      <div id="borrowed" class="box"></div>
+
+      <script src="/static/borrow.js"></script>
+
+      <!-- EXAMPLE 3: JSON -->
+
+      <h2>Getting JSON Responses</h2>
+
+      Get <input id="ncards" value="5" /> Cards
+
+      <button class="btn btn-primary"
+              id="hand-btn">Go!</button>
+
+      <div id="hand" class="box"></div>
+
+      <script src="/static/hand.js"></script>
+    </div>
+  </body>
+</html>

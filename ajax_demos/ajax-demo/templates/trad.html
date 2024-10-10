@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rithm Casino</title>
+  <link
+      rel="stylesheet"
+      href="https://unpkg.com/bootstrap/dist/css/bootstrap.css"
+  />
+
+  <style>
+    .box {
+      margin: 1em 0;
+      padding: 1em;
+      border: solid 1px black;
+    }
+
+    h2 {
+      margin-top: 2em;
+    }
+  </style>
+</head>
+
+<body>
+<div class="container">
+  <div class="jumotron">
+    <h1>Rithm Casino</h1>
+  </div>
+
+  <!-- EXAMPLE 1: SIMPLE GET REQUEST -->
+
+  <h2>Simple GET Request</h2>
+
+  <a href="/card" class="btn btn-primary">Get Card</a>
+
+  <!-- EXAMPLE 2: SIMPLE POST REQUEST -->
+
+  <h2>Simple POST Request</h2>
+
+  <form action="/borrow" method="POST">
+    <input name="amount" placeholder="Amount" />
+    <button class="btn btn-warning">Borrow</button>
+  </form>
+
+</div>
+</body>
+</html>
